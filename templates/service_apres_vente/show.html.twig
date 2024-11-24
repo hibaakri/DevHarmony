@@ -1,0 +1,25 @@
+{% extends 'Admin.html.twig' %}
+
+{% block title %}Hello AvisController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+        <ul>
+                    <li>Id: {{service_apres_vente.id}}</li>
+                    <li>Type probleme: {{service_apres_vente.typeprobleme}}</li>
+                    <li>Description probleme: {{service_apres_vente.descriptionprobleme}}</li>
+                    <li>Date demande: {{service_apres_vente.datedemande  |date()}}</li>
+                    <li>Etat demande: {{service_apres_vente.etatdemande}}</li>
+                    <li>Date resolution: {{service_apres_vente.dateresolution |date()}}</li>
+                    <li>Commentaire technicien: {{service_apres_vente.commentairetechnicien}}</li>
+                    <li> <a href="/service/apres/vente/edit/{{service_apres_vente.id}}" class="btn btn-warning">Modifier demande</a></li>
+                    <li> <a href="/service/apres/vente/delete/{{service_apres_vente.id}}" class="btn btn-danger">Supprimer demande</a></li>
+        </ul>      
+</div>
+{% endblock %}

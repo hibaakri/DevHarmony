@@ -1,0 +1,50 @@
+{% extends 'Admin.html.twig' %}
+
+{% block title %}Hello AvisController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+
+        <table border="1">
+            <thead>
+                <th>#</th>
+                <th>Commentaire</th>
+                <th>Note</th>
+                <th>Date creation</th>
+                <th>Visibilite</th>
+                <th>Reponse</th>
+            </thead>
+            <tbody> {% for avis in avis %}
+                <tr>
+                    
+
+                    <td>{{avis.id}}</td>
+                    <td>{{avis.commentaire}}</td>
+                    <td>{{avis.note}}</td>
+                    <td>{{avis.datecreation  |date()}}</td>
+                    <td>{{avis.visibilite}}</td>
+                    <td>{{avis.reponse}}</td>
+                    <td> <a href="/avis/show/{{avis.id}}" >Consulter avis</a></td>
+                    <td> <a href="/avis/edit/{{avis.id}}" >Modifier avis</a></td>
+                
+                {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+
+        {%for avis in avis %}
+
+        {{avis.id}}
+
+        {% endfor %}
+
+
+        <a href="/avis/add" class="btn btn-primary">Ajouter avis </a>
+       
+</div>
+{% endblock %}
