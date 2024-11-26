@@ -4,10 +4,11 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-
+ 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -18,6 +19,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column] ///////////////////////////
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'le Username doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'le Username doit contenir au max{{ 150 }} caractère',
+        )]
+    private ?String $username = null;
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -32,6 +42,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(
+        min: 5,
+        max: 50,
+        minMessage: 'mot de passe doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'mot de passe doit contenir au max{{ 150 }} caractère',
+        )]
     private ?string $password = null;
 
     public function getId(): ?int
@@ -50,6 +66,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
 
     /**
      * A visual identifier that represents this user.
@@ -63,7 +91,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
-     *
      * @return list<string>
      */
     public function getRoles(): array

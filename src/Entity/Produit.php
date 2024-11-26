@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -15,20 +16,45 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    //controle de saisir titre length
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'tittre doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'titre doit contenir au max{{ 150 }} caractère',
+        )] 
+    #[Assert\NotBlank(message: "Le Titre est obligatoire.")]    
+    #[Assert\NotNull()] 
     private ?string $titre = null;
     
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez ajouter une description.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix est obligatoire.")]
+    #[Assert\Positive(message: "Le prix doit être un nombre positif.")]
     private ?int $prix = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created_At = null;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "La catégorie est obligatoire.")]
     private ?Category $category = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\File(
+        maxSize: "2M",
+        mimeTypes: ["image/jpeg", "image/png"],
+        mimeTypesMessage: "Veuillez télécharger une image valide (JPEG ou PNG)."
+    )]
+    private ?string $image = null;
 
    
 
@@ -93,6 +119,18 @@ class Produit
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

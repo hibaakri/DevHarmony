@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Repository\ProduitRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -40,7 +42,33 @@ class ProduitController extends AbstractController
         //
         if ($form->isSubmitted() && $form->isValid())
         {
+
+              /////////////////////////////// //image ////////////////////////////
+              $imageFile = $form->get('image')->getData();
+              if ($imageFile) {
+                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                 $newFilename = $originalFilename . '.' . $imageFile->guessExtension();
+     
+                 try {
+                     $imageFile->move(
+                         $this->getParameter('upload_directory'),
+                         $newFilename
+                     );
+                 } catch (FileException $e) {
+                     $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image.');
+                     return $this->redirectToRoute('app_produit');
+                 }
+     
+                 $produit->setImage($newFilename);
+             }  
+             
+             /////////////////////////////////////
             //injection de l'entity manger interface
+            $currentdatetime = new DateTimeImmutable('now'); 
+
+            $produit->setCreatedat($currentdatetime);
+
+
             $em->persist($produit);//requete pour ajouter un entité a la BD
             $em->flush();//execution de req
 
@@ -72,6 +100,29 @@ class ProduitController extends AbstractController
 
 
         if ($form->isSubmitted()  && $form->isValid()) {
+
+
+            
+              /////////////////////////////// //image ////////////////////////////
+              $imageFile = $form->get('image')->getData();
+              if ($imageFile) {
+                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                 $newFilename = $originalFilename . '.' . $imageFile->guessExtension();
+     
+                 try {
+                     $imageFile->move(
+                         $this->getParameter('upload_directory'),
+                         $newFilename
+                     );
+                 } catch (FileException $e) {
+                     $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image.');
+                     return $this->redirectToRoute('app_produit');
+                 }
+     
+                 $produit->setImage($newFilename);
+             }  
+             
+             /////////////////////////////////////
             //Injection de l entity manager Interface
 
             $em->persist($produit); // Requéte pour Ajouter un entité a la DB
