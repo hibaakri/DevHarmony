@@ -58,10 +58,14 @@
                             <div style="margin-left: 50px">
                                 <div class="phone">
                                     {% if app.user %}
-                                    <a class="btn btn-danger " href="/logout">LOGOUT</a>
+                                    {#<a class="btn btn-danger " href="/logout">LOGOUT</a>#}
+                                    <a class="btn btn-danger" href="{{ path('app_logout') }}">LOGOUT</a>
 
                                     {% else %}
-                                    <a class="btn btn-success " href="/login">LOGIN</a>
+                                    {#<a class="btn btn-success " href="/Register">Register</a>#}
+                                    {#<a class="btn btn-success " href="/login">LOGIN</a>#}
+                                    <a class="btn btn-success" href="{{ path('app_register') }}">Register</a>
+                                    <a class="btn btn-success" href="{{ path('app_login') }}">LOGIN</a>
 
                                     {% endif %}
                                 </div>
