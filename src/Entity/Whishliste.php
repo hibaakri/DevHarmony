@@ -21,6 +21,10 @@ class Whishliste
     #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'WhishlisteProduit')]
     private Collection $Items;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'whishlistes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user;
+
     public function __construct()
     {
         $this->Items = new ArrayCollection();
@@ -51,6 +55,18 @@ class Whishliste
     public function removeItem(Produit $item): static
     {
         $this->Items->removeElement($item);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
