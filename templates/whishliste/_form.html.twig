@@ -2,3 +2,28 @@
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+
+{#
+{% extends 'base.html.twig' %}
+
+{% block title %}Create New Whishliste{% endblock %}
+
+{% block body %}
+    <h1>Create New Whishliste</h1>
+
+    <form method="POST">
+        <h2>Choose Products</h2>
+        {% for product in produits %}
+            <div>
+                <span>{{ product.titre }}</span>
+                <form action="{{ path('app_whishliste_new', { 'productId': product.id }) }}" method="POST">
+                    <button type="submit">Add to Wishlist</button>
+                </form>
+            </div>
+        {% endfor %}
+    </form>
+
+    <a href="{{ path('app_whishliste_index') }}">Back to list</a>
+{% endblock %}
+#}

@@ -32,11 +32,11 @@ class Produit
      * @var Collection<int, Whishliste>
      */
     #[ORM\ManyToMany(targetEntity: Whishliste::class, mappedBy: 'Items')]
-    private Collection $WhishlisteProduit;
+    private Collection $Items;
 
     public function __construct()
     {
-        $this->WhishlisteProduit = new ArrayCollection();
+        $this->Items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,25 +95,25 @@ class Produit
     /**
      * @return Collection<int, Whishliste>
      */
-    public function getWhishlisteProduit(): Collection
+    public function getItems(): Collection
     {
-        return $this->WhishlisteProduit;
+        return $this->Items;
     }
 
-    public function addWhishlisteProduit(Whishliste $whishlisteProduit): static
+    public function addWItems(Whishliste $Items): static
     {
-        if (!$this->WhishlisteProduit->contains($whishlisteProduit)) {
-            $this->WhishlisteProduit->add($whishlisteProduit);
-            $whishlisteProduit->addItem($this);
+        if (!$this->Items->contains($Items)) {
+            $this->Items->add($Items);
+            $Items->addItem($this);
         }
 
         return $this;
     }
 
-    public function removeWhishlisteProduit(Whishliste $whishlisteProduit): static
+    public function removeItems(Whishliste $Items): static
     {
-        if ($this->WhishlisteProduit->removeElement($whishlisteProduit)) {
-            $whishlisteProduit->removeItem($this);
+        if ($this->Items->removeElement($Items)) {
+            $Items->removeItem($this);
         }
 
         return $this;

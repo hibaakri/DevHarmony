@@ -49,8 +49,11 @@
                             <!--Cart info Start -->
                             <div class="header-tools d-flex">
                                 <div class="cart-info d-flex align-self-center">
-                                    <a href="#offcanvas-wishlist" style="margin-left: 50px"
-                                        class="heart offcanvas-toggle" data-number="3"><i class="icon-heart"></i></a>
+                                    {#<a href="#offcanvas-wishlist" style="margin-left: 50px"
+                                        class="heart offcanvas-toggle" data-number="3"><i class="icon-heart"></i></a>#}
+                                    <a href ="{{ path('app_page') }}" style="margin-left: 50px" class="heart" data-number="3">
+                                         <i class="icon-heart"></i>
+                                    </a>
                                     <a href="#offcanvas-cart" class="bag offcanvas-toggle" data-number="3"><i
                                             class="icon-bag"></i><span>$20.00</span></a>
                                 </div>

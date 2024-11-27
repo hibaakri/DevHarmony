@@ -18,12 +18,12 @@ class WhishlisteType extends AbstractType
                 'class' => Produit::class,
                 'choice_label' => 'Titre',
                 'multiple' => true,
-                
+                'expanded' =>true ,                
             ])
-             ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-             ])
+            //  ->add('user', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            //  ])
         ;
     }
 
@@ -33,4 +33,6 @@ class WhishlisteType extends AbstractType
             'data_class' => Whishliste::class,
         ]);
     }
+
+    
 }

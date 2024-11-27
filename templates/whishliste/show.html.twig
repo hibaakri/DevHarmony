@@ -8,11 +8,24 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>numero</th>
                 <td>{{ whishliste.id }}</td>
             </tr>
+{# ajoute du titre dans show#}
+              <tr>
+                <th>Produits</th>
+                <td>
+                    {% for item in whishliste.Items %}
+                        {{ item.titre }}{% if not loop.last %}, {% endif %}
+                    {% else %}
+                        Aucun produit ajouté.
+                    {% endfor %}
+                </td>
+            </tr>
+
         </tbody>
     </table>
+
 
     <a href="{{ path('app_whishliste_index') }}">back to list</a>
 

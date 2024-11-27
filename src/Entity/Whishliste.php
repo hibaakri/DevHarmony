@@ -18,12 +18,18 @@ class Whishliste
     /**
      * @var Collection<int, Produit>
      */
-    #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'WhishlisteProduit')]
+    #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'Items')]
     private Collection $Items;
 
+    // #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'whishlistes')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?User $user;
+
+    
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'whishlistes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user;
+     
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -59,15 +65,27 @@ class Whishliste
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
+    // public function getUser(): ?User
+    // {
+    //     return $this->user;
+    // }
 
-    public function setUser(?User $user): static
+    // public function setUser(?User $user): static
+    // {
+    //     $this->user = $user;
+
+    //     return $this;
+    // }
+
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 }
