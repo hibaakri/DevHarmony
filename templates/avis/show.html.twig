@@ -3,22 +3,29 @@
 {% block title %}Hello AvisController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<!-- Add Bootstrap CSS if not already included in your base layout -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="example-wrapper">
+<div class="container mt-4">
+    <h2 class="mb-4 text-light">Détails de l'Avis</h2>
 
-        <ul>
-                    <li>Id: {{avis.id}}</li>
-                    <li>Commentaire: {{avis.commentaire}}</li>
-                    <li>Note: {{avis.note}}</li>
-                    <li>Date de creation: {{avis.datecreation  |date()}}</li>
-                    <li>Visibilite: {{avis.visibilite}}</li>
-                    <li>Reponse: {{avis.reponse}}</li>
-                    <li> <a href="/avis/edit/{{avis.id}}" class="btn btn-warning">Modifier avis</a></li>
-                    <li> <a href="/avis/delete/{{avis.id}}" class="btn btn-danger">Supprimer avis</a></li>
-        </ul>      
+    <ul class="list-group">
+        <li class="list-group-item bg-dark text-light">Id: {{ avis.id }}</li>
+        <li class="list-group-item bg-dark text-light">Commentaire: {{ avis.commentaire }}</li>
+        <li class="list-group-item bg-dark text-light">Note: {{ avis.note }}</li>
+        <li class="list-group-item bg-dark text-light">Date de création: {{ avis.datecreation | date() }}</li>
+        <li class="list-group-item bg-dark text-light">Visibilité: {{ avis.visibilite }}</li>
+        <li class="list-group-item bg-dark text-light">Réponse: {{ avis.reponse }}</li>
+        <li class="list-group-item bg-dark text-light">
+            <a href="/avis/edit/{{ avis.id }}" class="btn btn-warning">Modifier avis</a>
+        </li>
+        <li class="list-group-item bg-dark text-light">
+            <a href="/avis/delete/{{ avis.id }}" class="btn btn-danger">Supprimer avis</a>
+        </li>
+    </ul>
 </div>
+
+<!-- Bootstrap JS (optional, for features like modals, dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 {% endblock %}

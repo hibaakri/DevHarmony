@@ -1,19 +1,64 @@
-{% extends 'Admin.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Hello AvisController!{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper {
+        margin: 2em auto;
+        max-width: 700px;
+        font-family: 'Arial', sans-serif;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    .form-header {
+        background-color: #007bff; /* Couleur bleue */
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    .form-header h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+    .form-body {
+        padding: 20px;
+    }
+    .form-footer {
+        background-color: #f8f9fa;
+        padding: 15px;
+        text-align: right;
+    }
+    .btn-custom {
+        background-color: #007bff; /* Couleur bleue */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn-custom:hover {
+        background-color: #0056b3; /* Couleur bleue plus foncée au survol */
+    }
 </style>
 
 <div class="example-wrapper">
-      {{ form_start(form) }}
+    <div class="form-header">
+        <h2>Ajouter une Demande</h2>
+    </div>
+    <div class="form-body">
+        {{ form_start(form, { 'attr': {'class': 'needs-validation'} }) }}
 
-      {{ form_widget(form) }}
-      <button type="submit" class="btn btn-success"> Ajouter demande</button>
+        <div class="form-group mb-3">
+            {{ form_widget(form, { 'attr': {'class': 'form-control'} }) }}
+        </div>
 
-      {{ form_end(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="form-footer">
+        <button type="submit" class="btn btn-custom">Ajouter Demande</button>
+    </div>
 </div>
 {% endblock %}

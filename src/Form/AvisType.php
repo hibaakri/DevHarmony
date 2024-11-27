@@ -17,20 +17,14 @@ class AvisType extends AbstractType
         $builder
             ->add('Commentaire')
             ->add('Note')
-            ->add('Date_creation', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('Etat')
+            // ->add('Date_creation', null, [
+            //     'widget' => 'single_text',
+            // ])
+            //->add('Etat')
             ->add('Visibilite')
             ->add('Reponse')
-            ->add('user', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-            ])
-            ->add('produit', EntityType::class, [
-                'class' => Produit::class,
-                'choice_label' => 'id',
-            ])
+            ->add('user')
+            ->add('produit')
         ;
     }
 

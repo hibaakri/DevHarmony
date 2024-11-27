@@ -3,48 +3,54 @@
 {% block title %}Hello AvisController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<!-- Add Bootstrap CSS if not already included in your base layout -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="example-wrapper">
+<div class="container mt-4">
+    <h2 class="mb-4 text-light">Liste des Avis</h2>
 
-        <table border="1">
-            <thead>
+    <table class="table table-dark table-striped table-bordered">
+        <thead class="thead-light">
+            <tr>
                 <th>#</th>
+                <th>Client</th>
+                <th>Produit</th> 
                 <th>Commentaire</th>
                 <th>Note</th>
-                <th>Date creation</th>
-                <th>Visibilite</th>
-                <th>Reponse</th>
-            </thead>
-            <tbody> {% for avis in avis %}
+                <th>Date création</th>
+                <th>Visibilité</th>
+                <th>Réponse</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avis in avis %}
                 <tr>
-                    
-
-                    <td>{{avis.id}}</td>
-                    <td>{{avis.commentaire}}</td>
-                    <td>{{avis.note}}</td>
-                    <td>{{avis.datecreation  |date()}}</td>
-                    <td>{{avis.visibilite}}</td>
-                    <td>{{avis.reponse}}</td>
-                    <td> <a href="/avis/show/{{avis.id}}" >Consulter avis</a></td>
-                    <td> <a href="/avis/edit/{{avis.id}}" >Modifier avis</a></td>
-                
-                {% endfor %}
+                    <td>{{ avis.id }}</td>
+                    <td>{{ avis.user.email }}</td>
+                    {% if avis.produit %}
+                        <td>{{ avis.produit.id }}</td>
+                    {% else %}
+                        <td>Produit introuvable!</td>
+                    {% endif %}
+                    <td>{{ avis.commentaire }}</td>
+                    <td>{{ avis.note }}</td>
+                    <td>{{ avis.datecreation | date() }}</td>
+                    <td>{{ avis.visibilite }}</td>
+                    <td>{{ avis.reponse }}</td>
+                    <td>
+                        <a href="/avis/show/{{ avis.id }}" class="btn btn-info btn-sm">Consulter</a>
+                        <a href="/avis/edit/{{ avis.id }}" class="btn btn-warning btn-sm">Modifier</a>
+                    </td>
                 </tr>
-            </tbody>
-        </table>
+            {% endfor %}
+        </tbody>
+    </table>
 
-        {%for avis in avis %}
-
-        {{avis.id}}
-
-        {% endfor %}
-
-
-        <a href="/avis/add" class="btn btn-primary">Ajouter avis </a>
-       
+    <a href="/avis/add" class="btn btn-success mt-3">Ajouter un Avis</a>
 </div>
+
+<!-- Bootstrap JS (optional, for features like modals, dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 {% endblock %}

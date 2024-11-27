@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Avis;
 use App\Form\AvisType;
 use App\Repository\AvisRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 class AvisController extends AbstractController
 {
@@ -38,6 +40,8 @@ class AvisController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()&& $form->isValid()){
+            $nowdate= new DateTime('now');
+            $avis->setDateCreation($nowdate);
             //injection de l entity manager interface
             $em->persist($avis); //requete pour ajouter un entite a la bd
             $em->flush(); //execution du requete

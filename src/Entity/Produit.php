@@ -29,6 +29,7 @@ class Produit
      * @var Collection<int, Avis>
      */
     #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'produit')]
+    #[ORM\JoinColumn(nullable: false)]
     private Collection $avis;
 
     #[ORM\ManyToOne(inversedBy: 'produit')]
@@ -121,5 +122,11 @@ class Produit
         $this->serviceApresVente = $serviceApresVente;
 
         return $this;
+    }
+
+
+    public function __toString()
+    {
+        return $this->titre ;
     }
 }

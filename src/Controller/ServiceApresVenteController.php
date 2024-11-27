@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\ServiceApresVente;
 use App\Form\ServiceApresVenteType;
 use App\Repository\ServiceApresVenteRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,6 +40,31 @@ class ServiceApresVenteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()&& $form->isValid()){
+            
+            //image
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile) {
+               $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+               $newFilename = $originalFilename . '.' . $imageFile->guessExtension();
+   
+               try {
+                   $imageFile->move(
+                       $this->getParameter('upload_directory'),
+                       $newFilename
+                   );
+               } catch (FileException $e) {
+                   $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de l\'image.');
+                   return $this->redirectToRoute('app_service_apres_vente');
+               }
+   
+               $service_apres_vente->setImage($newFilename);
+           } 
+            
+            
+            
+            $service_apres_vente->setEtatDemande(null);
+            $nowdate= new DateTime('now');
+            $service_apres_vente->setDateDemande($nowdate);
             //injection de l entity manager interface
             $em->persist($service_apres_vente); //requete pour ajouter un entite a la bd
             $em->flush(); //execution du requete

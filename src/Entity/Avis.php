@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AvisRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AvisRepository::class)]
 class Avis
@@ -15,9 +16,19 @@ class Avis
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Vous pouvez ajouter un commentaire.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le commentaire ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $Commentaire = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Vous pouvez ajouter une note.")]
+    #[Assert\Length(
+        min: 0,
+        max: 10
+    )]
     private ?int $Note = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -30,10 +41,16 @@ class Avis
     private ?bool $Visibilite = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Vous pouvez répondre au commentaire.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le commentaire ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $Reponse = null;
 
     #[ORM\ManyToOne(inversedBy: 'avis')]
     #[ORM\JoinColumn(nullable: true)]
+    #[Assert\NotNull(message: "Champ obligatoire!")]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'avis')]
@@ -139,4 +156,9 @@ class Avis
 
         return $this;
     }
+
+
+
+    
+    
 }

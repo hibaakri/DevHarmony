@@ -40,10 +40,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Avis>
      */
     #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'user')]
+    #[ORM\JoinColumn(nullable: false)]
     private Collection $avis;
 
     #[ORM\ManyToOne(inversedBy: 'user')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?ServiceApresVente $serviceApresVente = null;
 
     public function __construct()
@@ -156,6 +157,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
     public function getServiceApresVente(): ?ServiceApresVente
     {
         return $this->serviceApresVente;
@@ -167,4 +169,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
+
+    public function __toString()
+    {
+        return $this->email ;
+    }
+
+
 }

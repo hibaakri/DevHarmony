@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\ServiceApresVente;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,14 +15,20 @@ class ServiceApresVenteType extends AbstractType
         $builder
             ->add('Type_probleme')
             ->add('Description_probleme')
-            ->add('Date_demande', null, [
-                'widget' => 'single_text',
+            ->add('image',FileType::class,[
+                'label'=> 'insérer votre image',
+                'mapped' => false,
+
             ])
-            ->add('Etat_demande')
+            // ->add('Date_demande', null, [
+            //     'widget' => 'single_text',
+            // ])
+            
             ->add('Date_resolution', null, [
                 'widget' => 'single_text',
             ])
             ->add('Commentaire_technicien')
+            
         ;
     }
 
