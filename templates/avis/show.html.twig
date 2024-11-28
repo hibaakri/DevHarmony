@@ -1,4 +1,4 @@
-{% extends 'Admin.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Hello AvisController!{% endblock %}
 
@@ -14,6 +14,7 @@
         <li class="list-group-item bg-dark text-light">Commentaire: {{ avis.commentaire }}</li>
         <li class="list-group-item bg-dark text-light">Note: {{ avis.note }}</li>
         <li class="list-group-item bg-dark text-light">Date de création: {{ avis.datecreation | date() }}</li>
+        {# <li class="list-group-item bg-dark text-light">Etat: {{ avis.etat }}</li> #}
         <li class="list-group-item bg-dark text-light">Visibilité: {{ avis.visibilite }}</li>
         <li class="list-group-item bg-dark text-light">Réponse: {{ avis.reponse }}</li>
         <li class="list-group-item bg-dark text-light">

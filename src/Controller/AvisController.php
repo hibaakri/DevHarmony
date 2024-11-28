@@ -94,7 +94,6 @@ class AvisController extends AbstractController
     {   //recuperation de l'entite a partir de l id
         $avis= $av->find($id);
         
-    
 
         return $this->render('avis/show.html.twig', [
             "avis" => $avis,

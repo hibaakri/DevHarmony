@@ -22,7 +22,7 @@
                 <span class="badge bg-danger">Refusé</span>
             {% endif %}
         </li>
-        <li class="list-group-item"><strong>Date de résolution:</strong> {{ service_apres_vente.dateresolution | date('d/m/Y') }}</li>
+        {# <li class="list-group-item"><strong>Date de résolution:</strong> {{ service_apres_vente.dateresolution | date('d/m/Y') }}</li> #}
         <li class="list-group-item">
             <strong>Image associée:</strong><br>
             <img src="{{ asset('/service_apres_vente/' ~ service_apres_vente.image) }}" alt="Image" class="img-fluid mt-2">

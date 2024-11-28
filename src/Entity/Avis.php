@@ -34,8 +34,8 @@ class Avis
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $Date_creation = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Etat = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $Etat = null;
 
     #[ORM\Column]
     private ?bool $Visibilite = null;
@@ -97,17 +97,17 @@ class Avis
         return $this;
     }
 
-    public function getEtat(): ?string
-    {
-        return $this->Etat;
-    }
+    // public function getEtat(): ?string
+    // {
+    //     return $this->Etat;
+    // }
 
-    public function setEtat(string $Etat): static
-    {
-        $this->Etat = $Etat;
+    // public function setEtat(string $Etat): static
+    // {
+    //     $this->Etat = $Etat;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function isVisibilite(): ?bool
     {

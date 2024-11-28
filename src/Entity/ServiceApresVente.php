@@ -36,16 +36,16 @@ class ServiceApresVente
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $Date_demande = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $Date_resolution = null;
+    // #[ORM\Column(type: Types::DATE_MUTABLE)]
+    // private ?\DateTimeInterface $Date_resolution = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "N'ajouter rien ici .")]
-    #[Assert\Length(
-        max: 255,
-        maxMessage: "Le commentaire ne peut pas dépasser {{ limit }} caractères."
-    )]
-    private ?string $Commentaire_technicien = null;
+    // #[ORM\Column(length: 255)]
+    // #[Assert\NotBlank(message: "N'ajouter rien ici .")]
+    // #[Assert\Length(
+    //     max: 255,
+    //     maxMessage: "Le commentaire ne peut pas dépasser {{ limit }} caractères."
+    // )]
+    // private ?string $Commentaire_technicien = null;
 
     /**
      * @var Collection<int, Produit>
@@ -114,29 +114,29 @@ class ServiceApresVente
         return $this;
     }
 
-    public function getDateResolution(): ?\DateTimeInterface
-    {
-        return $this->Date_resolution;
-    }
+    // public function getDateResolution(): ?\DateTimeInterface
+    // {
+    //     return $this->Date_resolution;
+    // }
 
-    public function setDateResolution(\DateTimeInterface $Date_resolution): static
-    {
-        $this->Date_resolution = $Date_resolution;
+    // public function setDateResolution(\DateTimeInterface $Date_resolution): static
+    // {
+    //     $this->Date_resolution = $Date_resolution;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getCommentaireTechnicien(): ?string
-    {
-        return $this->Commentaire_technicien;
-    }
+    // public function getCommentaireTechnicien(): ?string
+    // {
+    //     return $this->Commentaire_technicien;
+    // }
 
-    public function setCommentaireTechnicien(string $Commentaire_technicien): static
-    {
-        $this->Commentaire_technicien = $Commentaire_technicien;
+    // public function setCommentaireTechnicien(string $Commentaire_technicien): static
+    // {
+    //     $this->Commentaire_technicien = $Commentaire_technicien;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Produit>

@@ -15,8 +15,8 @@
                 <th>Description</th>
                 <th>Date de demande</th>
                 <th>État de la demande</th>
-                <th>Date de résolution</th>
-                <th>Commentaire technicien</th>
+                {# <th>Date de résolution</th>
+                <th>Commentaire technicien</th> #}
                 <th>Actions</th>
             </tr>
         </thead>
@@ -36,9 +36,9 @@
                         <span class="badge bg-danger">Refusé</span>
                     {% endif %}
                 </td>
-                <td>{{ service_apres_vente.dateresolution | date('d/m/Y') }}</td>
-                <td>{{ service_apres_vente.commentairetechnicien }}</td>
-                <td>
+                {# <td>{{ service_apres_vente.dateresolution | date('d/m/Y') }}</td> #}
+                {# <td>{{ service_apres_vente.commentairetechnicien }}</td> #}
+                <td> 
                     <a href="/service/apres/vente/show/{{ service_apres_vente.id }}" class="btn btn-info btn-sm">Consulter</a>
                     <a href="/service/apres/vente/edit/{{ service_apres_vente.id }}" class="btn btn-warning btn-sm">Modifier</a>
                 </td>
@@ -48,7 +48,7 @@
     </table>
 
     <div class="mt-4">
-        <a href="/service/apres/vente/add" class="btn btn-primary">Ajouter une demande</a>
+        <a href="/service/apres/vente/add"" class="btn btn-primary">Ajouter une demande</a>
     </div>
 </div>
 

@@ -24,10 +24,10 @@ class ServiceApresVenteType extends AbstractType
             //     'widget' => 'single_text',
             // ])
             
-            ->add('Date_resolution', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('Commentaire_technicien')
+            // ->add('Date_resolution', null, [
+            //     'widget' => 'single_text',
+            // ])
+            // ->add('Commentaire_technicien')
             
         ;
     }
