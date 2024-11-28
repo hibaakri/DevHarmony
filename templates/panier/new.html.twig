@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un nouveau panier{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h4 mb-0">Créer un nouveau panier</h1>
+            </div>
+            <div class="card-body">
+                <!-- Inclusion du formulaire -->
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        <!-- Bouton pour revenir à la liste -->
+        <div class="text-center mt-4">
+            <a class="btn btn-secondary" href="{{ path('app_panier_index') }}">Retour à la liste</a>
+        </div>
+    </div>
+{% endblock %}
+
+
