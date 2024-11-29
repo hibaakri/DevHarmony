@@ -22,9 +22,6 @@ final class WhishlisteController extends AbstractController
     {
         $whishlistes = $whishlisteRepository->findAll();
 
-        // return $this->render('whishliste/index.html.twig', [
-        //     'whishlistes' => $whishlisteRepository->findAll(),
-        // ]);
 
         return $this->render('whishliste/index.html.twig', [
             'whishlistes' => $whishlistes,
@@ -38,14 +35,14 @@ final class WhishlisteController extends AbstractController
         // Associer l'utilisateur connecté à la wishlist
         $user = $security->getUser();
     
-    // Vérifier si l'utilisateur est connecté
+        // Vérifier si l'utilisateur est connecté
         if ($user) {
-        $whishliste->setUser($user);  // Assurez-vous d'avoir une méthode setUser() dans votre entité Whishliste
+        $whishliste->setUser($user);  
         } else {
 
         // Gérer l'erreur si l'utilisateur n'est pas connecté
         $this->addFlash('error', 'You must be logged in to create a wishlist.');
-        return $this->redirectToRoute('app_login');  // Redirige vers la page de connexion
+        return $this->redirectToRoute('app_login');  
     }
 
 

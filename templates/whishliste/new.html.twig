@@ -1,13 +1,24 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}New Whishliste{% endblock %}
+{% block title %}New Wishlist{% endblock %}
 
 {% block body %}
-    <h1>Create new Whishliste</h1>
+<div class="container mt-5">
+    <h1 class="text-primary mb-4">Create a New Wishlist</h1>
 
-    {{ include('whishliste/_form.html.twig') }}
+    <div class="card shadow p-4 bg-white">
+        {{ form_start(form, { 'attr': { 'class': 'form-horizontal' } }) }}
 
-    <a href="{{ path('app_whishliste_index') }}">back to list</a>
-    
+            {{ form_widget(form, { 'attr': { 'class': 'form-control mb-3' } }) }}
+
+            <div class="d-flex justify-content-between">
+
+                <button type="submit" class="btn btn-primary btn-sm ">Save</button>
+                
+                <a href="{{ path('app_whishliste_index') }}" class="btn btn-secondary btn-sm w-40">Back to list</a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

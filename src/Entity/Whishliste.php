@@ -6,6 +6,7 @@ use App\Repository\WhishlisteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WhishlisteRepository::class)]
 class Whishliste
@@ -19,13 +20,9 @@ class Whishliste
      * @var Collection<int, Produit>
      */
     #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'Items')]
+
     private Collection $Items;
-
-    // #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'whishlistes')]
-    // #[ORM\JoinColumn(nullable: false)]
-    // private ?User $user;
-
-    
+   
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'whishlistes')]
     #[ORM\JoinColumn(nullable: false)]
      

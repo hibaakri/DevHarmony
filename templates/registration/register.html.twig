@@ -6,7 +6,7 @@
     <div class="container mt-5">
         <h1 class="text-center">Register</h1>
 
-        {# Affichage des erreurs du formulaire s'il y en a #}
+        {# Affichage des erreurs du formulaire s'il y en a des errors  #}
 
         <div class="alert alert-danger" style="display: {% if form_errors(registrationForm) %}block{% else %}none{% endif %};">
             {{ form_errors(registrationForm) }}
@@ -20,26 +20,32 @@
                 {# Champ pour l'email #}
                 {{ form_label(registrationForm.email, 'E-mail') }}
                 {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                 <div class="text-danger">
                 {{ form_errors(registrationForm.email) }}
+                </div>
             </div>
-
+{# plain Password fama not Blank et length du password > 6 caracteres et agreeTerms si on ne clique pas il affiche un message #}
             <div class="form-group" style="margin-bottom: 1rem;">  
-                {# Champ pour le mot de passe #}
+                {# Champ et control du  saisie pour le mot de passe  #}
                 {{ form_label(registrationForm.plainPassword, 'Password') }}
                 {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger">
                 {{ form_errors(registrationForm.plainPassword) }}
+                 </div>
             </div>
 
             <div class="form-group" style="margin-bottom: 1rem;"> 
                 {# Case à cocher pour accepter les termes #}
                 {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
                 {{ form_label(registrationForm.agreeTerms, 'I agree to the terms', {'label_attr': {'class': 'form-check-label'}}) }}
+                 <div class="text-danger">
                 {{ form_errors(registrationForm.agreeTerms) }}
+                </div>
             </div>
 
             {# Bouton de soumission du formulaire #}
             <button type="submit" class="btn btn-primary btn-block" style="margin-top: 0.2rem;">Register</button>
-            <a href="{{path('app_login')}}" class="btn btn-sencondar btn-block">Login</a>
+            
 
         {# Fin du formulaire #}
         {{ form_end(registrationForm) }}

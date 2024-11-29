@@ -26,7 +26,7 @@ class WhishlistController extends AbstractController
     public function page(EntityManagerInterface $entityManager):Response
     {
     $wishlists = $entityManager->getRepository(Whishliste::class)->findAll();
-    dump($wishlists);
+    
 
     return $this->render('whishlist/page.html.twig', [
         'whishlists' => $wishlists,
