@@ -109,22 +109,7 @@ class Produit
         return $this;
     }
 
- 
-    /**
-     * @return Collection<int, Avis>
-     */
-    public function getAvis(): Collection
-    {
-        return $this->avis;
-    }
-
-    public function addAvi(Avis $avi): static
-    {
-        if (!$this->avis->contains($avi)) {
-            $this->avis->add($avi);
-            $avi->setProduit($this);
-        }
- 
+  
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -139,15 +124,7 @@ class Produit
     }
 
  
-    public function removeAvi(Avis $avi): static
-    {
-        if ($this->avis->removeElement($avi)) {
-            // set the owning side to null (unless already changed)
-            if ($avi->getProduit() === $this) {
-                $avi->setProduit(null);
-            }
-        }
- 
+    
     public function getDescription(): ?string
     {
         return $this->description;
@@ -162,24 +139,10 @@ class Produit
     }
 
 
-    public function getServiceApresVente(): ?ServiceApresVente
-    {
-        return $this->serviceApresVente;
-    }
-
-    public function setServiceApresVente(?ServiceApresVente $serviceApresVente): static
-    {
-        $this->serviceApresVente = $serviceApresVente;
-
-        return $this;
-    }
+    
 
 
-    public function __toString()
-    {
-        return $this->titre ;
-    }
-}
+   
 
     public function getImage(): ?string
     {
@@ -191,6 +154,11 @@ class Produit
         $this->image = $image;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->titre ;
     }
 }
 
