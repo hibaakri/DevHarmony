@@ -1,57 +1,73 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon Panier{% endblock %}
+{% block title %}Panier{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
-        <h1 class="text-center mb-4">Mon Panier</h1>
-
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endfor %}
-
-        <!-- Tableau stylisé avec Bootstrap -->
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
+<div class="container mt-4">
+    <h1>Votre Panier</h1>
+    
+    {% if produits is empty %}
+        <div class="alert alert-info text-center">Votre panier est vide.</div>
+        <div class="text-center mt-4">
+            <a href="{{ path('app_produit_index') }}" class="btn btn-primary">Voir les produits disponibles</a>
+        </div>
+    {% else %}
+        <table class="table">
+            <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Id Panier</th>
-                    <th>Id Produit</th>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for panier in paniers %}
+                {% for produit in produits %}
                     <tr>
-                        <td>{{ panier.id }}</td>
-                        <td>{{ panier.idPanier }}</td>
-                        <td>{{ panier.idProduit }}</td>
+                        <td>{{ produit.produit.titre }}</td>
                         <td>
-                            <a href="{{ path('app_panier_show', {'id': panier.id}) }}" class="btn btn-info btn-sm">Voir</a>
-                            <a href="{{ path('app_panier_edit', {'id': panier.id}) }}" class="btn btn-warning btn-sm">Éditer</a>
-                            <form action="{{ path('app_panier_delete', {'id': panier.id}) }}" method="post" style="display:inline;">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ panier.id) }}">
-                                <button class="btn btn-danger btn-sm" type="submit">Supprimer</button>
+                            <!-- Formulaire pour modifier la quantité -->
+                            <form method="post" action="{{ path('app_panier_modifier', {'id': produit.produit.id}) }}" class="d-flex">
+                                <input 
+                                    type="number" 
+                                    name="quantite" 
+                                    value="{{ produit.quantite }}" 
+                                    min="1" 
+                                    class="form-control" 
+                                    style="max-width: 80px;"
+                                />
+                                <button type="submit" class="btn btn-success ms-2">✔</button>
                             </form>
                         </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4" class="text-center">Aucun enregistrement trouvé</td>
+                        <td>{{ produit.produit.prix * produit.quantite }} €</td>
+                        <td>
+                            <!-- Formulaire pour supprimer le produit -->
+                            <form method="post" action="{{ path('app_panier_supprimer', {'id': produit.produit.id}) }}">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <div class="d-flex justify-content-end mt-3">
-            <a href="{{ path('app_panier_new') }}" class="btn btn-primary">Créer un nouveau panier</a>
+        <!-- Affichage du total -->
+        <div class="d-flex justify-content-between">
+            <h4>Total a payer :</h4>
+            <h4>{{ total }} €</h4>
         </div>
-    </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <!-- Bouton "Continuer mes achats" -->
+            <a href="{{ path('app_produit_index') }}" class="btn btn-primary">Continuer mes achats</a>
+            
+           
+        </div>
+        <!-- Bouton pour valider la commande -->
+        <div class="d-flex justify-content-end mt-4">
+             <a href="{{ path('app_commande_creer') }}" class="btn btn-success">Valider la commande</a>
+        </div>
+
+    {% endif %}
+</div>
 {% endblock %}
-
-
-
-
-
