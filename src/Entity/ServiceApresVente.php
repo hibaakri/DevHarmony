@@ -47,12 +47,7 @@ class ServiceApresVente
     // )]
     // private ?string $Commentaire_technicien = null;
 
-    /**
-     * @var Collection<int, Produit>
-     */
-    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'serviceApresVente')]
-    #[ORM\JoinColumn(nullable: true)]
-    private Collection $produit;
+  
 
     /**
      * @var Collection<int, User>
@@ -69,8 +64,7 @@ class ServiceApresVente
 
     public function __construct()
     {
-        $this->produit = new ArrayCollection();
-        $this->user = new ArrayCollection();
+         $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,35 +132,7 @@ class ServiceApresVente
     //     return $this;
     // }
 
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduit(): Collection
-    {
-        return $this->produit;
-    }
-
-    public function addProduit(Produit $produit): static
-    {
-        if (!$this->produit->contains($produit)) {
-            $this->produit->add($produit);
-            $produit->setServiceApresVente($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): static
-    {
-        if ($this->produit->removeElement($produit)) {
-            // set the owning side to null (unless already changed)
-            if ($produit->getServiceApresVente() === $this) {
-                $produit->setServiceApresVente(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, User>
@@ -176,27 +142,7 @@ class ServiceApresVente
         return $this->user;
     }
 
-    public function addUser(User $user): static
-    {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-            $user->setServiceApresVente($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->user->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getServiceApresVente() === $this) {
-                $user->setServiceApresVente(null);
-            }
-        }
-
-        return $this;
-    }
+     
 
     public function getImage(): ?string
     {
