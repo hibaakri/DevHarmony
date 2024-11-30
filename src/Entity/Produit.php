@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -17,29 +23,50 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+
+    //controle de saisir titre length
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'tittre doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'titre doit contenir au max{{ 150 }} caractère',
+        )] 
+    #[Assert\NotBlank(message: "Le Titre est obligatoire.")]    
+    #[Assert\NotNull()] 
     private ?string $titre = null;
+    
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez ajouter une description.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
+    )]
+    private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix est obligatoire.")]
+    #[Assert\Positive(message: "Le prix doit être un nombre positif.")]
+
     private ?int $prix = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created_At = null;
 
-    /**
-     * @var Collection<int, Avis>
-     */
-    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'produit')]
-    #[ORM\JoinColumn(nullable: false)]
-    private Collection $avis;
 
-    #[ORM\ManyToOne(inversedBy: 'produit')]
+    #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ServiceApresVente $serviceApresVente = null;
+    #[Assert\NotBlank(message: "La catégorie est obligatoire.")]
+    private ?Category $category = null;
 
-    public function __construct()
-    {
-        $this->avis = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    #[Assert\File(
+        maxSize: "2M",
+        mimeTypes: ["image/jpeg", "image/png"],
+        mimeTypesMessage: "Veuillez télécharger une image valide (JPEG ou PNG)."
+    )]
+    private ?string $image = null;
+
+   
 
     public function getId(): ?int
     {
@@ -82,6 +109,7 @@ class Produit
         return $this;
     }
 
+ 
     /**
      * @return Collection<int, Avis>
      */
@@ -96,10 +124,21 @@ class Produit
             $this->avis->add($avi);
             $avi->setProduit($this);
         }
+ 
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+ 
 
         return $this;
     }
 
+ 
     public function removeAvi(Avis $avi): static
     {
         if ($this->avis->removeElement($avi)) {
@@ -108,9 +147,20 @@ class Produit
                 $avi->setProduit(null);
             }
         }
+ 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+ 
 
         return $this;
     }
+
 
     public function getServiceApresVente(): ?ServiceApresVente
     {
@@ -130,3 +180,17 @@ class Produit
         return $this->titre ;
     }
 }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+}
+
