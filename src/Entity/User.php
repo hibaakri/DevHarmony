@@ -77,7 +77,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+ 
+    public function __toString()
+    {
+        return $this->username;
+    }
 
+ 
 
     /**
      * A visual identifier that represents this user.
@@ -135,4 +141,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+ 
 }
