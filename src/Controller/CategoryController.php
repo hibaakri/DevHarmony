@@ -18,10 +18,18 @@ class CategoryController extends AbstractController
     {
           //recupération de toutes la table depuis la repository 
           $categorys = $pr->findAll() ;
+          if($this->isGranted("ROLE_ADMIN"))
+          {
         return $this->render('category/index.html.twig', [
            //envoie vers la Vue 
            "categorys"=> $categorys
         ]);
+    }
+    return $this->render('category/indexClient.html.twig', [
+        //envoie vers la Vue 
+        "categorys"=> $categorys
+     ]);
+    
     }
 
 
@@ -87,7 +95,7 @@ class CategoryController extends AbstractController
         return $this->render('category/edit.html.twig', [
             //send a variable to a view 
 
-            "form" => $form
+            "form" => $form->createView()
         ]);
 
     }

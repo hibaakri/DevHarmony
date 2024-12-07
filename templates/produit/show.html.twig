@@ -1,50 +1,33 @@
 {% extends 'Admin.html.twig' %}
 
-{% block title %}Hello ProduitController!{% endblock %}
+{% block title %}Produit - Détails{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-
-<div class="row">
-
-    
-        
-   
-    <div class="col-4 ">
-        <div class="card m-2">
-
-            <div class="card-header">
-                <img src="{{asset('/produits/' ~ produit.image )}}" height="100%" width="100%" alt="">    
-            </div>
-            <div class="card-body">
-                <h2>  <i>{{produit.titre}}</i></h2>
-                 <ul>
-                    
-                    <li>
-                     <b>{{produit.prix}} TND</b>
-
-                    </li>
-                    <li>{{produit.description}}</li>
-                    <li>  <p style="color: grey;" >{{produit.createdat |date(' Y-M-D')}}</p> </li>
-                     
-                 </ul>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0" style="background-color: #f8f9fa;">
+                <div class="card-header text-center" style="background-color: #e3f2fd;">
+                    <img src="{{ asset('/produits/' ~ produit.image) }}" class="img-fluid rounded" alt="Produit Image">
                 </div>
-                <div class="card-footer">
-                    <a class="btn btn-secondary" href="/produit/edit/{{produit.id}}">Modifier</a>
-                    <a class="btn btn-danger" href="/produit/delete/{{produit.id}}">Supprimer</a>
+                <div class="card-body">
+                    <!-- Modification de la couleur du titre -->
+                    <h2 class="card-title text-center" style="color: #4a90e2;"><strong>{{ produit.titre }}</strong></h2>
+                    <ul class="list-unstyled mt-3">
+                        <li class="mb-2">
+                            <strong class="text-success">Prix : {{ produit.prix }} TND</strong>
+                        </li>
+                        <li class="mb-2">
+                            <span class="text-dark">Description : </span>
+                            <span class="text-muted">{{ produit.description }}</span>
+                        </li>
+                        <li>
+                            <small class="text-dark">Ajouté le : {{ produit.createdat | date('d/m/Y') }}</small>
+                        </li>
+                    </ul>
                 </div>
             </div>
-           
-    
         </div>
-    
-      
-    
-    
     </div>
-    
+</div>
 {% endblock %}
