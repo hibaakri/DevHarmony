@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %} whishlist{% endblock %}
+
+{% block body %}
+
+  <h1>Wishlist</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>titre</th>
+                <th>description</th>
+                <th>prix</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for wishlist in whishlists %}
+                <td>
+                    {% for item in wishlist.Items %}
+                    
+                        {{ item.titre }} 
+                        {{ item.description }}
+                        {{ item.prix }}
+                    
+                    {% endfor %}
+                </td>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

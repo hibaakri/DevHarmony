@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+    <h1>Liste des produits</h1>
+
+    <div class="product-list">
+        {% for produit in produits %}
+            <div class="product-item">
+                <p>{{ produit.nom }}</p>  {# Affiche le nom du produit #}
+                <p>{{ produit.description }}</p>  {# Affiche la description du produit (facultatif) #}
+                <p>{{ produit.prix }} €</p>  {# Affiche le prix du produit #}
+
+                <form action="{{ path('add_to_whishliste', {'produitId': produit.id}) }}" method="POST">
+                    <button type="submit">Ajouter à la wishlist</button>
+                </form>
+            </div>
+        {% else %}
+            <p>Aucun produit disponible.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
