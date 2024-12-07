@@ -156,7 +156,7 @@ class Produit
         return $this->Panier;
     }
 
-    public function setPanier(?Panier $MPanier): static
+    public function setPanier(?Panier $Panier): static
     {
         $this->Panier = $Panier;
 
@@ -186,7 +186,7 @@ class Produit
     {
         $this->quantite = $quantite;
 
-        return $this;
+        return $this;}
      public function __toString()
     {
         return $this->titre ;
