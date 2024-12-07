@@ -3,10 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
@@ -17,27 +23,52 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $titre = null;
 
+
+    //controle de saisir titre length
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'tittre doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'titre doit contenir au max{{ 150 }} caractère',
+        )] 
+    #[Assert\NotBlank(message: "Le Titre est obligatoire.")]    
+    #[Assert\NotNull()] 
+    private ?string $titre = null;
+    
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez ajouter une description.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix est obligatoire.")]
+    #[Assert\Positive(message: "Le prix doit être un nombre positif.")]
+
     private ?int $prix = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created_AT = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $created_At = null;
 
-    /**
-     * @var Collection<int, Whishliste>
-     */
-    #[ORM\ManyToMany(targetEntity: Whishliste::class, mappedBy: 'Items')]
-    private Collection $Items;
 
-    public function __construct()
-    {
-        $this->Items = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotBlank(message: "La catégorie est obligatoire.")]
+    private ?Category $category = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\File(
+        maxSize: "2M",
+        mimeTypes: ["image/jpeg", "image/png"],
+        mimeTypesMessage: "Veuillez télécharger une image valide (JPEG ou PNG)."
+    )]
+    private ?string $image = null;
+
+   
+
 
     public function getId(): ?int
     {
@@ -56,17 +87,6 @@ class Produit
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
 
     public function getPrix(): ?int
     {
@@ -80,42 +100,71 @@ class Produit
         return $this;
     }
 
-    public function getCreatedAT(): ?\DateTimeInterface
+
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->created_AT;
+        return $this->created_At;
     }
 
-    public function setCreatedAT(\DateTimeInterface $created_AT): static
+    public function setCreatedAt(\DateTimeInterface $created_At): static
     {
-        $this->created_AT = $created_AT;
+        $this->created_At = $created_At;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Whishliste>
-     */
-    public function getItems(): Collection
+
+  
+    public function getCategory(): ?Category
     {
-        return $this->Items;
+        return $this->category;
     }
 
-    public function addWItems(Whishliste $Items): static
+    public function setCategory(?Category $category): static
     {
-        if (!$this->Items->contains($Items)) {
-            $this->Items->add($Items);
-            $Items->addItem($this);
-        }
+        $this->category = $category;
+ 
 
         return $this;
     }
 
-    public function removeItems(Whishliste $Items): static
+
+ 
+    
+    public function getDescription(): ?string
     {
-        if ($this->Items->removeElement($Items)) {
-            $Items->removeItem($this);
-        }
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+ 
 
         return $this;
+    }
+
+
+    
+
+
+   
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->titre ;
     }
 }
+
