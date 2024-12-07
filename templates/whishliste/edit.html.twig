@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Whishliste{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">Edit Whishliste</h1>
+    
+       <form method="post">
+       {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+    
+    <button class="btn btn-primary btn-lg w-100" style="background-color: #007bff; color: white; border: none;">Update</button>
+        </form>
+
+    <a href="{{ path('app_whishliste_index') }}" class="btn btn-outline-primary btn-lg w-100 mt-3" style="border-color: #007bff; color: #007bff;" >back to list</a>
+    <div class="mt-3">
+    {{ include('whishliste/_delete_form.html.twig') }}
+    </div>
+</div>
+
+{% endblock %}

@@ -24,6 +24,7 @@ class Produit
 
     #[ORM\Column(length: 255)]
 
+
     //controle de saisir titre length
     #[Assert\Length(
         min: 3,
@@ -68,6 +69,7 @@ class Produit
 
    
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +87,7 @@ class Produit
         return $this;
     }
 
+
     public function getPrix(): ?int
     {
         return $this->prix;
@@ -97,6 +100,7 @@ class Produit
         return $this;
     }
 
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_At;
@@ -108,6 +112,7 @@ class Produit
 
         return $this;
     }
+
 
   
     public function getCategory(): ?Category
@@ -122,6 +127,7 @@ class Produit
 
         return $this;
     }
+
 
  
     
