@@ -23,13 +23,13 @@ class Avis
     )]
     private ?string $Commentaire = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank(message: "Vous pouvez ajouter une note.")]
-    #[Assert\Length(
-        min: 0,
-        max: 10
-    )]
-    private ?int $Note = null;
+    // #[ORM\Column]
+    // #[Assert\NotBlank(message: "Vous pouvez ajouter une note.")]
+    // #[Assert\Length(
+    //     min: 0,
+    //     max: 10
+    // )]
+    // private ?int $Note = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $Date_creation = null;
@@ -37,8 +37,8 @@ class Avis
     // #[ORM\Column(length: 255)]
     // private ?string $Etat = null;
 
-    #[ORM\Column]
-    private ?bool $Visibilite = null;
+    // #[ORM\Column]
+    // private ?bool $Visibilite = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Vous pouvez répondre au commentaire.")]
@@ -73,17 +73,17 @@ class Avis
         return $this;
     }
 
-    public function getNote(): ?int
-    {
-        return $this->Note;
-    }
+    // public function getNote(): ?int
+    // {
+    //     return $this->Note;
+    // }
 
-    public function setNote(int $Note): static
-    {
-        $this->Note = $Note;
+    // public function setNote(int $Note): static
+    // {
+    //     $this->Note = $Note;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getDateCreation(): ?\DateTimeInterface
     {
@@ -109,17 +109,17 @@ class Avis
     //     return $this;
     // }
 
-    public function isVisibilite(): ?bool
-    {
-        return $this->Visibilite;
-    }
+    // public function isVisibilite(): ?bool
+    // {
+    //     return $this->Visibilite;
+    // }
 
-    public function setVisibilite(bool $Visibilite): static
-    {
-        $this->Visibilite = $Visibilite;
+    // public function setVisibilite(bool $Visibilite): static
+    // {
+    //     $this->Visibilite = $Visibilite;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getReponse(): ?string
     {

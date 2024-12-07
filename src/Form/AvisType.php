@@ -15,14 +15,14 @@ class AvisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Commentaire')
-            ->add('Note')
+            ->add('commentaire')
+            // ->add('Note')
             // ->add('Date_creation', null, [
             //     'widget' => 'single_text',
             // ])
             //->add('Etat')
-            ->add('Visibilite')
-            ->add('Reponse')
+            // ->add('Visibilite')
+            ->add('reponse')
             ->add('user')
             ->add('produit')
         ;

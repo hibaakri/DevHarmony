@@ -49,13 +49,39 @@
         <h2>Ajouter une Demande</h2>
     </div>
     <div class="form-body">
-        {{ form_start(form, { 'attr': {'class': 'needs-validation'} }) }}
+        {{ form_start(form, { 'attr': {'class': 'container mt-5 needs-validation'} }) }}
 
-        <div class="form-group mb-3">
-            {{ form_widget(form, { 'attr': {'class': 'form-control'} }) }}
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h4 class="mb-0">Ajouter une Demande</h4>
+    </div>
+    <div class="card-body">
+        <!-- Type de Problème -->
+        <div class="mb-3">
+           <label for="Type_probleme" class="form-label">Type de Problème :</label>
+            {{ form_widget(form.Type_probleme, { 'attr': {'class': 'form-control'} }) }}
         </div>
-        <button type="submit" class="btn btn-custom" >Ajouter Demande</button>
-        {{ form_end(form) }}
+
+        <div class="mb-3">
+            <label for="Description_probleme" class="form-label">Description du Problème :</label>
+            {{ form_widget(form.Description_probleme, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Insérer votre image :</label>
+            {{ form_widget(form.image, { 'attr': {'class': 'form-control'} }) }}
+        </div>
+    </div>
+
+    <div class="card-footer text-center">
+        <button type="submit" class="btn btn-primary w-100 mt-3">
+            Ajouter Demande
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
     </div>
 </div>
 {% endblock %}
