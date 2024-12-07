@@ -3,11 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+ 
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
+
+
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: ProduitRepository::class)]
+
+ #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
     #[ORM\Id]
@@ -16,6 +24,8 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+ 
+
     //controle de saisir titre length
     #[Assert\Length(
         min: 2,
@@ -38,15 +48,25 @@ class Produit
     #[ORM\Column]
     #[Assert\NotBlank(message: "Le prix est obligatoire.")]
     #[Assert\Positive(message: "Le prix doit être un nombre positif.")]
-    private ?int $prix = null;
+
+     private ?int $prix = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created_At = null;
 
+ 
     #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotBlank(message: "La catégorie est obligatoire.")]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Produit')]
+    private ?Panier $Panier = null;
+
+   
+
+ 
+
+ 
 
     #[ORM\Column(length: 255)]
     // #[Assert\NotBlank(message: "L'image est obligatoire.")]
@@ -58,6 +78,7 @@ class Produit
 
    
 
+ 
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +96,7 @@ class Produit
         return $this;
     }
 
+ 
     public function getPrix(): ?int
     {
         return $this->prix;
@@ -87,6 +109,7 @@ class Produit
         return $this;
     }
 
+ 
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_At;
@@ -99,6 +122,7 @@ class Produit
         return $this;
     }
 
+ 
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -107,10 +131,12 @@ class Produit
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+ 
 
         return $this;
     }
 
+ 
     public function getDescription(): ?string
     {
         return $this->description;
@@ -119,11 +145,27 @@ class Produit
     public function setDescription(string $description): static
     {
         $this->description = $description;
+ 
 
         return $this;
     }
 
-    public function getImage(): ?string
+ 
+    public function getPanier(): ?Panier
+    {
+        return $this->Panier;
+    }
+
+    public function setPanier(?Panier $MPanier): static
+    {
+        $this->Panier = $Panier;
+
+        return $this;
+    }
+
+ 
+
+    public function getImage(): ?string 
     {
         return $this->image;
     }
@@ -135,7 +177,7 @@ class Produit
         return $this;
     }
 
-    public function getquantite(): ?int
+     public function getquantite(): ?int
     {
         return $this->quantite;
     }
@@ -145,5 +187,10 @@ class Produit
         $this->quantite = $quantite;
 
         return $this;
-    }
+     public function __toString()
+    {
+        return $this->titre ;
+     }
 }
+
+ 

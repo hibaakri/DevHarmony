@@ -8,6 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+ use Doctrine\Common\Collections\ArrayCollection; 
+use Doctrine\Common\Collections\Collection;
+
+
  
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -50,6 +54,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         )]
     private ?string $password = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Whishliste::class)]
+    private Collection $whishlistes;
+
+    public function __construct()
+    {
+        $this->whishlistes = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,7 +89,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+ 
+    public function __toString()
+    {
+        return $this->username;
+    }
 
+ 
 
     /**
      * A visual identifier that represents this user.
@@ -135,4 +153,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+ 
+
+
+    public function getWhishlistes(): Collection
+    {
+        return $this->whishlistes;
+    }
+
+    public function addWhishliste(Whishliste $whishliste): static
+    {
+        if (!$this->whishlistes->contains($whishliste)) {
+            $this->whishlistes[] = $whishliste;
+            $whishliste->setUser($this); // Associer l'utilisateur à la wishlist
+        }
+        return $this;
+    }
+
+    public function removeWhishliste(Whishliste $whishliste): static
+    {
+        if ($this->whishlistes->removeElement($whishliste)) {
+            // Si la wishlist est supprimée, dissocier l'utilisateur
+            if ($whishliste->getUser() === $this) {
+                $whishliste->setUser(null);
+            }
+        }
+        return $this;
+    }
 }
+ 
