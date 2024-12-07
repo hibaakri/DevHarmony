@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Produits{% endblock %}
+
+{% block body %}
+<style>
+    .card img {
+        object-fit: cover;
+        height: 200px;
+        width: auto;
+        display: block;
+        margin: 0 auto; /* Centre l'image */
+    }
+    .card-body {
+        text-align: center; /* Centre le texte */
+    }
+    .card-footer {
+        text-align: center;
+    }
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row gy-4">
+        {% for produit in produits %}
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <!-- Image Section -->
+                <div class="card-header p-0 text-center">
+                    <img src="{{ asset('/produits/' ~ produit.image) }}" alt="Image de {{ produit.titre }}">
+                </div>
+                
+                <!-- Card Body -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ produit.titre }}</h5>
+                     <p class="card-category">{{ produit.category }}</p> <!-- Affiche la catégorie ici -->
+                    <p class="card-text">
+                        <b>{{ produit.prix }} TND</b>
+                        <br>
+                        {{ produit.description }}
+                    </p>
+                    <p class="text-muted" style="font-size: 0.9rem;">Ajouté le : {{ produit.createdat | date('Y-m-d') }}</p>
+                </div>
+                
+                <!-- Card Footer -->
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-sm">
+                        <i class="fas fa-shopping-cart"></i> Acheter
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

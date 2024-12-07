@@ -23,16 +23,15 @@ class Category
         minMessage: 'tittre doit contenir au min{{ 3 }} caractère ',
         maxMessage: 'titre doit contenir au max{{ 150 }} caractère',
         )] 
-    #[Assert\NotBlank(message: "Le Titre est obligatoire.")]    
     #[Assert\NotNull()] 
+     #[Assert\NotBlank(message: "Le Titre est obligatoire.")] 
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Veuillez ajouter une description.")]
     #[Assert\Length(
         max: 255,
         maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
-    )]
+    )] #[Assert\NotBlank(message: "Veuillez ajouter une description.")]
     private ?string $description = null;
 
     /**

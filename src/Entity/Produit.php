@@ -18,7 +18,7 @@ class Produit
     #[ORM\Column(length: 255)]
     //controle de saisir titre length
     #[Assert\Length(
-        min: 3,
+        min: 2,
         max: 50,
         minMessage: 'tittre doit contenir au min{{ 3 }} caractère ',
         maxMessage: 'titre doit contenir au max{{ 150 }} caractère',
@@ -49,12 +49,12 @@ class Produit
     private ?Category $category = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\File(
-        maxSize: "2M",
-        mimeTypes: ["image/jpeg", "image/png"],
-        mimeTypesMessage: "Veuillez télécharger une image valide (JPEG ou PNG)."
-    )]
+    // #[Assert\NotBlank(message: "L'image est obligatoire.")]
     private ?string $image = null;
+
+    #[Assert\NotBlank(message: "La quantite est obligatoire.")]
+    #[ORM\Column(nullable: true)]
+    private ?int $quantite = null;
 
    
 
@@ -131,6 +131,18 @@ class Produit
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getquantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setquantite(?int $quantite): static
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }

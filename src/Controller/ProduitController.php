@@ -20,10 +20,19 @@ class ProduitController extends AbstractController
     {
           //recupération de toutes la table depuis la repository 
           $produits = $pr->findAll() ;
-        return $this->render('produit/index.html.twig', [
+          if($this->isGranted("ROLE_ADMIN"))
+          {
+            return $this->render('produit/index.html.twig', [
+                //envoie vers la Vue 
+                "produits"=> $produits
+            ]);
+
+          }
+          return $this->render('produit/indexClient.html.twig', [
             //envoie vers la Vue 
             "produits"=> $produits
         ]);
+       
     }
 
 
@@ -139,7 +148,7 @@ class ProduitController extends AbstractController
         return $this->render('produit/edit.html.twig', [
             //send a variable to a view 
 
-            "form" => $form
+            "form" => $form->createView()
         ]);
     }
 
