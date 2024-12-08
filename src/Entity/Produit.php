@@ -2,9 +2,20 @@
 
 namespace App\Entity;
 
+use App\Repository\ProduitRepository;
+ 
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+ #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
     #[ORM\Id]
@@ -13,16 +24,127 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+ 
+
+    //controle de saisir titre length
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: 'tittre doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'titre doit contenir au max{{ 150 }} caractère',
+        )] 
+    #[Assert\NotBlank(message: "Le Titre est obligatoire.")]    
+    #[Assert\NotNull()] 
     private ?string $titre = null;
-
-    #[ORM\Column(type: "float")]
-    private ?float $prix = null;
-
+    
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Veuillez ajouter une description.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $description = null;
 
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "Le prix est obligatoire.")]
+    #[Assert\Positive(message: "Le prix doit être un nombre positif.")]
+
+     private ?int $prix = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $created_At = null;
+
+ 
     #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Category $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Produit')]
     private ?Panier $Panier = null;
 
+    #[ORM\Column(length: 255)]
+    // #[Assert\NotBlank(message: "L'image est obligatoire.")]
+    private ?string $image = null;
+
+    #[Assert\NotBlank(message: "La quantite est obligatoire.")]
+    #[ORM\Column(nullable: true)]
+    private ?int $quantite = null;
+
+   
+
+ 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): static
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+ 
+    public function getPrix(): ?int
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(int $prix): static
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+ 
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_At;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_At): static
+    {
+        $this->created_At = $created_At;
+
+        return $this;
+    }
+
+ 
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+ 
+
+        return $this;
+    }
+
+ 
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+ 
+
+        return $this;
+    }
+
+ 
     public function getPanier(): ?Panier
     {
         return $this->Panier;
@@ -35,70 +157,32 @@ class Produit
         return $this;
     }
 
-    public function getId(): ?int
+ 
+
+    public function getImage(): ?string 
     {
-        return $this->id;
+        return $this->image;
     }
 
-    public function getTitre(): ?string
+    public function setImage(string $image): static
     {
-        return $this->titre;
-    }
-
-    public function setTitre(string $titre): self
-    {
-        $this->titre = $titre;
+        $this->image = $image;
 
         return $this;
     }
 
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): self
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $quantite;
-
-    public function getQuantite(): ?int
+     public function getquantite(): ?int
     {
         return $this->quantite;
     }
 
-    public function setQuantite(int $quantite): self
+    public function setquantite(?int $quantite): static
     {
         $this->quantite = $quantite;
-        return $this;
-    }
 
-    // public function getPanier(): ?Panier
-    // {
-    //     return $this->Panier;
-    // }
-
-    // public function setPanier(?Panier $Panier): static
-    // {
-    //     $this->Panier = $Panier;
-
-    //     return $this;
-    // }
+        return $this;}
+     public function __toString()
+    {
+        return $this->titre ;
+     }
 }

@@ -6,9 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
+
+ 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -16,14 +21,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
     #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column] ///////////////////////////
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'le Username doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'le Username doit contenir au max{{ 150 }} caractère',
+        )]
+    private ?String $username = null;
+
+    #[ORM\Column(length: 180)]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     #[ORM\Column]
+    #[Assert\Length(
+        min: 5,
+        max: 50,
+        minMessage: 'mot de passe doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'mot de passe doit contenir au max{{ 150 }} caractère',
+        )]
     private ?string $password = null;
 
 //      #[ORM\OneToOne(mappedBy:'user', cascade:['persist', 'remove'])]
@@ -52,6 +72,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // {
     //     $this->paniers = new ArrayCollection();
     // }
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Whishliste::class)]
+    private Collection $whishlistes;
+
+    public function __construct()
+    {
+        $this->whishlistes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +96,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+ 
+    public function __toString()
+    {
+        return $this->username;
+    }
+
+ 
 
     /**
      * A visual identifier that represents this user.
@@ -79,7 +124,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+
      * @return array<string> The roles of the user
+     * @see UserInterface
+     * @return list<string>
      */
     public function getRoles(): array
     {
@@ -126,6 +174,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
 
     // /**
     //  * @return Collection<int, Panier>
@@ -180,4 +229,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     // }
    
 
+ 
+
+
+    public function getWhishlistes(): Collection
+    {
+        return $this->whishlistes;
+    }
+
+    public function addWhishliste(Whishliste $whishliste): static
+    {
+        if (!$this->whishlistes->contains($whishliste)) {
+            $this->whishlistes[] = $whishliste;
+            $whishliste->setUser($this); // Associer l'utilisateur à la wishlist
+        }
+        return $this;
+    }
+
+    public function removeWhishliste(Whishliste $whishliste): static
+    {
+        if ($this->whishlistes->removeElement($whishliste)) {
+            // Si la wishlist est supprimée, dissocier l'utilisateur
+            if ($whishliste->getUser() === $this) {
+                $whishliste->setUser(null);
+            }
+        }
+        return $this;
+    }
 }
+ 

@@ -1,0 +1,42 @@
+{% extends 'Admin.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    
+
+    <table border="1">
+            <thead>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th colspan="2"> Actions  </th>
+            </thead>
+            <tbody> 
+            {% for category in categorys %}
+                <tr>
+                   
+        
+
+                    <td>{{category.id}}</td>
+                    <td>{{category.titre}}</td>
+                    <td>{{category.description}}</td>
+                    <td> <a href="/category/show/{{category.id}}">Consulter</a> </td>
+                    <td> <a href="/category/edit/{{category.id}}">Modifier</a> </td>
+            
+            
+            
+             
+                </tr>   {% endfor %}
+            </tbody>
+        </table>
+
+   <a href="/category/add" class="btn btn-primary">Ajouter category</a>
+</div>
+{% endblock %}

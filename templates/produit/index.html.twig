@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html.twig' %}
 
 {% block title %}Produits{% endblock %}
@@ -24,5 +25,60 @@
             <div class="alert alert-info text-center">Aucun produit disponible.</div>
         {% endfor %}
     </div>
+=======
+{% extends 'Admin.html.twig' %}
+
+{% block title %}Hello ProduitController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    
+
+
+    
+        <table border="1">
+            <thead>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Crée en </th>
+                <th>Category </th>
+                <th colspan="2"> Actions  </th>
+            </thead>
+            <tbody> 
+            {% for produit in produits %}
+                <tr>
+                   
+        
+
+                    <td>{{produit.id}}</td>
+                    <td>{{produit.titre}}</td>
+                    <td>{{produit.prix}}</td>
+                    <td>{{produit.createdat  |date() }}</td>
+
+                    {% if produit.category %}
+                    <td><a href="{{produit.category.id}}">{{produit.category.titre}}</a> </td>
+
+                    {% else %}
+                    <td>no category</td>
+
+                    {% endif %}
+                    <td> <a href="/produit/show/{{produit.id}}">Consulter</a> </td>
+                    <td> <a href="/produit/edit/{{produit.id}}">Modifier</a> </td>
+            
+            
+            
+             
+                </tr>   {% endfor %}
+            </tbody>
+        </table>
+
+   <a href="/produit/add" class="btn btn-primary">Ajouter Produit</a>
+>>>>>>> 9e6798c07f3c22eea71dd35271919621cfa40d44
 </div>
 {% endblock %}

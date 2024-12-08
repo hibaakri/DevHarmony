@@ -6,6 +6,9 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+ 
+use Symfony\Component\Validator\Constraints as Assert;
+ 
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
@@ -16,17 +19,34 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+ 
+    #[Assert\Length(
+        min: 3,
+        max: 50,
+        minMessage: 'tittre doit contenir au min{{ 3 }} caractère ',
+        maxMessage: 'titre doit contenir au max{{ 150 }} caractère',
+        )] 
+    #[Assert\NotBlank(message: "Le Titre est obligatoire.")]    
+    #[Assert\NotNull()] 
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    #[Assert\NotBlank(message: "Veuillez ajouter une description.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
+    )]
+     private ?string $description = null;
 
     /**
      * @var Collection<int, Produit>
      */
-    //#[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'category')]
-    //private Collection $produits;
+ 
+    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'category')]
+    #[ORM\JoinColumn(nullable:false)]
 
+    private Collection $produits;
+ 
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -92,4 +112,9 @@ class Category
         return $this;
     }
 
-}
+ 
+    public function __toString()
+    {
+        return $this->titre ;
+    }
+ }
