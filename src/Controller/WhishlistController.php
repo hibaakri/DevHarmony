@@ -22,16 +22,16 @@ class WhishlistController extends AbstractController
         ]);
     }
 
-    #[Route('/page', name: 'app_page')]
-    public function page(EntityManagerInterface $entityManager):Response
-    {
-    $wishlists = $entityManager->getRepository(Whishliste::class)->findAll();
+    // #[Route('/page', name: 'app_page')]
+    // public function page(EntityManagerInterface $entityManager):Response
+    // {
+    // $wishlists = $entityManager->getRepository(Whishliste::class)->findAll();
     
 
-    return $this->render('whishlist/page.html.twig', [
-        'whishlists' => $wishlists,
-    ]);
+    // return $this->render('whishlist/page.html.twig', [
+    //     'whishlists' => $wishlists,
+    // ]);
 
 
-}
+
 }
