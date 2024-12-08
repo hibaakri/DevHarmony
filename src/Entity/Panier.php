@@ -26,10 +26,47 @@ class Panier
      */
     #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'panier')]
     private Collection $Produit;
+    private ?Produit $produit = null;
+
+    /**
+     * @var Collection<int, Produit>
+     */
+    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'Panier')]
+    private Collection $produits;
+
+//     #[ORM\OneToOne(inversedBy:'panier', cascade:['persist', 'remove'])]
+//     #[ORM\JoinColumn(nullable:false)] 
+//     // #[ORM\OneToOne(targetEntity:'App\Entity\User')]
+  
+//    private ?User $user = null;
+
+//    // Getter et setter pour user
+//    public function getUser(): ?User
+//    {
+//        return $this->user;
+//    }
+
+//    public function setUser(?User $user): self
+//    {
+//        $this->user = $user;
+//        return $this;
+//    }
+    public function getProduit(): ?Produit
+    {
+    return $this->produit;
+    }
+
+    public function setProduit(?Produit $produit): self
+    {
+    $this->produit = $produit;
+
+    return $this;
+    }
 
     public function __construct()
     {
         $this->Produit = new ArrayCollection();
+        $this->produits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,13 +86,13 @@ class Panier
         return $this;
     }
 
-    public function getIdProduit(): ?int
-    {
-        return $this->id_produit;
-    }
+     public function getIdProduit(): ?int
+     {
+         return $this->id_produit;
+     }
 
-    public function setIdProduit(int $id_produit): static
-    {
+     public function setIdProduit(int $id_produit): static
+     {
         $this->id_produit = $id_produit;
 
         return $this;
@@ -64,10 +101,10 @@ class Panier
     /**
      * @return Collection<int, Produit>
      */
-    public function getProduit(): Collection
-    {
-        return $this->Produit;
-    }
+    // public function getProduit(): Collection
+    // {
+    //     return $this->Produit;
+    // }
 
     public function addProduit(Produit $produit): self
 {
@@ -86,5 +123,15 @@ public function removeProduit(Produit $produit): self
         }
     }
     return $this;
-}    
+}
+
+/**
+ * @return Collection<int, Produit>
+ */
+public function getProduits(): Collection
+{
+    return $this->produits;
+}
+
+
 }

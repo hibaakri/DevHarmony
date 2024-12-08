@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une commande{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Saisir l'adresse de livraison</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.adresseLivraison) }}
+        <button type="submit" class="btn btn-success">Valider la commande</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

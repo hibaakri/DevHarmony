@@ -2,11 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ProduitRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProduitRepository::class)]
+#[ORM\Entity]
 class Produit
 {
     #[ORM\Id]
@@ -16,24 +14,26 @@ class Produit
 
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
-    
-    #[ORM\Column(length: 255)]
+
+    #[ORM\Column(type: "float")]
+    private ?float $prix = null;
+
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?int $prix = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $created_At = null;
-
     #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Category $category = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Produit')]
     private ?Panier $Panier = null;
 
-   
+    public function getPanier(): ?Panier
+    {
+        return $this->Panier;
+    }
+
+    public function setPanier(?Panier $Panier): static
+    {
+        $this->Panier = $Panier;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -45,70 +45,60 @@ class Produit
         return $this->titre;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitre(string $titre): self
     {
         $this->titre = $titre;
 
         return $this;
     }
 
-    public function getPrix(): ?int
+    public function getPrix(): ?float
     {
         return $this->prix;
     }
 
-    public function setPrix(int $prix): static
+    public function setPrix(float $prix): self
     {
         $this->prix = $prix;
 
         return $this;
     }
-
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->created_At;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $created_At): static
-    {
-        $this->created_At = $created_At;
-
-        return $this;
-    }
-
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantite;
 
-    public function getPanier(): ?Panier
+    public function getQuantite(): ?int
     {
-        return $this->Panier;
+        return $this->quantite;
     }
 
-    public function setPanier(?Panier $MPanier): static
+    public function setQuantite(int $quantite): self
     {
-        $this->Panier = $Panier;
-
+        $this->quantite = $quantite;
         return $this;
     }
+
+    // public function getPanier(): ?Panier
+    // {
+    //     return $this->Panier;
+    // }
+
+    // public function setPanier(?Panier $Panier): static
+    // {
+    //     $this->Panier = $Panier;
+
+    //     return $this;
+    // }
 }

@@ -3,15 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -19,20 +17,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
     private ?string $password = null;
+
+//      #[ORM\OneToOne(mappedBy:'user', cascade:['persist', 'remove'])]
+
+//    private $panier;
+
+//    // Getter et setter pour panier
+//    public function getPanier(): ?Panier
+//    {
+//        return $this->panier;
+//    }
+
+//    public function setPanier(?Panier $panier): self
+//    {
+//        $this->panier = $panier;
+//        return $this;
+//    }
+
+
+
+
+    // #[ORM\OneToMany(mappedBy: 'user', targetEntity: Panier::class, cascade: ['persist', 'remove'])]
+    // private Collection $paniers;
+
+    // public function __construct()
+    // {
+    //     $this->paniers = new ArrayCollection();
+    // }
 
     public function getId(): ?int
     {
@@ -44,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -53,8 +72,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * A visual identifier that represents this user.
-     *
-     * @see UserInterface
      */
     public function getUserIdentifier(): string
     {
@@ -62,38 +79,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
-     *
-     * @return list<string>
+     * @return array<string> The roles of the user
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // Guarantee every user has at least ROLE_USER
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
 
         return array_unique($roles);
     }
 
-    /**
-     * @param list<string> $roles
-     */
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): self
     {
-        $this->roles = $roles;
+    foreach ($roles as $role) {
+        if (!is_string($role)) {
+            throw new \InvalidArgumentException('Chaque rôle doit être une chaîne.');
+        }
+     }
 
-        return $this;
+     $this->roles = $roles;
+
+     return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
+
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
@@ -101,11 +119,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
+     * Returning a salt is not needed if you're using a modern algorithm like bcrypt or sodium.
      */
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    // /**
+    //  * @return Collection<int, Panier>
+    //  */
+    // public function getPaniers(): Collection
+    // {
+    //     return $this->paniers;
+    // }
+
+    // public function addPanier(Panier $panier): self
+    // {
+    //     if (!$this->paniers->contains($panier)) {
+    //         $this->paniers[] = $panier;
+    //         $panier->setUser($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removePanier(Panier $panier): self
+    // {
+    //     if ($this->paniers->removeElement($panier)) {
+    //         // Unset the owning side of the relationship
+    //         if ($panier->getUser() === $this) {
+    //             $panier->setUser(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function getPanier(): ?Panier
+    // {
+    //     return $this->panier;
+    // }
+
+    // public function setPanier(?Panier $panier): static
+    // {
+    //     // unset the owning side of the relation if necessary
+    //     if ($panier === null && $this->panier !== null) {
+    //         $this->panier->setUser(null);
+    //     }
+
+        // set the owning side of the relation if necessary
+    //     if ($panier !== null && $panier->getUser() !== $this) {
+    //         $panier->setUser($this);
+    //     }
+
+    //     $this->panier = $panier;
+
+    //     return $this;
+    // }
+   
+
 }

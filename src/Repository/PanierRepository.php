@@ -40,4 +40,41 @@ class PanierRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+
+
+    /**
+     * Calculer le total du panier avec une remise si applicable.
+     */
+    // public function calculerTotal(Panier $panier): float
+    // {
+    //     $total = 0;
+    //     foreach ($panier->getProduits() as $produit) {
+    //         $total += $produit->getPrix() * $produit->getQuantite();
+    //     }
+
+    //     // Appliquer une remise si le total dépasse un certain seuil
+    //     if ($total > 150) {
+    //         $total *= 0.9; // Remise de 10%
+    //     }
+
+    //     return $total;
+    // }
+
+    // /**
+    //  * Calculer le total du panier avec les frais de livraison.
+    //  */
+    // public function calculerTotalAvecLivraison(Panier $panier): float
+    // {
+    //     $total = $this->calculerTotal($panier);
+
+    //     // Calculer les frais de livraison
+    //     $fraisLivraison = 7; // Frais fixes
+    //     if ($total > 100) {
+    //         $fraisLivraison = 0; // Gratuit si le total dépasse 100
+    //     }
+
+    //     return $total + $fraisLivraison;
+    // }
 }
