@@ -1,87 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AvisController!{% endblock %}
+{% block title %}Ajouter une Demande{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper {
-        margin: 2em auto;
-        max-width: 700px;
-        font-family: 'Arial', sans-serif;
-        background: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-    .form-header {
-        background-color: #007bff; /* Couleur bleue */
-        color: white;
-        padding: 20px;
-        text-align: center;
-    }
-    .form-header h2 {
-        margin: 0;
-        font-size: 24px;
-    }
-    .form-body {
-        padding: 20px;
-    }
-    .form-footer {
-        background-color: #f8f9fa;
-        padding: 15px;
-        text-align: right;
-    }
-    .btn-custom {
-        background-color: #007bff; /* Couleur bleue */
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .btn-custom:hover {
-        background-color: #0056b3; /* Couleur bleue plus foncée au survol */
-    }
-</style>
-
-<div class="example-wrapper">
-    <div class="form-header">
-        <h2>Ajouter une Demande</h2>
-    </div>
-    <div class="form-body">
-        {{ form_start(form, { 'attr': {'class': 'container mt-5 needs-validation'} }) }}
-
-<div class="card shadow-sm">
-    <div class="card-header">
-        <h4 class="mb-0">Ajouter une Demande</h4>
-    </div>
-    <div class="card-body">
-        <!-- Type de Problème -->
-        <div class="mb-3">
-           <label for="Type_probleme" class="form-label">Type de Problème :</label>
-            {{ form_widget(form.Type_probleme, { 'attr': {'class': 'form-control'} }) }}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2>Ajouter une Demande</h2>
         </div>
+        <div class="card-body">
+            {{ form_start(form, { 'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'} }) }}
 
-        <div class="mb-3">
-            <label for="Description_probleme" class="form-label">Description du Problème :</label>
-            {{ form_widget(form.Description_probleme, { 'attr': {'class': 'form-control'} }) }}
+            <!-- Type_probleme Field -->
+            <div class="form-group mb-3">
+                {{ form_label(form.Type_probleme, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.Type_probleme, {'attr': {'class': 'form-control'}}) }}
+                <div class="invalid-feedback">
+                    Veuillez sélectionner un type de problème.
+                </div>
+            </div>
+
+            <!-- Description_probleme Field -->
+            <div class="form-group mb-3">
+                {{ form_label(form.Description_probleme, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.Description_probleme, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+                <div class="invalid-feedback">
+                    Veuillez décrire le problème.
+                </div>
+            </div>
+
+            <!-- Image Field -->
+            <div class="form-group mb-3">
+                {{ form_label(form.image, 'Insérer votre image', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+                <div class="invalid-feedback">
+                    Veuillez sélectionner une image à télécharger.
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Ajouter Demande</button>
+
+            {{ form_end(form) }}
         </div>
-
-        <div class="mb-3">
-            <label for="image" class="form-label">Insérer votre image :</label>
-            {{ form_widget(form.image, { 'attr': {'class': 'form-control'} }) }}
-        </div>
-    </div>
-
-    <div class="card-footer text-center">
-        <button type="submit" class="btn btn-primary w-100 mt-3">
-            Ajouter Demande
-        </button>
     </div>
 </div>
 
-{{ form_end(form) }}
-
-    </div>
-</div>
 {% endblock %}

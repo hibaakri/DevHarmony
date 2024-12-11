@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AvisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,14 +24,7 @@ class Avis
         maxMessage: "Le commentaire ne peut pas dépasser {{ limit }} caractères."
     )]
     private ?string $Commentaire = null;
-
-    // #[ORM\Column]
-    // #[Assert\NotBlank(message: "Vous pouvez ajouter une note.")]
-    // #[Assert\Length(
-    //     min: 0,
-    //     max: 10
-    // )]
-    // private ?int $Note = null;
+ 
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $Date_creation = null;
@@ -37,12 +32,11 @@ class Avis
     // #[ORM\Column(length: 255)]
     // private ?string $Etat = null;
 
-    // #[ORM\Column]
-    // private ?bool $Visibilite = null;
+    #[ORM\JoinColumn(nullable: true)]
+    private ?bool $Visibilite = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Vous pouvez répondre au commentaire.")]
-    #[Assert\Length(
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+     #[Assert\Length(
         max: 255,
         maxMessage: "Le commentaire ne peut pas dépasser {{ limit }} caractères."
     )]
@@ -50,11 +44,27 @@ class Avis
 
     #[ORM\ManyToOne(inversedBy: 'avis')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Assert\NotNull(message: "Champ obligatoire!")]
-    private ?User $user = null;
+     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'avis')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'avis')]
+    private ?self $parent = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent' ,cascade: ['remove'])]
+    private Collection $replies;
+
+    public function __construct()
+    {
+        $this->replies = new ArrayCollection();
+    }
+
+   
 
     public function getId(): ?int
     {
@@ -73,17 +83,7 @@ class Avis
         return $this;
     }
 
-    // public function getNote(): ?int
-    // {
-    //     return $this->Note;
-    // }
-
-    // public function setNote(int $Note): static
-    // {
-    //     $this->Note = $Note;
-
-    //     return $this;
-    // }
+    
 
     public function getDateCreation(): ?\DateTimeInterface
     {
@@ -109,17 +109,17 @@ class Avis
     //     return $this;
     // }
 
-    // public function isVisibilite(): ?bool
-    // {
-    //     return $this->Visibilite;
-    // }
+    public function isVisibilite(): ?bool
+    {
+        return $this->Visibilite;
+    }
 
-    // public function setVisibilite(bool $Visibilite): static
-    // {
-    //     $this->Visibilite = $Visibilite;
+    public function setVisibilite(bool $Visibilite): static
+    {
+        $this->Visibilite = $Visibilite;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     public function getReponse(): ?string
     {
@@ -156,6 +156,49 @@ class Avis
 
         return $this;
     }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): static
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->replies;
+    }
+
+    public function addAvi(self $avi): static
+    {
+        if (!$this->replies->contains($avi)) {
+            $this->replies->add($avi);
+            $avi->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(self $avi): static
+    {
+        if ($this->replies->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getParent() === $this) {
+                $avi->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+ 
 
 
 

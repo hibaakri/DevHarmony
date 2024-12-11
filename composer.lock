@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e21ceb0ec486ae6f548b5a8e2f8730b",
+    "content-hash": "c96768f8ff5cafda9e962b776dc51893",
     "packages": [
+        {
+            "name": "bacon/bacon-qr-code",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Bacon/BaconQrCode.git",
+                "reference": "f9cc1f52b5a463062251d666761178dbdb6b544f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/f9cc1f52b5a463062251d666761178dbdb6b544f",
+                "reference": "f9cc1f52b5a463062251d666761178dbdb6b544f",
+                "shasum": ""
+            },
+            "require": {
+                "dasprid/enum": "^1.0.3",
+                "ext-iconv": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phly/keep-a-changelog": "^2.12",
+                "phpunit/phpunit": "^10.5.11 || 11.0.4",
+                "spatie/phpunit-snapshot-assertions": "^5.1.5",
+                "squizlabs/php_codesniffer": "^3.9"
+            },
+            "suggest": {
+                "ext-imagick": "to generate QR code images"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BaconQrCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Scholzen 'DASPRiD'",
+                    "email": "mail@dasprids.de",
+                    "homepage": "https://dasprids.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BaconQrCode is a QR code generator for PHP.",
+            "homepage": "https://github.com/Bacon/BaconQrCode",
+            "support": {
+                "issues": "https://github.com/Bacon/BaconQrCode/issues",
+                "source": "https://github.com/Bacon/BaconQrCode/tree/v3.0.1"
+            },
+            "time": "2024-10-01T13:55:55+00:00"
+        },
         {
             "name": "composer/semver",
             "version": "3.4.3",
@@ -86,6 +140,56 @@
                 }
             ],
             "time": "2024-09-19T14:15:21+00:00"
+        },
+        {
+            "name": "dasprid/enum",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DASPRiD/Enum.git",
+                "reference": "8dfd07c6d2cf31c8da90c53b83c026c7696dda90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/8dfd07c6d2cf31c8da90c53b83c026c7696dda90",
+                "reference": "8dfd07c6d2cf31c8da90c53b83c026c7696dda90",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1 <9.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7 || ^8 || ^9 || ^10 || ^11",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DASPRiD\\Enum\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Scholzen 'DASPRiD'",
+                    "email": "mail@dasprids.de",
+                    "homepage": "https://dasprids.de/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP 7.1 enum implementation",
+            "keywords": [
+                "enum",
+                "map"
+            ],
+            "support": {
+                "issues": "https://github.com/DASPRiD/Enum/issues",
+                "source": "https://github.com/DASPRiD/Enum/tree/1.0.6"
+            },
+            "time": "2024-08-09T14:30:48+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1381,6 +1485,239 @@
             "time": "2023-10-06T06:47:41+00:00"
         },
         {
+            "name": "endroid/qr-code",
+            "version": "5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/endroid/qr-code.git",
+                "reference": "393fec6c4cbdc1bd65570ac9d245704428010122"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/393fec6c4cbdc1bd65570ac9d245704428010122",
+                "reference": "393fec6c4cbdc1bd65570ac9d245704428010122",
+                "shasum": ""
+            },
+            "require": {
+                "bacon/bacon-qr-code": "^3.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "endroid/quality": "dev-main",
+                "ext-gd": "*",
+                "khanamiryan/qrcode-detector-decoder": "^2.0.2",
+                "setasign/fpdf": "^1.8.2"
+            },
+            "suggest": {
+                "ext-gd": "Enables you to write PNG images",
+                "khanamiryan/qrcode-detector-decoder": "Enables you to use the image validator",
+                "roave/security-advisories": "Makes sure package versions with known security issues are not installed",
+                "setasign/fpdf": "Enables you to use the PDF writer"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Endroid\\QrCode\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeroen van den Enden",
+                    "email": "info@endroid.nl"
+                }
+            ],
+            "description": "Endroid QR Code",
+            "homepage": "https://github.com/endroid/qr-code",
+            "keywords": [
+                "code",
+                "endroid",
+                "php",
+                "qr",
+                "qrcode"
+            ],
+            "support": {
+                "issues": "https://github.com/endroid/qr-code/issues",
+                "source": "https://github.com/endroid/qr-code/tree/5.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/endroid",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-09-08T08:52:55+00:00"
+        },
+        {
+            "name": "knplabs/knp-components",
+            "version": "v5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/knp-components.git",
+                "reference": "a1ccc001fd243670ca1e970356027a53d6fca2af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/knp-components/zipball/a1ccc001fd243670ca1e970356027a53d6fca2af",
+                "reference": "a1ccc001fd243670ca1e970356027a53d6fca2af",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1",
+                "symfony/event-dispatcher-contracts": "^3.0"
+            },
+            "conflict": {
+                "doctrine/dbal": "<3.8"
+            },
+            "require-dev": {
+                "doctrine/dbal": "^3.8 || ^4.0",
+                "doctrine/mongodb-odm": "^2.5.5",
+                "doctrine/orm": "^2.13 || ^3.0",
+                "doctrine/phpcr-odm": "^1.8 || ^2.0",
+                "ext-pdo_sqlite": "*",
+                "jackalope/jackalope-doctrine-dbal": "^1.12 || ^2.0",
+                "phpunit/phpunit": "^10.5 || ^11.3",
+                "propel/propel1": "^1.7",
+                "ruflin/elastica": "^7.0",
+                "solarium/solarium": "^6.0",
+                "symfony/http-foundation": "^5.4.38 || ^6.4.4 || ^7.0",
+                "symfony/http-kernel": "^5.4.38 || ^6.4.4 || ^7.0",
+                "symfony/property-access": "^5.4.38 || ^6.4.4 || ^7.0"
+            },
+            "suggest": {
+                "doctrine/common": "to allow usage pagination with Doctrine ArrayCollection",
+                "doctrine/mongodb-odm": "to allow usage pagination with Doctrine ODM MongoDB",
+                "doctrine/orm": "to allow usage pagination with Doctrine ORM",
+                "doctrine/phpcr-odm": "to allow usage pagination with Doctrine ODM PHPCR",
+                "propel/propel1": "to allow usage pagination with Propel ORM",
+                "ruflin/elastica": "to allow usage pagination with ElasticSearch Client",
+                "solarium/solarium": "to allow usage pagination with Solarium Client",
+                "symfony/http-foundation": "to retrieve arguments from Request",
+                "symfony/property-access": "to allow sorting arrays"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Component\\": "src/Knp/Component"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "https://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/KnpLabs/knp-components/contributors"
+                }
+            ],
+            "description": "Knplabs component library",
+            "homepage": "https://github.com/KnpLabs/knp-components",
+            "keywords": [
+                "components",
+                "knp",
+                "knplabs",
+                "pager",
+                "paginator"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/knp-components/issues",
+                "source": "https://github.com/KnpLabs/knp-components/tree/v5.1.0"
+            },
+            "time": "2024-09-20T12:03:01+00:00"
+        },
+        {
+            "name": "knplabs/knp-paginator-bundle",
+            "version": "v6.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpPaginatorBundle.git",
+                "reference": "1a00f88149d25418bd99d8954eba951f04cc3acf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpPaginatorBundle/zipball/1a00f88149d25418bd99d8954eba951f04cc3acf",
+                "reference": "1a00f88149d25418bd99d8954eba951f04cc3acf",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-components": "^4.4 || ^5.0",
+                "php": "^8.1",
+                "symfony/config": "^6.4 || ^7.0",
+                "symfony/dependency-injection": "^6.4 || ^7.0",
+                "symfony/event-dispatcher": "^6.4 || ^7.0",
+                "symfony/http-foundation": "^6.4 || ^7.0",
+                "symfony/http-kernel": "^6.4 || ^7.0",
+                "symfony/routing": "^6.4 || ^7.0",
+                "symfony/translation": "^6.4 || ^7.0",
+                "twig/twig": "^3.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.11",
+                "phpunit/phpunit": "^10.5 || ^11.3",
+                "symfony/expression-language": "^6.4 || ^7.0",
+                "symfony/templating": "^6.4 || ^7.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Bundle\\PaginatorBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "https://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/KnpLabs/KnpPaginatorBundle/contributors"
+                }
+            ],
+            "description": "Paginator bundle for Symfony to automate pagination and simplify sorting and other features",
+            "homepage": "https://github.com/KnpLabs/KnpPaginatorBundle",
+            "keywords": [
+                "bundle",
+                "knp",
+                "knplabs",
+                "pager",
+                "pagination",
+                "paginator",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/KnpLabs/KnpPaginatorBundle/issues",
+                "source": "https://github.com/KnpLabs/KnpPaginatorBundle/tree/v6.6.1"
+            },
+            "time": "2024-10-07T16:11:50+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "3.8.0",
             "source": {
@@ -2082,7 +2419,6 @@
         },
         {
             "name": "symfony/asset-mapper",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -2093,7 +2429,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/asset-mapper/zipball/21fe29b637ddaada739d3d6cd55694a7b95d2343",
                 "reference": "21fe29b637ddaada739d3d6cd55694a7b95d2343",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "composer/semver": "^3.0",
@@ -2142,9 +2478,7 @@
             "description": "Maps directories of assets & makes them available in a public directory with versioned filenames.",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/asset-mapper/tree/v6.4.15"
- 
             },
             "funding": [
                 {
@@ -2160,9 +2494,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-09T07:17:14+00:00"
-         },
+        },
         {
             "name": "symfony/cache",
             "version": "v6.4.16",
@@ -2580,7 +2913,6 @@
         },
         {
             "name": "symfony/dependency-injection",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -2591,7 +2923,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/70ab1f65a4516ef741e519ea938e6aa465e6aa36",
                 "reference": "70ab1f65a4516ef741e519ea938e6aa465e6aa36",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -2642,9 +2974,8 @@
             "description": "Allows you to standardize and centralize the way objects are constructed in your application",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/dependency-injection/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -2659,9 +2990,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-09T06:56:25+00:00"
-         },
+        },
         {
             "name": "symfony/deprecation-contracts",
             "version": "v3.5.1",
@@ -3724,7 +4054,6 @@
         },
         {
             "name": "symfony/http-client",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -3735,7 +4064,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-client/zipball/cb4073c905cd12b8496d24ac428a9228c1750670",
                 "reference": "cb4073c905cd12b8496d24ac428a9228c1750670",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -3798,9 +4127,8 @@
                 "http"
             ],
             "support": {
- 
                 "source": "https://github.com/symfony/http-client/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3815,9 +4143,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-13T13:40:18+00:00"
-         },
+        },
         {
             "name": "symfony/http-client-contracts",
             "version": "v3.5.1",
@@ -3898,7 +4225,6 @@
         },
         {
             "name": "symfony/http-foundation",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -3909,7 +4235,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-foundation/zipball/9b3165eb2f04aeaa1a5a2cfef73e63fe3b22dff6",
                 "reference": "9b3165eb2f04aeaa1a5a2cfef73e63fe3b22dff6",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -3956,9 +4282,8 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/http-foundation/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3973,7 +4298,6 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-08T16:09:24+00:00"
         },
         {
@@ -3988,7 +4312,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-kernel/zipball/b002a5b3947653c5aee3adac2a024ea615fd3ff5",
                 "reference": "b002a5b3947653c5aee3adac2a024ea615fd3ff5",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -4072,9 +4396,8 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/http-kernel/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4089,9 +4412,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-13T13:57:37+00:00"
-         },
+        },
         {
             "name": "symfony/intl",
             "version": "v6.4.15",
@@ -4257,7 +4579,6 @@
         },
         {
             "name": "symfony/messenger",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -4268,7 +4589,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/messenger/zipball/f9d4bae8301dced6f12e110a7956d2fd441573f1",
                 "reference": "f9d4bae8301dced6f12e110a7956d2fd441573f1",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -4325,9 +4646,8 @@
             "description": "Helps applications send and receive messages to/from other applications or via message queues",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/messenger/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4342,9 +4662,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-09T07:05:35+00:00"
-         },
+        },
         {
             "name": "symfony/mime",
             "version": "v6.4.13",
@@ -5429,7 +5748,6 @@
         },
         {
             "name": "symfony/property-info",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -5440,7 +5758,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/property-info/zipball/9d7b576bb643c72bf3b60eb8e89c98725d00afd0",
                 "reference": "9d7b576bb643c72bf3b60eb8e89c98725d00afd0",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -5494,9 +5812,8 @@
                 "validator"
             ],
             "support": {
- 
                 "source": "https://github.com/symfony/property-info/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -5511,8 +5828,7 @@
                     "type": "tidelift"
                 }
             ],
-             "time": "2024-11-27T10:18:02+00:00"
- 
+            "time": "2024-11-27T10:18:02+00:00"
         },
         {
             "name": "symfony/routing",
@@ -6894,7 +7210,6 @@
         },
         {
             "name": "symfony/validator",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -6905,7 +7220,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/validator/zipball/7541055cdaf54ff95f0735bf703d313374e8b20b",
                 "reference": "7541055cdaf54ff95f0735bf703d313374e8b20b",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -6972,9 +7287,8 @@
             "description": "Provides tools to validate values",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/validator/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -6989,9 +7303,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-08T15:28:48+00:00"
-         },
+        },
         {
             "name": "symfony/var-dumper",
             "version": "v6.4.15",
@@ -9793,7 +10106,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -9801,6 +10114,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }

@@ -16,6 +16,24 @@ class ServiceApresVenteRepository extends ServiceEntityRepository
         parent::__construct($registry, ServiceApresVente::class);
     }
 
+
+
+    public function all (): array
+    {
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.id', 'DESC')
+          
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+
+
+
+
+
     //    /**
     //     * @return ServiceApresVente[] Returns an array of ServiceApresVente objects
     //     */
