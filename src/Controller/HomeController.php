@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
     #[Route('', name: 'app_home')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
         if ($this->isGranted("ROLE_ADMIN")) {
             return $this->render('Admin.html.twig', [
@@ -17,9 +18,11 @@ class HomeController extends AbstractController
             ]);     
            }
        
+
+           $recherche = $request->get('recherche');
             
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => $recherche ,
         ]);
     }
 }

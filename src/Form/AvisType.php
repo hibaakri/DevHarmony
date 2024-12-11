@@ -16,15 +16,15 @@ class AvisType extends AbstractType
     {
         $builder
             ->add('Commentaire')
-            ->add('Note')
+           // ->add('Note')
             // ->add('Date_creation', null, [
             //     'widget' => 'single_text',
             // ])
             //->add('Etat')
-            ->add('Visibilite')
-            ->add('Reponse')
-            ->add('user')
-            ->add('produit')
+            //->add('Visibilite')
+           // ->add('Reponse')
+        //    ->add('user')
+           // ->add('produit')
         ;
     }
 
