@@ -40,6 +40,12 @@
                     <a href="/service/apres/vente/edit/{{ service_apres_vente.id }}" class="btn btn-warning btn-sm">Modifier</a>
                 </td>
             </tr>
+            {% else %}
+           <tr>
+            <td>
+                Aucun service aprés vente
+            </td>
+           </tr>
             {% endfor %}
         </tbody>
     </table>

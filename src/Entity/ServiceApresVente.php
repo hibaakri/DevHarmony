@@ -62,6 +62,9 @@ class ServiceApresVente
     #[ORM\Column(nullable: true)]
     private ?bool $Etat_demande = null;
 
+    #[ORM\ManyToOne(inversedBy: 'serviceApresVentes')]
+    private ?User $createdby = null;
+
     public function __construct()
     {
          $this->user = new ArrayCollection();
@@ -164,6 +167,18 @@ class ServiceApresVente
     public function setEtatDemande(?bool $Etat_demande): static
     {
         $this->Etat_demande = $Etat_demande;
+
+        return $this;
+    }
+
+    public function getCreatedby(): ?User
+    {
+        return $this->createdby;
+    }
+
+    public function setCreatedby(?User $createdby): static
+    {
+        $this->createdby = $createdby;
 
         return $this;
     }

@@ -247,20 +247,7 @@ class ProduitController extends AbstractController
             return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId()]);
         }
 
-        //qr code
-        $localIp = gethostbyname(gethostname());
-
-        $result = Builder::create()
-       ->writer(new \Endroid\QrCode\Writer\PngWriter())
-       ->data('http://'.$localIp .':8000/produit/show/' . $produit->getId() )
-        ->encoding(new Encoding('UTF-8'))
-        ->errorCorrectionLevel(ErrorCorrectionLevel::High)
-        ->size(300)
-        ->margin(10)
-        ->build();
-
-    // Generate a Data URI to include image data inline
-         $dataUri = $result->getDataUri();
+ 
 
 
 
@@ -269,7 +256,7 @@ class ProduitController extends AbstractController
         return $this->render('produit/showClient.html.twig', [
             "produit" => $produit,
             "form" => $form->createView() ,
-             'qrcode'=>$ $dataUri
+       
         ]);
     }
 
@@ -281,11 +268,8 @@ class ProduitController extends AbstractController
     {
         // Récuperation de entité a partir de LURL (ID)
         $produit = $pr->find($id);
-
         $em->remove($produit);
         $em->flush();
-
-
         //entitymanager interface 
         //perist + flush
         //remove + flush

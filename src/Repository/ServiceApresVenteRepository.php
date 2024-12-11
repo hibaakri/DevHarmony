@@ -17,8 +17,17 @@ class ServiceApresVenteRepository extends ServiceEntityRepository
     }
 
 
+    public function all(int $id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.createdby = :id') // Assuming the relationship is correctly mapped
+            ->setParameter('id', $id)
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 
-    public function all (): array
+    public function alladmin (): array
     {
         return $this->createQueryBuilder('p')
         ->orderBy('p.id', 'DESC')
@@ -26,6 +35,7 @@ class ServiceApresVenteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
 
 

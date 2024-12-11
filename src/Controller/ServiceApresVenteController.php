@@ -24,12 +24,16 @@ class ServiceApresVenteController extends AbstractController
     #[Route('/service/apres/vente', name: 'app_service_apres_vente')]
     public function index(ServiceApresVenteRepository $sav ,Request $request , PaginatorInterface $paginator): Response
     {
-        //recuperation de toute la table de la repository 
-        $service_apres_vente = $sav->all();
-        if ($this->isGranted("ROLE_ADMIN")) {
 
-            $savs = $paginator->paginate(
-                $service_apres_vente,
+       if ($this->getUser()) {
+        # code...
+       
+        //recuperation de toute la table de la repository 
+         if ($this->isGranted("ROLE_ADMIN")) {
+            $ss = $sav->alladmin();
+
+            $service_apres_vente = $paginator->paginate(
+                $ss,
                 $request->query->getInt('page', 1), // Current page number, default to 1
                 3 // Number of items per page
             );
@@ -39,6 +43,8 @@ class ServiceApresVenteController extends AbstractController
                 'service_apres_vente' => $service_apres_vente,
             ]);
         }
+        $service_apres_vente = $sav->all($this->getUser()->getId());
+
         $savs = $paginator->paginate(
             $service_apres_vente,
             $request->query->getInt('page', 1), // Current page number, default to 1
@@ -48,6 +54,10 @@ class ServiceApresVenteController extends AbstractController
             //envoi vers le vue
             'service_apres_vente' => $savs,
         ]);
+
+    } else {
+        return $this->redirectToRoute('app_login');
+    }
     }
 
 
@@ -82,7 +92,8 @@ class ServiceApresVenteController extends AbstractController
    
                $service_apres_vente->setImage($newFilename);
            } 
-            
+        
+           $service_apres_vente->setCreatedby($this->getUser());
             
             
             $service_apres_vente->setEtatDemande(null);

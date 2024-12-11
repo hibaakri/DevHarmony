@@ -72,7 +72,8 @@
 										<input type="text" id="search-input" autocomplete="off" name="search" placeholder="Rechercher un produit ... "/>
                                          <button type="submit">
 											<i class="icon-magnifier"></i>
-										</button>                                    <div class="mt-5" id="suggestions-list"></div>
+										</button>                            
+										        <div class="mt-5" id="suggestions-list"></div>
 
 									</form>
 
@@ -188,12 +189,13 @@ suggestionsList.style.display = 'none';
 								<div style="margin-left: 50px">
 									<div class="phone">
 										{% if app.user %}
-											{#<a class="btn btn-danger " href="/logout">LOGOUT</a>#}
+
+											 
 											<a class="btn btn-danger" href="{{ path('app_logout') }}">LOGOUT</a>
 
 										{% else %}
-											{#<a class="btn btn-success " href="/Register">Register</a>#}
-											{#<a class="btn btn-success " href="/login">LOGIN</a>#}<a class="btn btn-success" href="{{ path('app_register') }}"> Register</a>
+
+		 								<a class="btn btn-success" href="{{ path('app_register') }}"> Register</a>
 											<a class="btn btn-success" href="{{ path('app_login') }}">LOGIN</a>
 
 										{% endif %}
@@ -280,8 +282,15 @@ console.error('Erreur lors de la récupération des catégories :', error);
 								<li class="text-end">
 									<a href="contact.html">A propos</a>
 								</li>
+								<div class="text-end ">
+									{% if app.user %}
+										
+										<h3><b class="" style="color: black;" ><i>{{app.user.email}}</i></b></h3>
+		
+									{% endif %}
+								</div>
 							</ul>
-
+							
 						</div>
 						<!-- header horizontal menu -->
 
