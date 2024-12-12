@@ -124,18 +124,10 @@ class AvisController extends AbstractController
 
 
 
-
-
-
-
-
-
     #[Route('/avis/reply/{id}', name: 'add_reply')]
     public function reply(Request $request, Avis $parent, EntityManagerInterface $em): Response
-    {   //new instance
+    {  
         $avis = new Avis;
-        //formulaire
-        
 
         if (!$this->getUser()) {
             $this->addFlash(
@@ -143,7 +135,7 @@ class AvisController extends AbstractController
                 'Vous devez être connecté pour soumettre un commentaire.'
             );
 
-            return $this->redirectToRoute('app_login'); // Redirect to the login page
+            return $this->redirectToRoute('app_login'); 
         }
         $avis->setCommentaire($request->get("description"));
         $avis->setParent($parent);

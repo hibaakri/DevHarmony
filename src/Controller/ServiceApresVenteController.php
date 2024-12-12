@@ -149,10 +149,6 @@ class ServiceApresVenteController extends AbstractController
     #[Route('/service/apres/vente/show/{id}', name: 'app_service_apres_vente_show')]
     public function show( int $id,ServiceApresVenteRepository $sav ,Request $request, EntityManagerInterface $em): Response
     {   //recuperation de l'entite a partir de l id
-
-
-
-
         $service_apres_vente= $sav->find($id);
         if ($this->isGranted("ROLE_ADMIN")) {
             return $this->render('service_apres_vente/show_admin.html.twig', [

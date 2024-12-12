@@ -215,9 +215,6 @@ class ProduitController extends AbstractController
         }
 
 
-
-
-
         // comment section 
         $avis = new Avis;
         $form = $this->createForm(AvisType::class, $avis);
