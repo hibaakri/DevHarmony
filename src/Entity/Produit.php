@@ -62,11 +62,18 @@ class Produit
     #[ORM\ManyToOne(inversedBy: 'Produit')]
     private ?Panier $Panier = null;
 
-   
 
- 
+    // /**
+    //  * @var Collection<int, Whishliste>
+    //  */
+    // #[ORM\ManyToMany(targetEntity: Whishliste::class, mappedBy: 'Items')]
+    // private Collection $Items;
 
- 
+    // public function __construct()
+    // {
+    //     $this->Items = new ArrayCollection();
+    // }
+
 
     #[ORM\Column(length: 255)]
     // #[Assert\NotBlank(message: "L'image est obligatoire.")]
@@ -162,6 +169,29 @@ class Produit
 
         return $this;
     }
+
+    // public function getItems(): Collection
+    // {
+    //     return $this->Items;
+    // }
+
+    // public function addItem(Produit $produit): self
+    // {
+    //     if (!$this->Items->contains($produit)) {
+    //         $this->Items[] = $produit;
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeItems(Whishliste $Items): static
+    // {
+    //     if ($this->Items->removeElement($Items)) {
+    //         $Items->removeItem($this);
+    //     }
+
+    //     return $this;
+    // }
 
  
 

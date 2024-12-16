@@ -5,9 +5,19 @@
 onsubmit="return confirm('Are you sure you want to delete this item?');">
 
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ whishliste.id) }}">
+
+
+    
+
     
     <button class="btn btn-danger btn-sm w-40 mt-2" 
     style="background-color: #dc3545; color: white; border: none;">Delete</button>
        
 </form>
+
+
+{#<form action="{{ path('app_whishliste_clear', {id: whishliste.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir vider la wishlist ?');">
+    {{ csrf_token('clear_whishliste')|raw }}
+    <button type="submit" class="btn btn-danger">Vider la wishlist</button>
+    </form> #}
 </div>

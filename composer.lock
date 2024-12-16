@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e21ceb0ec486ae6f548b5a8e2f8730b",
+    "content-hash": "b5f977f515732129f73e9d73aac7f3d3",
     "packages": [
         {
             "name": "composer/semver",
@@ -2082,7 +2082,6 @@
         },
         {
             "name": "symfony/asset-mapper",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -2093,7 +2092,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/asset-mapper/zipball/21fe29b637ddaada739d3d6cd55694a7b95d2343",
                 "reference": "21fe29b637ddaada739d3d6cd55694a7b95d2343",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "composer/semver": "^3.0",
@@ -2142,9 +2141,7 @@
             "description": "Maps directories of assets & makes them available in a public directory with versioned filenames.",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/asset-mapper/tree/v6.4.15"
- 
             },
             "funding": [
                 {
@@ -2160,9 +2157,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-09T07:17:14+00:00"
-         },
+        },
         {
             "name": "symfony/cache",
             "version": "v6.4.16",
@@ -2580,7 +2576,6 @@
         },
         {
             "name": "symfony/dependency-injection",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -2591,7 +2586,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/70ab1f65a4516ef741e519ea938e6aa465e6aa36",
                 "reference": "70ab1f65a4516ef741e519ea938e6aa465e6aa36",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -2642,9 +2637,8 @@
             "description": "Allows you to standardize and centralize the way objects are constructed in your application",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/dependency-injection/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -2659,9 +2653,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-09T06:56:25+00:00"
-         },
+        },
         {
             "name": "symfony/deprecation-contracts",
             "version": "v3.5.1",
@@ -3723,8 +3716,72 @@
             "time": "2024-10-25T15:07:50+00:00"
         },
         {
+            "name": "symfony/google-mailer",
+            "version": "v6.4.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/google-mailer.git",
+                "reference": "bb35654e4d9d02fea335de97a0ae4a24b6db582c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/google-mailer/zipball/bb35654e4d9d02fea335de97a0ae4a24b6db582c",
+                "reference": "bb35654e4d9d02fea335de97a0ae4a24b6db582c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/mailer": "^5.4.21|^6.2.7|^7.0"
+            },
+            "require-dev": {
+                "symfony/http-client": "^5.4|^6.0|^7.0"
+            },
+            "type": "symfony-mailer-bridge",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Mailer\\Bridge\\Google\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Google Mailer Bridge",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/google-mailer/tree/v6.4.13"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-09-25T14:18:03+00:00"
+        },
+        {
             "name": "symfony/http-client",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -3735,7 +3792,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-client/zipball/cb4073c905cd12b8496d24ac428a9228c1750670",
                 "reference": "cb4073c905cd12b8496d24ac428a9228c1750670",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -3798,9 +3855,8 @@
                 "http"
             ],
             "support": {
- 
                 "source": "https://github.com/symfony/http-client/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3815,9 +3871,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-13T13:40:18+00:00"
-         },
+        },
         {
             "name": "symfony/http-client-contracts",
             "version": "v3.5.1",
@@ -3898,7 +3953,6 @@
         },
         {
             "name": "symfony/http-foundation",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -3909,7 +3963,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-foundation/zipball/9b3165eb2f04aeaa1a5a2cfef73e63fe3b22dff6",
                 "reference": "9b3165eb2f04aeaa1a5a2cfef73e63fe3b22dff6",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -3956,9 +4010,8 @@
             "description": "Defines an object-oriented layer for the HTTP specification",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/http-foundation/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -3973,7 +4026,6 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-08T16:09:24+00:00"
         },
         {
@@ -3988,7 +4040,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-kernel/zipball/b002a5b3947653c5aee3adac2a024ea615fd3ff5",
                 "reference": "b002a5b3947653c5aee3adac2a024ea615fd3ff5",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -4072,9 +4124,8 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/http-kernel/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4089,9 +4140,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-13T13:57:37+00:00"
-         },
+        },
         {
             "name": "symfony/intl",
             "version": "v6.4.15",
@@ -4257,7 +4307,6 @@
         },
         {
             "name": "symfony/messenger",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -4268,7 +4317,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/messenger/zipball/f9d4bae8301dced6f12e110a7956d2fd441573f1",
                 "reference": "f9d4bae8301dced6f12e110a7956d2fd441573f1",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -4325,9 +4374,8 @@
             "description": "Helps applications send and receive messages to/from other applications or via message queues",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/messenger/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -4342,9 +4390,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-09T07:05:35+00:00"
-         },
+        },
         {
             "name": "symfony/mime",
             "version": "v6.4.13",
@@ -5429,7 +5476,6 @@
         },
         {
             "name": "symfony/property-info",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -5440,7 +5486,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/property-info/zipball/9d7b576bb643c72bf3b60eb8e89c98725d00afd0",
                 "reference": "9d7b576bb643c72bf3b60eb8e89c98725d00afd0",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -5494,9 +5540,8 @@
                 "validator"
             ],
             "support": {
- 
                 "source": "https://github.com/symfony/property-info/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -5511,8 +5556,7 @@
                     "type": "tidelift"
                 }
             ],
-             "time": "2024-11-27T10:18:02+00:00"
- 
+            "time": "2024-11-27T10:18:02+00:00"
         },
         {
             "name": "symfony/routing",
@@ -6894,7 +6938,6 @@
         },
         {
             "name": "symfony/validator",
- 
             "version": "v6.4.15",
             "source": {
                 "type": "git",
@@ -6905,7 +6948,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/validator/zipball/7541055cdaf54ff95f0735bf703d313374e8b20b",
                 "reference": "7541055cdaf54ff95f0735bf703d313374e8b20b",
-                 "shasum": ""
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1",
@@ -6972,9 +7015,8 @@
             "description": "Provides tools to validate values",
             "homepage": "https://symfony.com",
             "support": {
- 
                 "source": "https://github.com/symfony/validator/tree/v6.4.15"
-             },
+            },
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -6989,9 +7031,8 @@
                     "type": "tidelift"
                 }
             ],
- 
             "time": "2024-11-08T15:28:48+00:00"
-         },
+        },
         {
             "name": "symfony/var-dumper",
             "version": "v6.4.15",

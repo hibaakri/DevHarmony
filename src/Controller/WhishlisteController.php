@@ -18,49 +18,99 @@ use Symfony\Component\Security\Core\Security;
 final class WhishlisteController extends AbstractController
 {
     #[Route(name: 'app_whishliste_index', methods: ['GET'])]
-    public function index(WhishlisteRepository $whishlisteRepository): Response
+    public function index(WhishlisteRepository $whishlisteRepository,Security $security): Response
     {
-        $whishlistes = $whishlisteRepository->findAll();
+        // $whishlistes = $whishlisteRepository->findAll();
+        
+        // Récupérer l'utilisateur connecté
+        $user = $security->getUser();
 
+        // Vérifier si l'utilisateur est connecté
+        if (!$user) {
+            $this->addFlash('error', 'You must be logged in to view your wishlists.');
+            return $this->redirectToRoute('app_login');
+        }
+
+    // Récupérer uniquement les wishlists de l'utilisateur connecté
+    $whishlistes = $whishlisteRepository->findBy(['user' => $user]);
 
         return $this->render('whishliste/index.html.twig', [
             'whishlistes' => $whishlistes,
         ]);
     }
 
-    #[Route('/new', name: 'app_whishliste_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,Security $security): Response
-    {
-        $whishliste = new Whishliste();
-        // Associer l'utilisateur connecté à la wishlist
-        $user = $security->getUser();
+    // #[Route('/new', name: 'app_whishliste_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager,Security $security): Response
+    // {
+    //     $whishliste = new Whishliste();
+    //     // Associer l'utilisateur connecté à la wishlist
+    //     $user = $security->getUser();
     
-        // Vérifier si l'utilisateur est connecté
-        if ($user) {
-        $whishliste->setUser($user);  
-        } else {
+    //     // Vérifier si l'utilisateur est connecté
+    //     if ($user) {
+    //     $whishliste->setUser($user);  
+    //     } else {
 
-        // Gérer l'erreur si l'utilisateur n'est pas connecté
-        $this->addFlash('error', 'You must be logged in to create a wishlist.');
-        return $this->redirectToRoute('app_login');  
-    }
+    //     // Gérer l'erreur si l'utilisateur n'est pas connecté
+    //     $this->addFlash('error', 'You must be logged in to create a wishlist.');
+    //     return $this->redirectToRoute('app_login');  
+    // }
 
 
-        $form = $this->createForm(WhishlisteType::class, $whishliste);
-        $form->handleRequest($request);
+    //     $form = $this->createForm(WhishlisteType::class, $whishliste);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($whishliste);
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($whishliste);
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_whishliste_index', [], Response::HTTP_SEE_OTHER);
+    //         return $this->redirectToRoute('app_whishliste_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->render('whishliste/new.html.twig', [
+    //         'whishliste' => $whishliste,
+    //         'form' => $form,
+    //     ]);
+    // }
+
+
+    #[Route('/whishlist/new/{id}', name: 'app_whishliste_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, ProduitRepository $produitRepository, EntityManagerInterface $entityManager, WhishlisteRepository $whishlisteRepository, $id): Response
+    {
+        $produit = $produitRepository->find($id);
+
+        if (!$produit) {
+            $this->addFlash('error', 'Produit introuvable.');
+            return $this->redirectToRoute('app_produit');
         }
 
-        return $this->render('whishliste/new.html.twig', [
-            'whishliste' => $whishliste,
-            'form' => $form,
-        ]);
+        $user = $this->getUser();
+        $whishliste = $whishlisteRepository->findOneBy(['user' => $user]);
+
+        if (!$whishliste) {
+            $whishliste = new Whishliste();
+            $whishliste->setUser($user);
+            $entityManager->persist($whishliste);
+            $entityManager->flush();
+        }
+
+        // Vérification si le produit est déjà dans la wishlist
+        if ($whishliste->getItems()->contains($produit)) {
+            $this->addFlash('warning', 'Ce produit est déjà dans votre wishlist.');
+            return $this->redirectToRoute('app_whishliste_show', ['id' => $whishliste->getId()]);
+        }
+
+        // Ajouter le produit
+        $whishliste->addItem($produit);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Produit ajouté à la wishlist.');
+        return $this->redirectToRoute('app_whishliste_show', ['id' => $whishliste->getId()]);
     }
+
+
+    
+    
 
     #[Route('/{id}', name: 'app_whishliste_show', methods: ['GET'])]
     public function show(Whishliste $whishliste): Response
@@ -98,6 +148,31 @@ final class WhishlisteController extends AbstractController
 
         return $this->redirectToRoute('app_whishliste_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+    // #[Route('/whishlist/clear/{id}', name: 'app_whishliste_clear', methods: ['POST'])]
+    // public function clear(WhishlisteRepository $whishlisteRepository, EntityManagerInterface $entityManager, $id): Response
+    // {
+    //     // Récupérer la wishlist par son ID
+    //     $whishliste = $whishlisteRepository->find($id);
+
+    //     if (!$whishliste) {
+    //         $this->addFlash('error', 'Wishlist introuvable.');
+    //         return $this->redirectToRoute('app_whishliste_show', ['id' => $id]);
+    //     }
+
+    //     // Vider la collection d'items
+    //     foreach ($whishliste->getItems() as $item) {
+    //         $whishliste->removeItem($item);
+    //     }
+
+    //     // Persister les modifications
+    //     $entityManager->flush();
+
+    //     $this->addFlash('success', 'La wishlist a été vidée avec succès.');
+    //     return $this->redirectToRoute('app_whishliste_show', ['id' => $id]);
+    // }
 
 
 }
