@@ -31,7 +31,8 @@ class RegistrationController extends AbstractController
             //  plain password
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword)); //pour crypté le mot de passe en clair.
 
-            $user->setResetToken(null); // Cela garantit que resetToken est `null`
+            $resetToken = bin2hex(random_bytes(32)); // Generate a secure token
+            $user->setResetToken($resetToken);
             $entityManager->persist($user);
             $entityManager->flush();
 
