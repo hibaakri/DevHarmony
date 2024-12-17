@@ -1,15 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Service Après-Vente{% endblock %}
 
 {% block body %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+ 
 <div class="container mt-5">
-    <h1 class="mb-4">Service Après-Vente</h1>
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h4 class="mb-0 fw-bold">Liste des services aprés ventes</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="table-dark">
             <tr>
+                 <th>Client</th>
                  <th>Type de problème</th>
                 <th>Description</th>
                 <th>Date de demande</th>
@@ -21,6 +25,8 @@
         <tbody>
             {% for service_apres_vente in service_apres_vente %}
             <tr>
+<td>    {{ service_apres_vente.createdby ? service_apres_vente.createdby.email : '..' }}
+</td>
                  <td>{{ service_apres_vente.typeprobleme }}</td>
                 <td>{{ service_apres_vente.descriptionprobleme }}</td>
                 <td>{{ service_apres_vente.datedemande | date('d/m/Y') }}</td>
@@ -37,27 +43,21 @@
                 {# <td>{{ service_apres_vente.commentairetechnicien }}</td> #}
                 <td> 
                     <a href="/service/apres/vente/show/{{ service_apres_vente.id }}" class="btn btn-info btn-sm">Consulter</a>
-                    <a href="/service/apres/vente/edit/{{ service_apres_vente.id }}" class="btn btn-warning btn-sm">Modifier</a>
-                </td>
+                 </td>
             </tr>
-            {% else %}
-           <tr>
-            <td>
-                Aucun service aprés vente
-            </td>
-           </tr>
             {% endfor %}
         </tbody>
     </table>
+
+     
+</div>
  <nav class="app-pagination mt-5 text-center">
             <ul class="pagination justify-content-center">
                 {{ knp_pagination_render(service_apres_vente) }}
             </ul>
         </nav> 
-    <div class="mt-4">
-        <a href="/service/apres/vente/add" class="btn btn-primary">Ajouter une demande</a>
-    </div>
-</div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

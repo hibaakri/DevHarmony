@@ -1,54 +1,41 @@
-{% extends 'base.html.twig' %}
+{% extends 'Admin.html.twig' %}
 
 {% block title %}Hello AvisController!{% endblock %}
 
 {% block body %}
 <!-- Add Bootstrap CSS if not already included in your base layout -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+ 
 <div class="container mt-4">
     <h2 class="mb-4 text-light">Liste des Avis</h2>
 
     <table class="table table-dark table-striped table-bordered">
         <thead class="thead-light">
             <tr>
-                <th>#</th>
+            
                 <th>Client</th>
                 <th>Produit</th> 
                 <th>Commentaire</th>
-                <th>Note</th>
-                <th>Date création</th>
-                <th>Visibilité</th>
-                <th>Réponse</th>
-                <th>Actions</th>
+                 <th>Date création</th>
+                  <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for avis in avis %}
                 <tr>
-                    <td>{{ avis.id }}</td>
-                    <td>{{ avis.user.email }}</td>
-                    {% if avis.produit %}
-                        <td>{{ avis.produit.id }}</td>
-                    {% else %}
-                        <td>Produit introuvable!</td>
-                    {% endif %}
+                     <td>{{ avis.user.email }}</td>
+                         <td><a href="produit/show/{{ avis.produit.id }}">{{ avis.produit.titre }}</a></td>
+                   
                     <td>{{ avis.commentaire }}</td>
-                    <td>{{ avis.note }}</td>
-                    <td>{{ avis.datecreation | date() }}</td>
-                    <td>{{ avis.visibilite }}</td>
-                    <td>{{ avis.reponse }}</td>
-                    <td>
-                        <a href="/avis/show/{{ avis.id }}" class="btn btn-info btn-sm">Consulter</a>
-                        <a href="/avis/edit/{{ avis.id }}" class="btn btn-warning btn-sm">Modifier</a>
-                    </td>
+                     <td>{{ avis.datecreation | date() }}</td>
+                      <td>
+                        <a href="produit/show/{{ avis.produit.id }}" class="btn btn-info btn-sm">Consulter</a>
+                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a href="/avis/add" class="btn btn-success mt-3">Ajouter un Avis</a>
-</div>
+ </div>
 
 <!-- Bootstrap JS (optional, for features like modals, dropdowns) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

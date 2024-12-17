@@ -25,8 +25,17 @@
         {# <li class="list-group-item"><strong>Date de résolution:</strong> {{ service_apres_vente.dateresolution | date('d/m/Y') }}</li> #}
         <li class="list-group-item">
             <strong>Image associée:</strong><br>
-            <img src="{{ asset('/service_apres_vente/' ~ service_apres_vente.image) }}" alt="Image" class="img-fluid mt-2">
+            <img height="300px" width="300px" src="{{ asset('/service_apres_vente/' ~ service_apres_vente.image) }}" alt="Image" class="img-fluid mt-2">
         </li>
+
+
+        <li class="list-group-item"><strong>Code QR :</strong>  </li>
+        <div class="text-right"> 
+            <img class="img-thumbnail" style="border-radius: 0px;" width="100px" height="100px" src="{{codeqr}}"alt="QR Code">
+            <br>
+            Scanner Moi ! 
+         </div>
+
     </ul>
 
     <div class="mt-4">

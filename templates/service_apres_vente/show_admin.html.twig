@@ -1,0 +1,38 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Détail de la Demande{% endblock %}
+
+{% block body %}
+ 
+<div class="container cont  mt-5">
+    <h1 class="mb-4">Détail de la Demande</h1>
+
+    <ul class="bg-dark   " >
+         <li class="list-group-item bg-dark  "><strong>Type de problème:</strong> {{ service_apres_vente.typeprobleme }}</li>
+        <li class="list-group-item bg-dark"><strong>Description:</strong> {{ service_apres_vente.descriptionprobleme }}</li>
+        <li class="list-group-item bg-dark"><strong>Date de demande:</strong> {{ service_apres_vente.datedemande | date('d/m/Y') }}</li>
+        <li class="list-group-item bg-dark"><strong>État de la demande:</strong> 
+            {% if service_apres_vente.etatdemande %}
+                <span class="badge bg-success">Ok</span>
+            {% elseif service_apres_vente.etatdemande is null %}
+                <span class="badge bg-warning text-dark">En attente</span>
+            {% else %}
+                <span class="badge bg-danger">Refusé</span>
+            {% endif %}
+        </li>
+        {# <li class="list-group-item bg-dark"><strong>Date de résolution:</strong> {{ service_apres_vente.dateresolution | date('d/m/Y') }}</li> #}
+        <li class="list-group-item bg-dark">
+            <strong>Image associée:</strong><br>
+            <img height="300px" width="300px" src="{{ asset('/service_apres_vente/' ~ service_apres_vente.image) }}" alt="Image" class="img-fluid mt-2">
+        </li>
+    </ul>
+
+    <div class="mt-4">
+         <a href="/service/apres/vente/accepte/{{ service_apres_vente.id }}" class="btn btn-success">Accepter</a>
+         <a href="/service/apres/vente/refuse/{{ service_apres_vente.id }}" class="btn btn-danger">Refuser</a>
+                  <a href="/service/apres/vente/delete/{{ service_apres_vente.id }}" class="btn btn-danger">Supprimer la demande</a>
+
+    </div>
+</div>
+
+ {% endblock %}
