@@ -196,9 +196,10 @@ class Produit
     public function setquantite(?int $quantite): static
     {
         $this->quantite = $quantite;
-
         return $this;
     }
+
+      
 
 
     public function __toString()
@@ -213,6 +214,7 @@ class Produit
     {
         return $this->avis;
     }
+
 
     public function addAvi(Avis $avi): static
     {

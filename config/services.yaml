@@ -7,9 +7,7 @@ parameters:
  
     
     upload_directory: '%kernel.project_dir%/public/service_apres_vente'
- 
-  
-    upload_directory1: '%kernel.project_dir%/public/produits'
+    upload_directory_produit: '%kernel.project_dir%/public/produits'
     upload_directory2: '%kernel.project_dir%/public/users'
  
 
