@@ -196,12 +196,12 @@ class Produit
     public function setquantite(?int $quantite): static
     {
         $this->quantite = $quantite;
-
         return $this;
     }
 
 
     public function __toString()
+ 
     {
         return $this->titre;
     }
