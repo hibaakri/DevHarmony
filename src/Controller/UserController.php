@@ -42,4 +42,18 @@ class UserController extends AbstractController
         // Rediriection vers la liste des utilisateurs
         return $this->redirectToRoute('app_users');
     }
+
+
+    #[Route('/profile', name: 'app_profile')]
+    #[IsGranted("ROLE_USER")] // Seuls les utilisateurs connectés peuvent accéder
+    public function profile(): Response
+    {
+        $user = $this->getUser(); // Récupérer l'utilisateur connecté
+
+        return $this->render('profile/profile.html.twig', [
+            'user' => $user,
+        ]);
+        
+    }
+
 }

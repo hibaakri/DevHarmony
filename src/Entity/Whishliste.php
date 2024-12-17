@@ -45,22 +45,31 @@ class Whishliste
     {
         return $this->Items;
     }
-
-    public function addItem(Produit $item): static
+    public function addItem(Produit $produit): self
     {
-        if (!$this->Items->contains($item)) {
-            $this->Items->add($item);
+        if (!$this->Items->contains($produit)) {
+            $this->Items[] = $produit;
         }
 
         return $this;
     }
 
-    public function removeItem(Produit $item): static
+    public function removeItems(Whishliste $Items): static
     {
-        $this->Items->removeElement($item);
+        if ($this->Items->removeElement($Items)) {
+            $Items->removeItem($this);
+        }
 
         return $this;
     }
+
+
+    // public function removeItem(Produit $item): static
+    // {
+    //     $this->Items->removeElement($item);
+
+    //     return $this;
+    // }
 
     // public function getUser(): ?User
     // {

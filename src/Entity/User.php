@@ -57,6 +57,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Whishliste::class)]
     private Collection $whishlistes;
 
+    #[ORM\Column(length: 100)]
+    private ?string $resetToken = null;
+
     public function __construct()
     {
         $this->whishlistes = new ArrayCollection();
@@ -161,6 +164,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->whishlistes;
     }
 
+    
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(string $resetToken): static
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
+    }
+
     public function addWhishliste(Whishliste $whishliste): static
     {
         if (!$this->whishlistes->contains($whishliste)) {
@@ -180,5 +197,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return $this;
     }
+
+    
 }
  

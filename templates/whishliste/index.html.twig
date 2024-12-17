@@ -9,27 +9,38 @@
         <thead class="table-dark">
             <tr>
                 <th scope="col">Numero</th>
+                <th scope="col">Produits</th>
                 <th scope="col">Actions</th>
             </tr>
-
         </thead>
         <tbody>
-
         {% for whishliste in whishlistes %}
             <tr>
                 <td>{{ whishliste.id }}</td>
                 <td>
-                    <a href="{{ path('app_whishliste_show', {'id': whishliste.id}) }}" class="btn btn-primary btn-sm">show</a>
-                    <a href="{{ path('app_whishliste_edit', {'id': whishliste.id}) }}" class="btn btn-primary btn-sm">edit</a>
+                    {% if whishliste.items is not empty %}
+                        {% for produit in whishliste.items %}
+                            <div>{{ produit.titre }} - {{ produit.prix }} €</div>
+                        {% endfor %}
+                    {% else %}
+                        <div>Aucun produit ajouté</div>
+                    {% endif %}
+                </td>
+                <td>
+                    
+                    <a href="{{ path('app_whishliste_show', {'id': whishliste.id}) }}" class="btn btn-primary btn-sm">Show</a>
+                    {{ include('whishliste/_delete_form.html.twig') }}
+                    <a href="#" class="btn btn-primary btn-sm">ajouter au panier</a>
+                    {#<a href="{{ path('app_whishliste_edit', {'id': whishliste.id}) }}" class="btn btn-primary btn-sm">Edit</a>#}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="2" class="text-center">no records found</td>
+                <td colspan="3" class="text-center">No wishlists found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_whishliste_new') }}" class="btn btn-success mt-3">Create new</a>
+    <a href="{{ path('app_produit') }}" class="btn btn-success mt-3">Create new</a>
 {% endblock %}

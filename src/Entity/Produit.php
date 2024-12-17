@@ -68,6 +68,7 @@ class Produit
 
 
 
+
     #[ORM\Column(length: 255)]
     // #[Assert\NotBlank(message: "L'image est obligatoire.")]
     private ?string $image = null;
@@ -173,6 +174,7 @@ class Produit
 
         return $this;
     }
+
 
 
 
