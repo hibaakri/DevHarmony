@@ -1,266 +1,424 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="shortcut icon" type="image/x-icon" href="{{asset('FO/images/favicon/favicon.png')}}" />
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800&amp;display=swap"
-        rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset ('FO/css/vendor/vendor.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset ('FO/css/plugins/plugins.min.css')}}" />
-    <link rel="stylesheet" href="{{ asset ('FO/css/style.min.css')}}" />
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Welcome!
+			{% endblock %}
+		</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+		<link rel="shortcut icon" type="image/x-icon" href="{{asset('FO/images/favicon/favicon.png')}}"/>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800&amp;display=swap" rel="stylesheet"/>
+		<link rel="stylesheet" href="{{ asset ('FO/css/vendor/vendor.min.css')}}"/>
+		<link rel="stylesheet" href="{{ asset ('FO/css/plugins/plugins.min.css')}}"/>
+		<link rel="stylesheet" href="{{ asset ('FO/css/style.min.css')}}"/>
+	</head>
 
-<body>
+	<body>
+		<style>
+			/* Styling the input field */
 
-    <header class="header-wrapper">
-        <!-- Header Nav Start -->
+            
+			/* Styling the suggestions container */
+			#suggestions-list {
+				border: 1px solid #ccc;
+				max-height: 200px;
+				overflow-y: auto;
+				position: absolute;
+				background: white;
+				width: 300px;
+				z-index: 1000;
+				display: none; /* Initially hidden */
+			}
 
-        <!-- Header Nav End -->
-        <div class="header-top bg-white ptb-30px d-xl-block d-none">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="logo">
-                            <a href="index.html"><img class="img-responsive" src="FO/images/logo/logo.png"
-                                    alt="logo.jpg" /></a>
-                        </div>
-                    </div>
-                    <div class="col-md-10 align-self-center">
-                        <div class="header-right-element d-flex">
-                            <div class="search-element media-body">
-                                <form class="d-flex" action="#">
-                                    <div class="search-category">
-                                        <select>
-                                            <option value="0">All categories</option>
+			/* Styling each suggestion item */
+			.suggestion-item {
+				padding: 10px;
+				cursor: pointer;
+				font-size: 16px;
+			}
 
-                                        </select>
-                                    </div>
-                                    <input type="text" placeholder="Enter your search key ... " />
-                                    <button><i class="icon-magnifier"></i></button>
-                                </form>
-                            </div>
+			/* Highlight suggestion on hover */
+			.suggestion-item:hover {
+				background-color: #f0f0f0;
+			}
 
-                            <!--Cart info Start -->
-                            <div class="header-tools d-flex">
-                                <div class="cart-info d-flex align-self-center">
-                                    {#<a href="#offcanvas-wishlist" style="margin-left: 50px"
-                                        class="heart offcanvas-toggle" data-number="3"><i class="icon-heart"></i></a>#}
-                                    <a href ="{{ path('app_page') }}" style="margin-left: 50px" class="heart" data-number="3">
-                                         <i class="icon-heart"></i>
-                                    </a>
-                                    <a href="#offcanvas-cart" class="bag offcanvas-toggle" data-number="3"><i
-                                            class="icon-bag"></i><span>$20.00</span></a>
-                                </div>
-                            </div>
-                            <div style="margin-left: 50px">
-                                <div class="phone">
-                                    {% if app.user %}
-                                    {#<a class="btn btn-danger " href="/logout">LOGOUT</a>#}
-                                    <a class="btn btn-danger" href="{{ path('app_logout') }}">LOGOUT</a>
+			/* Highlight the selected suggestion */
+			.selected {
+				background-color: #ddd;
+			}
 
-                                    {% else %}
-                                    {#<a class="btn btn-success " href="/Register">Register</a>#}
-                                    {#<a class="btn btn-success " href="/login">LOGIN</a>#}
-                                    <a class="btn btn-success" href="{{ path('app_register') }}">Register</a>
-                                    <a class="btn btn-success" href="{{ path('app_login') }}">LOGIN</a>
 
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+		</style>
+		<header class="header-wrapper">
+			<!-- Header Nav Start -->
 
-                        <!--Cart info End -->
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Header Nav End -->
-        <div class="header-menu bg-blue sticky-nav d-xl-block d-none padding-0px">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 custom-col-2">
-                        <div class="header-menu-vertical">
-                            <h4 class="menu-title"> Cattegories</h4>
-                            <ul class="menu-content display-none">
-                                <li>
+			<!-- Header Nav End -->
+				<div class="header-top bg-white ptb-30px d-xl-block d-none"> <div class="container">
+					<div class="row">
+						<div class="col-md-2">
+							<div class="logo">
+								<a href="index.html"><img class="img-responsive" src="FO/images/logo/logo.png" alt="logo.jpg"/></a>
+							</div>
+						</div>
+						<div class="col-md-10  ">
 
-                                    <ul class="submenu-item">
-                                        <li><a href="/category">Liste des categories</a></li>
+							<div class="header-right-element d-flex">
+								<div class="search-element  ">
+									<form class="d-flex" method="get">
 
-                                    </ul>
-                                </li>
-                            </ul>
-                            </ul>
-                            <!-- menu content -->
-                        </div>
-                        <!-- header menu vertical -->
-                    </div>
-                    
-                    <div class="col-lg-9 custom-col-2">
-                        <div class="header-horizontal-menu">
-                            <ul class="menu-content">
-                                <li class="active ">
-                                    <a href="/">Home </a>
+										<input type="text" id="search-input" autocomplete="off" name="search" placeholder="Rechercher un produit ... "/>
+                                         <button type="submit">
+											<i class="icon-magnifier"></i>
+										</button>                            
+										        <div class="mt-5" id="suggestions-list"></div>
 
-                                </li>
- 
-                                <li class="text-end"><a href="/produit">Produit</a></li>
-                                <li class="text-end"><a href="contact.html">A propos</a></li>
-                                 <li class="text-end"><a href="/whishliste">Wishlist</a></li>
-                                 <li class="text-end"><a href="/avis">Avis</a></li>
-                                <li class="text-end"><a href="/service/apres/vente"> Service Après Vente</a></li>
-                             </ul>
- 
-                        </div>
-                        <!-- header horizontal menu -->
+									</form>
 
-                    </div>
-                </div>
-                <!-- row -->
-            </div>
-            <!-- container -->
-        </div>
-        <!-- header menu -->
-    </header>
-   
-   
-    
-     <div class="shop-category-area mt-30px">
-        <div class="container">
+								</div>
 
-            {% block body %}{% endblock %}
-        </div>
-    </div>
 
-    
-    <div class="footer-area">
-        <div class="footer-container">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-4 mb-md-30px mb-lm-30px">
-                            <div class="single-wedge">
-                                <h4 class="footer-herading">ABOUT US</h4>
-                                <p class="text-infor">We are a team of designers and developers that create high quality
-                                    HTML template</p>
-                                <div class="need-help">
-                                    <p class="phone-info">
-                                        NEED HELP?
-                                        <span>
-                                            0123456789 <br />
-                                            0123456789
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-2 mb-md-30px mb-lm-30px">
-                            <div class="single-wedge">
-                                <h4 class="footer-herading">Information</h4>
-                                <div class="footer-links">
-                                    <ul>
-                                        <li><a href="#">Delivery</a></li>
-                                        <li><a href="about.html">About Us</a></li>
-                                        <li><a href="#">Secure Payment</a></li>
-                                        <li><a href="contact.html">Contact Us</a></li>
-                                        <li><a href="#">Sitemap</a></li>
-                                        <li><a href="#">Stores</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-2 mb-sm-30px mb-lm-30px">
-                            <div class="single-wedge">
-                                <h4 class="footer-herading">CUSTOM LINKS</h4>
-                                <div class="footer-links">
-                                    <ul>
-                                        <li><a href="#">Legal Notice</a></li>
-                                        <li><a href="#">Prices Drop</a></li>
-                                        <li><a href="#">New Products</a></li>
-                                        <li><a href="#">Best Sales</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="my-account.html">My Account</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 ">
-                            <div class="single-wedge">
-                                <h4 class="footer-herading">NEWSLETTER</h4>
-                                <div class="subscrib-text">
-                                    <p>You may unsubscribe at any moment. For that purpose, please find our contact info
-                                        in the legal notice.</p>
-                                </div>
-                                <div id="mc_embed_signup" class="subscribe-form">
-                                    <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank"
-                                        name="mc-embedded-subscribe-form" method="post"
-                                        action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
-                                        <div id="mc_embed_signup_scroll" class="mc-form">
-                                            <input class="email" type="email" required=""
-                                                placeholder="Enter your email here.." name="EMAIL" value="" />
-                                            <div class="mc-news" aria-hidden="true"
-                                                style="position: absolute; left: -5000px;">
-                                                <input type="text" value="" tabindex="-1"
-                                                    name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" />
-                                            </div>
-                                            <div class="clear">
-                                                <input id="mc-embedded-subscribe" class="button" type="submit"
-                                                    name="subscribe" value="Sign Up" />
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="social-info">
-                                    <ul>
-                                        <li>
-                                            <a href="#"><i class="icon-social-facebook"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="icon-social-twitter"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="icon-social-instagram"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="icon-social-google"></i></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"><i class="icon-social-instagram"></i></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
+								<script>
+									const searchInput = document.getElementById('search-input');
+const suggestionsList = document.getElementById('suggestions-list');
+let selectedIndex = -1;
+// To track the selected suggestion
 
-                            <p class="copy-text"> © 2021 <strong>Rozer</strong> Made With <i class="fa fa-heart"
-                                    style="color: red;" aria-hidden="true"></i> By <a class="company-name"
-                                    href="https://hasthemes.com/">
-                                    <strong> HasThemes</strong></a>.</p>
-                        </div>
-                        <div class="col-md-6 text-end">
-                            <img class="payment-img" src="FO/images/icons/payment.png" alt="" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="{{asset('FO/js/vendor/vendor.min.js')}}"></script>
-    <script src="{{asset('FO/js/plugins/plugins.min.js')}}"></script>
-    <script src="{{asset('FO/js/main.js')}}"></script>
-</body>
+// Function to fetch suggestions from the backend
+function fetchSuggestions(query) {
+if (query.length < 2) {
+suggestionsList.style.display = 'none';
+return;
+}
 
+// Fetch data from the API
+fetch(`/api/products/suggestions?search=${
+encodeURIComponent(query)
+}`).then(response => response.json()).then(data => { // Clear previous suggestions
+suggestionsList.innerHTML = '';
+
+// If suggestions are available, display them
+if (data.length > 0) {
+suggestionsList.style.display = 'block';
+data.forEach((product, index) => {
+const suggestionItem = document.createElement('div');
+suggestionItem.classList.add('suggestion-item');
+suggestionItem.textContent = product.name;
+suggestionItem.onclick = () => selectSuggestion(product);
+suggestionItem.dataset.index = index;
+
+// Add the suggestion to the list
+suggestionsList.appendChild(suggestionItem);
+});
+} else {
+suggestionsList.style.display = 'none';
+}
+}).catch(error => {
+console.error('Error fetching suggestions:', error);
+suggestionsList.style.display = 'none';
+});
+}
+
+// Function to select a suggestion
+function selectSuggestion(product) {
+searchInput.value = product.name; // Set the input value to the suggestion
+suggestionsList.style.display = 'none'; // Hide the suggestions list
+console.log('Selected product:', product);
+}
+
+// Handle keyboard navigation (up/down arrow keys)
+function handleKeyboardNavigation(event) {
+const suggestions = document.querySelectorAll('.suggestion-item');
+if (event.key === 'ArrowDown') {
+if (selectedIndex < suggestions.length - 1) {
+selectedIndex++;
+}
+} else if (event.key === 'ArrowUp') {
+if (selectedIndex > 0) {
+selectedIndex--;
+}
+} else if (event.key === 'Enter' && selectedIndex >= 0) {
+selectSuggestion(suggestions[selectedIndex].dataset);
+return;
+}
+
+// Highlight the selected suggestion
+suggestions.forEach((item, index) => {
+item.classList.remove('selected');
+if (index === selectedIndex) {
+item.classList.add('selected');
+}
+});
+}
+
+// Event listener to trigger suggestions when typing
+searchInput.addEventListener('input', (e) => {
+const query = e.target.value;
+fetchSuggestions(query);
+});
+
+// Listen for keyboard navigation
+searchInput.addEventListener('keydown', handleKeyboardNavigation);
+
+// Close suggestions when clicking outside
+document.addEventListener('click', (e) => {
+if (! suggestionsList.contains(e.target) && e.target !== searchInput) {
+suggestionsList.style.display = 'none';
+}
+});
+								</script>
+
+
+								<!--Cart info Start -->
+								<div class="header-tools d-flex">
+									<div
+										class="cart-info d-flex align-self-center">
+										{#<a href="#offcanvas-wishlist" style="margin-left: 50px"
+										                                        class="heart offcanvas-toggle" data-number="3"><i class="icon-heart"></i></a>#}
+										<a href="{{ path('app_page') }}" style="margin-left: 50px" class="heart" data-number="3">
+											<i class="icon-heart"></i>
+										</a>
+										<a href="#offcanvas-cart" class="bag offcanvas-toggle" data-number="3">
+											<i class="icon-bag"></i>
+											<span>$20.00</span>
+										</a>
+									</div>
+								</div>
+								<div style="margin-left: 50px">
+									<div class="phone">
+										{% if app.user %}
+
+											 
+											<a class="btn btn-danger" href="{{ path('app_logout') }}">LOGOUT</a>
+
+										{% else %}
+
+		 								<a class="btn btn-success" href="{{ path('app_register') }}"> Register</a>
+											<a class="btn btn-success" href="{{ path('app_login') }}">LOGIN</a>
+
+										{% endif %}
+									</div>
+								</div>
+							</div>
+
+							<!--Cart info End -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Header Nav End -->
+			<div class="header-menu bg-blue sticky-nav d-xl-block d-none padding-0px">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-3 custom-col-2">
+							<div class="header-menu-vertical">
+								<h4 class="menu-title">
+									Cattegories</h4>
+								<ul class="menu-content display-none">
+									<li>
+
+										<ul class="submenu-item" id="category-list"></ul>
+									</li>
+								</ul>
+							</ul>
+							<!-- menu content -->
+						</div>
+						<!-- header menu vertical -->
+					</div>
+
+
+					<script>
+						// Effectuer une requête AJAX pour obtenir les catégories
+fetch('/api/categories').then(response => response.json()).then(categories => {
+const categoryList = document.getElementById('category-list');
+
+// Ajouter chaque catégorie dans la liste
+categories.forEach(category => { // Créer un nouvel élément <li>
+const listItem = document.createElement('li');
+
+// Créer un élément <a> avec l'URL dynamique
+const link = document.createElement('a');
+link.href = `/category/show/${
+category.id
+}`; // URL dynamique avec l'ID de la catégorie
+link.textContent = category.name;
+// Le texte du lien est le nom de la catégorie
+
+// Ajouter le lien au <li>
+listItem.appendChild(link);
+
+// Ajouter le <li> à la liste
+categoryList.appendChild(listItem);
+});
+}).catch(error => {
+console.error('Erreur lors de la récupération des catégories :', error);
+});
+					</script>
+
+
+					<div class="col-lg-9 custom-col-2">
+						<div class="header-horizontal-menu">
+							<ul class="menu-content">
+								<li class="active ">
+									<a href="/">Home
+									</a>
+
+								</li>
+
+								<li class="text-end">
+									<a href="/produit">Produit</a>
+								</li>
+								
+								<li class="text-end">
+									<a href="/whishliste">Wishlist</a>
+								</li>
+								 
+								<li class="text-end">
+									<a href="/service/apres/vente">
+										Service Après Vente</a>
+								</li>
+								<li class="text-end">
+									<a href="contact.html">A propos</a>
+								</li>
+								<div class="text-end ">
+									{% if app.user %}
+										
+										<h3><b class="" style="color: black;" ><i>{{app.user.email}}</i></b></h3>
+		
+									{% endif %}
+								</div>
+							</ul>
+							
+						</div>
+						<!-- header horizontal menu -->
+
+					</div>
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- header menu -->
+	</body>
+</html></header><div class="shop-category-area mt-30px">
+<div class="container"> {% block body %}{% endblock %}
+	</div>
+</div>
+
+
+<div class="footer-area mt-5">
+	<div class="footer-container">
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-lg-4 mb-md-30px mb-lm-30px">
+						<div class="single-wedge">
+							<h4 class="footer-herading">ABOUT US</h4>
+							<p class="text-infor">We are a team of designers and developers that create high quality
+								                                    HTML template</p>
+							<div class="need-help">
+								<p class="phone-info">
+									NEED HELP?
+									<span>
+										0123456789
+										<br/>
+										0123456789
+									</span>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-2 mb-md-30px mb-lm-30px">
+						<div class="single-wedge">
+							<h4 class="footer-herading">Information</h4>
+							<div class="footer-links">
+								<ul>
+									<li><a href="#">Delivery</a></li>
+									<li><a href="about.html">About Us</a></li>
+									<li><a href="#">Secure Payment</a></li>
+									<li><a href="contact.html">Contact Us</a></li>
+									<li><a href="#">Sitemap</a></li>
+									<li><a href="#">Stores</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-2 mb-sm-30px mb-lm-30px">
+						<div class="single-wedge">
+							<h4 class="footer-herading">CUSTOM LINKS</h4>
+							<div class="footer-links">
+								<ul>
+									<li><a href="#">Legal Notice</a></li>
+									<li><a href="#">Prices Drop</a></li>
+									<li><a href="#">New Products</a></li>
+									<li><a href="#">Best Sales</a></li>
+									<li><a href="login.html">Login</a></li>
+									<li><a href="my-account.html">My Account</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4 ">
+						<div class="single-wedge">
+							<h4 class="footer-herading">NEWSLETTER</h4>
+							<div class="subscrib-text">
+								<p>You may unsubscribe at any moment. For that purpose, please find our contact info
+									                                        in the legal notice.</p>
+							</div>
+							<div id="mc_embed_signup" class="subscribe-form">
+								<form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank" name="mc-embedded-subscribe-form" method="post" action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
+									<div id="mc_embed_signup_scroll" class="mc-form">
+										<input class="email" type="email" required="" placeholder="Enter your email here.." name="EMAIL" value=""/>
+										<div class="mc-news" aria-hidden="true" style="position: absolute; left: -5000px;">
+											<input type="text" value="" tabindex="-1" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef"/>
+										</div>
+										<div class="clear">
+											<input id="mc-embedded-subscribe" class="button" type="submit" name="subscribe" value="Sign Up"/>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="social-info">
+								<ul>
+									<li><a href="#"><i class="icon-social-facebook"></i></a></li>
+									<li><a href="#"><i class="icon-social-twitter"></i></a></li>
+									<li><a href="#"><i class="icon-social-instagram"></i></a></li>
+									<li><a href="#"><i class="icon-social-google"></i></a></li>
+									<li><a href="#"><i class="icon-social-instagram"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+
+						<p class="copy-text">
+							© 2021
+							<strong>Rozer</strong>
+							Made With
+							<i class="fa fa-heart" style="color: red;" aria-hidden="true"></i>
+							By
+							<a class="company-name" href="https://hasthemes.com/">
+								<strong>
+									HasThemes</strong>
+							</a>.</p>
+					</div>
+					<div class="col-md-6 text-end">
+						<img class="payment-img" src="FO/images/icons/payment.png" alt=""/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{{asset('FO/js/vendor/vendor.min.js')}}"></script>
+<script src="{{asset('FO/js/plugins/plugins.min.js')}}"></script>
+<script src="{{asset('FO/js/main.js')}}"></script></body>
 </html>

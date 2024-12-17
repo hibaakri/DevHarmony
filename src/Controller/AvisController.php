@@ -32,24 +32,23 @@ class AvisController extends AbstractController
     #[Route('/avis/add', name: 'app_avis_add')]
     public function new(Request $request, EntityManagerInterface $em): Response
     {   //new instance
-        $avis= new Avis;
+        $avis = new Avis;
         //formulaire
-        $form=$this->createForm(AvisType::class,$avis);
+        $form = $this->createForm(AvisType::class, $avis);
         //recuperation des donnees via le formulaire
         //injection de request from httpfoundation
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()&& $form->isValid()){
-            $nowdate= new DateTime('now');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $nowdate = new DateTime('now');
             $avis->setDateCreation($nowdate);
             //injection de l entity manager interface
             $em->persist($avis); //requete pour ajouter un entite a la bd
             $em->flush(); //execution du requete
             //redirection a mon route souhaite 
             return $this->redirectToRoute('app_avis');
-
         }
-    
+
 
         return $this->render('avis/add.html.twig', [
             //envoyer un variable a un vue
@@ -63,24 +62,23 @@ class AvisController extends AbstractController
 
 
     #[Route('/avis/edit/{id}', name: 'app_avis_edit')]
-    public function edit( int $id,AvisRepository $av ,Request $request, EntityManagerInterface $em): Response
+    public function edit(int $id, AvisRepository $av, Request $request, EntityManagerInterface $em): Response
     {   //recuperation de l'entite a partir de l id
-        $avis= $av->find($id);
+        $avis = $av->find($id);
         //formulaire
-        $form=$this->createForm(AvisType::class,$avis);
+        $form = $this->createForm(AvisType::class, $avis);
         //recuperation des donnees via le formulaire
         //injection de request from httpfoundation
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()&& $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             //injection de l entity manager interface
             $em->persist($avis); //requete pour ajouter un entite a la bd
             $em->flush(); //execution du requete
             //redirection a mon route souhaite 
-            return $this->redirectToRoute('app_avis');
-
+            return $this->redirectToRoute('app_produit_show', ['id' => $avis->getProduit()->getId()]);
         }
-    
+
 
         return $this->render('avis/edit.html.twig', [
             //envoyer un variable a un vue
@@ -90,10 +88,10 @@ class AvisController extends AbstractController
 
 
     #[Route('/avis/show/{id}', name: 'app_avis_show')]
-    public function show( int $id,AvisRepository $av ,Request $request, EntityManagerInterface $em): Response
+    public function show(int $id, AvisRepository $av, Request $request, EntityManagerInterface $em): Response
     {   //recuperation de l'entite a partir de l id
-        $avis= $av->find($id);
-        
+        $avis = $av->find($id);
+
 
         return $this->render('avis/show.html.twig', [
             "avis" => $avis,
@@ -102,16 +100,61 @@ class AvisController extends AbstractController
 
 
     #[Route('/avis/delete/{id}', name: 'app_avis_delete')]
-    public function delete( int $id,AvisRepository $av ,Request $request, EntityManagerInterface $em): Response
+    public function delete(int $id, AvisRepository $av, Request $request, EntityManagerInterface $em): Response
     {   //recuperation de l'entite a partir de l id
-        $avis= $av->find($id);
+        $avis = $av->find($id);
         $em->remove($avis);
         $em->flush();
 
         //entity manager interface
         //persist+flush
         //remove+flush
-        return $this->redirectToRoute('app_avis');
+        return $this->redirectToRoute('app_produit_show', ['id' => $avis->getProduit()->getId()]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #[Route('/avis/reply/{id}', name: 'add_reply')]
+    public function reply(Request $request, Avis $parent, EntityManagerInterface $em): Response
+    {   //new instance
+        $avis = new Avis;
+        //formulaire
         
+
+        if (!$this->getUser()) {
+            $this->addFlash(
+                'error',
+                'Vous devez être connecté pour soumettre un commentaire.'
+            );
+
+            return $this->redirectToRoute('app_login'); // Redirect to the login page
+        }
+        $avis->setCommentaire($request->get("description"));
+        $avis->setParent($parent);
+        $avis->setUser($this->getUser());
+        $avis->setProduit($parent->getProduit());
+        $avis->setDateCreation(new DateTime('now'));
+
+        $em->persist($avis);
+        $em->flush();
+
+        // Redirect to avoid form resubmission
+        return $this->redirectToRoute('app_produit_show', ['id' => $parent->getProduit()->getId()]);
     }
 }
