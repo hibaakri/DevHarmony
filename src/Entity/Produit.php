@@ -199,9 +199,10 @@ class Produit
         return $this;
     }
 
+      
+
 
     public function __toString()
- 
     {
         return $this->titre;
     }
@@ -213,6 +214,7 @@ class Produit
     {
         return $this->avis;
     }
+
 
     public function addAvi(Avis $avi): static
     {

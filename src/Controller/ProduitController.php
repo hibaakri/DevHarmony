@@ -31,12 +31,14 @@ class ProduitController extends AbstractController
         $produits = $paginator->paginate(
             $productsQuery,
             $request->query->getInt('page', 1), // Current page number, default to 1
+
             3 // Number of items per page
         );
         if ($this->isGranted("ROLE_ADMIN")) {
             return $this->render('produit/index.html.twig', [
                 //envoie vers la Vue 
                 "produits" => $produits
+
             ]);
         }
 
@@ -215,6 +217,12 @@ class ProduitController extends AbstractController
         }
 
 
+        // comment section 
+        $avis = new Avis;
+        $form = $this->createForm(AvisType::class, $avis);
+        $form->handleRequest($request);
+        $user = $this->getUser();
+
 
 
 
@@ -247,13 +255,13 @@ class ProduitController extends AbstractController
             return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId()]);
         }
 
-    
+
 
 
         return $this->render('produit/showClient.html.twig', [
             "produit" => $produit,
             "form" => $form->createView() ,
-             
+
         ]);
     }
 
@@ -265,10 +273,8 @@ class ProduitController extends AbstractController
     {
         // Récuperation de entité a partir de LURL (ID)
         $produit = $pr->find($id);
-
         $em->remove($produit);
         $em->flush();
-
 
         //entitymanager interface 
         //perist + flush
