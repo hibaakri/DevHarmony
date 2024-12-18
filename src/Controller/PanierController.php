@@ -3,150 +3,183 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
-use App\Form\PanierType;
+use App\Entity\Produit;
 use App\Repository\PanierRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/panier')]
 final class PanierController extends AbstractController
 {
-    #[Route(name: 'app_panier_index', methods: ['GET'])]
-    public function index(PanierRepository $panierRepository): Response
-    {
-        
-        return $this->render('panier/index.html.twig', [
-            'paniers' => $panierRepository->findAll(),
-        ]);
-    }
+    /**
+     * Affiche les produits du panier avec le total.
+     */
+    #[Route('/', name: 'app_panier_afficher', methods: ['GET'])]
+public function afficherPanier(SessionInterface $session, ProduitRepository $produitRepository): Response
+{
+    // Récupérer le panier depuis la session
+    $panier = $session->get('panier', []);
 
-    #[Route('/new', name: 'app_panier_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $panier = new Panier();
-        $form = $this->createForm(PanierType::class, $panier);
-        $form->handleRequest($request);
+    // Initialiser les variables
+    $produits = [];
+    $total = 0;
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($panier);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Panier ajouté avec succès !');
-            return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
+    // Construire la liste des produits avec leur quantité et calculer le total
+    foreach ($panier as $id => $quantite) {
+        $produit = $produitRepository->find($id);
+        if ($produit) {
+            $produits[] = [
+                'produit' => $produit,
+                'quantite' => $quantite,
+                'sousTotal' => $produit->getPrix() * $quantite,
+            ];
+            $total += $produit->getPrix() * $quantite;
         }
-
-        return $this->render('panier/new.html.twig', [
-            'panier' => $panier,
-            'form' => $form,
-        ]);
     }
 
-    #[Route('/{id}', name: 'app_panier_show', methods: ['GET'])]
-    public function show(Panier $panier): Response
-    {
-        return $this->render('panier/show.html.twig', [
-            'panier' => $panier,
-        ]);
-    }
+    // Trier les produits par prix croissant
+    usort($produits, function ($a, $b) {
+        return $a['produit']->getPrix() <=> $b['produit']->getPrix();
+    });
 
-    #[Route('/{id}/edit', name: 'app_panier_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PanierType::class, $panier);
-        $form->handleRequest($request);
+    // Calcul de la remise (10% si total > 150 €)
+    $remise = $total >= 150 ? $total * 0.1 : 0;
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    // Calcul des frais de livraison (gratuits si total > 100 €)
+    $fraisLivraison = $total >= 100 ? 0 : 7;
 
-            $this->addFlash('success', 'Panier modifié avec succès !');
-            return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
-        }
+    // Calcul du total à payer
+    $totalAPayer = $total - $remise + $fraisLivraison;
 
-        return $this->render('panier/edit.html.twig', [
-            'panier' => $panier,
-            'form' => $form,
-        ]);
-    }
+    // Messages informatifs
+    $messageLivraisonGratuite = $total >= 100
+        ? "Félicitations, la livraison est gratuite pour votre commande !"
+        : "  La livraison est gratuite  à partir de 100 dt.";
+    $messageReduction = $total >= 150
+        ? "Vous bénéficiez d'une réduction de 10 %."
+        : "Une réduction de 10 %  à partir  150 dt d'achat.";
 
-    #[Route('/{id}', name: 'app_panier_delete', methods: ['POST'])]
-    public function delete(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$panier->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($panier);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Panier supprimé avec succès !');
-        }
-
-        return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
-    }
-
-
-
-    #[Route('/add/{produitId}', name: 'app_panier_add_produit', methods: ['POST'])]
-    public function addProduit(
-        int $produitId,
-        Request $request,
-        PanierRepository $panierRepository,
-        ProduitRepository $produitRepository, // Utilise ProduitRepository
-        EntityManagerInterface $entityManager
-    ): Response {
-        // Récupère le panier de l'utilisateur connecté
-        $panier = $panierRepository->findOneBy(['user' => $this->getUser()]);
-        
-        // Récupère le produit
-        $produit = $produitRepository->find($produitId); // Utilise produit et non product
+    // Passer les données à la vue
+    return $this->render('panier/index.html.twig', [
+        'produits' => $produits,         // Liste des produits triés
+        'total' => $total,               // Total des produits avant les frais et remises
+        'remise' => $remise,             // Montant de la remise
+        'fraisLivraison' => $fraisLivraison, // Frais de livraison
+        'totalAPayer' => $totalAPayer,   // Total final à payer
+        'messageLivraisonGratuite' => $messageLivraisonGratuite, // Message livraison
+        'messageReduction' => $messageReduction,                 // Message réduction
+    ]);
+}
     
-        // Si le panier n'existe pas, crée-le
-        if (!$panier) {
-            $panier = new Panier();
-            $panier->setUser($this->getUser());
-            $entityManager->persist($panier);
-        }
+
     
-        // Si le produit n'existe pas, lance une exception
+
+    /**
+     * Ajoute un produit au panier.
+     */
+    #[Route('/ajouter/{id}', name: 'app_panier_ajouter', methods: ['POST'])]
+    public function ajouterProduit(int $id, SessionInterface $session, ProduitRepository $produitRepository): Response
+    {
+        $produit = $produitRepository->find($id);
+
         if (!$produit) {
             throw $this->createNotFoundException('Produit introuvable.');
         }
-    
-        // Ajoute le produit au panier
-        $panier->addProduit($produit); // Utilise addProduit et non addProduct
-        $entityManager->flush();
-    
-        $this->addFlash('success', 'Produit ajouté au panier !');
-    
-        return $this->redirectToRoute('app_panier_show', ['id' => $panier->getId()]);
-    }
-    
-    #[Route('/remove/{produitId}', name: 'app_panier_remove_produit', methods: ['POST'])]
-    public function removeProduit(
-        int $produitId,
-        PanierRepository $panierRepository,
-        ProduitRepository $produitRepository, // Utilise ProduitRepository
-        EntityManagerInterface $entityManager
-    ): Response {
-        // Récupère le panier et le produit
-        $panier = $panierRepository->findOneBy(['user' => $this->getUser()]);
-        $produit = $produitRepository->find($produitId); // Utilise produit et non product
-    
-        if (!$panier || !$produit) {
-            $this->addFlash('error', 'Panier ou produit introuvable.');
-            return $this->redirectToRoute('app_panier_index');
+
+        $panier = $session->get('panier', []);
+        
+        // Si le produit existe déjà dans le panier, augmenter la quantité
+        if (isset($panier[$id])) {
+            $panier[$id]++;
+        } else {
+            // Si c'est un nouveau produit, l'ajouter avec une quantité de 1
+            $panier[$id] = 1;
         }
-    
-        // Retire le produit du panier
-        $panier->removeProduit($produit); // Utilise removeProduit et non removeProduct
-        $entityManager->flush();
-    
-        $this->addFlash('success', 'Produit retiré du panier !');
-    
-        return $this->redirectToRoute('app_panier_show', ['id' => $panier->getId()]);
+
+        $session->set('panier', $panier);
+
+        $this->addFlash('success', 'Produit ajouté au panier !');
+        return $this->redirectToRoute('app_panier_afficher');
     }
-    
+
+    /**
+     * Modifie la quantité d'un produit dans le panier.
+     */
+    #[Route('/modifier/{id}', name: 'app_panier_modifier', methods: ['POST'])]
+public function modifierProduit(int $id, Request $request, SessionInterface $session, ProduitRepository $produitRepository): Response
+{
+    $quantite = (int) $request->request->get('quantite', 1);
+    $produit = $produitRepository->find($id);
+
+    if (!$produit) {
+        throw $this->createNotFoundException('Produit introuvable.');
+    }
+
+    $panier = $session->get('panier', []);
+    if ($quantite > 0) {
+        $panier[$id] = $quantite; // Mise à jour de la quantité
+    } else {
+        unset($panier[$id]); // Supprime le produit si la quantité est 0
+    }
+
+    $session->set('panier', $panier);
+
+    $this->addFlash('success', 'Quantité mise à jour avec succès !');
+    return $this->redirectToRoute('app_panier_afficher');
+}
+
+
+    /**
+     * Supprime un produit du panier.
+     */
+    #[Route('/supprimer/{id}', name: 'app_panier_supprimer', methods: ['POST'])]
+    public function supprimerProduit(int $id, SessionInterface $session): Response
+    {
+        $panier = $session->get('panier', []);
+
+        if (isset($panier[$id])) {
+            unset($panier[$id]);
+        }
+
+        $session->set('panier', $panier);
+
+        $this->addFlash('success', 'Produit supprimé du panier !');
+        return $this->redirectToRoute('app_panier_afficher');
+    }
+
+
+
+
+   
+
+
+   
+
+
+
+
+
+
+
+// #[Route('/panier-affichage', name: 'app_panier_affichage')]
+// public function index(Panier $panier): Response
+// {
+//     // Appeler les méthodes du repository
+//     $total = $this->panierRepository->calculerTotal($panier);
+//     $totalAvecLivraison = $this->panierRepository->calculerTotalAvecLivraison($panier);
+
+//     return $this->render('panier/index.html.twig', [
+//         'panier' => $panier,
+//         'total' => $total,
+//         'totalAvecLivraison' => $totalAvecLivraison,
+//     ]);
+// }
+
+
 
 
 }
-

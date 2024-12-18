@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes{% endblock %}
+
+{% block body %}
+    <h1>Mes Commandes</h1>
+
+    {% if commandes is empty %}
+        <p>Aucune commande trouvée.</p>
+    {% else %}
+        <ul>
+            {% for commande in commandes %}
+                <li>
+                    <strong>Commande #{{ commande.id }}</strong><br>
+                    Date : {{ commande.dateCommande|date('d/m/Y') }}<br>
+                    Mode de Paiement : {{ commande.modePaiement }}<br>
+                    Produits :
+                    <ul>
+                        {% for produit in commande.produits %}
+                            <li>{{ produit.nom }} - {{ produit.prix }}dt</li>
+                        {% endfor %}
+                    </ul>
+                    Total : {{ commande.produits|map(p => p.prix)|sum }}dt
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+

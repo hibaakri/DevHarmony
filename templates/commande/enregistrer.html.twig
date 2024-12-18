@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande enregistrée{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card border-primary shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Commande enregistrée avec succès</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success" role="alert">
+                {{ app.session.flashbag.get('success')[0] }}
+            </div>
+            <a href="{{ path('app_home') }}" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+{# {% extends 'base.html.twig' %}
+
+{% block title %}Commande enregistrée{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card border-primary shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Commande enregistrée avec succès</h2>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success" role="alert">
+                {{ app.session.flashbag.get('success')[0] }}
+            </div>
+            <p>Vous allez recevoir un email de confirmation avec les détails de votre commande.</p>
+            <a href="{{ path('app_home') }}" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}#}
+
+

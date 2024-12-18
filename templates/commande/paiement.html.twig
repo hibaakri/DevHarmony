@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card border-primary shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Mode de paiement</h2>
+        </div>
+        <div class="card-body">
+           {{ form_start(form) }}
+            <div class="mb-5">
+              <label>
+                 {{ form_label(form.paiement_comptant, null, { 'label_attr': {'class': 'fw-bold'} }) }}
+              </label>
+              {{ form_widget(form.paiement_comptant) }}
+        </div>
+        <div class="text-center">
+           {{ form_row(form.submit) }}
+        </div>
+     {{ form_end(form) }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

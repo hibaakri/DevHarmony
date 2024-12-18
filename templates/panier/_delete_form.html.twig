@@ -1,34 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Suppression du Panier{% endblock %}
+{% block title %}Suppression du Produit{% endblock %}
 
 {% block body %}
 <div class="container mt-5">
     <div class="card text-center shadow">
-        <!-- En-tête de la carte -->
         <div class="card-header bg-danger text-white">
-            <h4>Suppression du Panier</h4>
+            <h4>Suppression du Produit</h4>
         </div>
-        
-        <!-- Corps de la carte -->
+
         <div class="card-body">
             <p class="card-text">
-                Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est <strong>irréversible</strong>.
+                Êtes-vous sûr de vouloir supprimer ce produit de votre panier ? Cette action est <strong>irréversible</strong>.
             </p>
 
-            <!-- Formulaire de suppression -->
-            <form 
-                method="post" 
-                action="{{ path('app_panier_delete', {'id': panier.id}) }}" 
-                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?');">
+            <form method="post" action="{{ path('app_panier_supprimer', {'id': panier.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ panier.id) }}">
                 <button class="btn btn-danger btn-lg" type="submit">Confirmer la suppression</button>
             </form>
         </div>
-        
-        <!-- Pied de la carte -->
+
         <div class="card-footer">
-            <a href="{{ path('app_panier_index') }}" class="btn btn-secondary">Annuler et revenir</a>
+            <a href="{{ path('app_panier_afficher') }}" class="btn btn-secondary">Annuler et revenir</a>
         </div>
     </div>
 </div>

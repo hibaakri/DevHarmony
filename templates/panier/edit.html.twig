@@ -1,28 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier le Panier{% endblock %}
+{% block title %}Modifier le Produit du Panier{% endblock %}
 
 {% block body %}
     <div class="container mt-4">
-        <h1 class="text-center mb-4">Modifier le Panier</h1>
+        <h1 class="text-center mb-4">Modifier le Produit du Panier</h1>
 
-        <!-- Formulaire pour modifier un panier -->
+        <!-- Formulaire pour modifier la quantité -->
         <div class="card">
             <div class="card-body">
-                {{ include('panier/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                <form action="{{ path('app_panier_modifier', {'id': panier.id}) }}" method="post">
+                    <div class="form-group">
+                        <label for="quantite">Quantité</label>
+                        <input type="number" name="quantite" id="quantite" value="{{ panier.quantite }}" min="1" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-warning mt-3">Mettre à jour</button>
+                </form>
             </div>
         </div>
 
         <!-- Lien pour revenir à la liste -->
         <div class="mt-3 d-flex justify-content-between">
-            <a href="{{ path('app_panier_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            <a href="{{ path('app_panier_afficher') }}" class="btn btn-secondary">Retour à la liste</a>
         </div>
-
     </div>
 {% endblock %}
-
-
-
-
-
 
