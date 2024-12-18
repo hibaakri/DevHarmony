@@ -1,39 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails du Panier{% endblock %}
+{% block title %}Détails du Produit{% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <h1 class="text-primary">Détails du Panier</h1>
+    <div class="container mt-5">
+        <h1 class="text-primary">Détails du Produit</h1>
 
-    <table class="table table-bordered mt-4">
-        <tbody>
-            <tr>
-                <th class="bg-primary text-white">Id</th>
-                <td>{{ panier.id }}</td>
-            </tr>
-            <tr>
-                <th class="bg-primary text-white">Identifiant Panier</th>
-                <td>{{ panier.idPanier }}</td>
-            </tr>
-            <tr>
-                <th class="bg-primary text-white">Identifiant Produit</th>
-                <td>{{ panier.idProduit }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-bordered mt-4">
+            <tbody>
+                <tr>
+                    <th class="bg-primary text-white">Nom</th>
+                    <td>{{ panier.produit.nom }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-primary text-white">Quantité</th>
+                    <td>{{ panier.quantite }}</td>
+                </tr>
+                <tr>
+                    <th class="bg-primary text-white">Prix Unitaire</th>
+                    <td>{{ panier.produit.prix | number_format(2, '.', ' ') }} €</td>
+                </tr>
+                <tr>
+                    <th class="bg-primary text-white">Total</th>
+                    <td>{{ panier.produit.prix * panier.quantite | number_format(2, '.', ' ') }} €</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <div class="d-flex justify-content-between">
-        <!-- Bouton retour -->
-        <a href="{{ path('app_panier_index') }}" class="btn btn-secondary">
-            Retour à la liste
-        </a>
-        
-        <!-- Bouton modifier -->
-        <a href="{{ path('app_panier_edit', {'id': panier.id}) }}" class="btn btn-primary">
-            Modifier
-        </a>
+        <div class="d-flex justify-content-between">
+            <a href="{{ path('app_panier_afficher') }}" class="btn btn-secondary">
+                Retour à la liste
+            </a>
+
+            <a href="{{ path('app_panier_edit', {'id': panier.id}) }}" class="btn btn-primary">
+                Modifier
+            </a>
+        </div>
     </div>
-</div>
 {% endblock %}
-

@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la commande{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card border-primary shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h2> Informations personnelles</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ path('app_commande_creer') }}">
+                <!-- Champ nom -->
+                <div class="mb-3">
+                    <label for="nom" class="form-label fw-bold text-primary">Nom</label>
+                    <input 
+                        type="text" 
+                        id="nom" 
+                        name="nom" 
+                        class="form-control border-primary" 
+                        required
+                        placeholder="Ex: Dupont" 
+                        title="Veuillez entrer un nom valide.">
+                </div>
+
+                <!-- Champ prénom -->
+                <div class="mb-3">
+                    <label for="prenom" class="form-label fw-bold text-primary">Prénom</label>
+                    <input 
+                        type="text" 
+                        id="prenom" 
+                        name="prenom" 
+                        class="form-control border-primary" 
+                        required
+                        placeholder="Ex: Jean" 
+                        title="Veuillez entrer un prénom valide.">
+                </div>
+
+                <!-- Champ email avec contrôle de saisie -->
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-bold text-primary">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-control border-primary" 
+                        required
+                        placeholder="Ex: email@exemple.com"
+                        title="Veuillez entrer un email valide.">
+                </div>
+
+                <!-- Champ adresse de livraison -->
+                <div class="mb-3">
+                    <label for="adresseLivraison" class="form-label fw-bold text-primary">Adresse de livraison</label>
+                    <input 
+                        type="text" 
+                        id="adresseLivraison" 
+                        name="adresseLivraison" 
+                        class="form-control border-primary" 
+                        placeholder="Ex: Rue Habib Bourguiba" 
+                        required 
+                        title="Veuillez entrer une adresse de livraison valide.">
+                </div>
+
+                <!-- Champ code postal -->
+                <div class="mb-3">
+                    <label for="codePostal" class="form-label fw-bold text-primary">Code postal</label>
+                    <input 
+                        type="text" 
+                        id="codePostal" 
+                        name="codePostal" 
+                        class="form-control border-primary" 
+                        placeholder="Ex: 1002" 
+                        required 
+                        maxlength="4" 
+                        pattern="\d{4}" 
+                        title="Le code postal doit contenir exactement 4 chiffres.">
+                </div>
+
+                <!-- Champ gouvernement -->
+                <div class="mb-3">
+                    <label for="gouvernement" class="form-label fw-bold text-primary">Gouvernement</label>
+                    <select 
+                        id="gouvernement" 
+                        name="gouvernement" 
+                        class="form-select border-primary" 
+                        required 
+                        title="Veuillez sélectionner un gouvernement.">
+                        <option value="" disabled selected>Choisir...</option>
+                        <option value="Tunis">Tunis</option>
+                        <option value="Ariana">Ariana</option>
+                        <option value="Manouba">Manouba</option>
+                        <option value="Ben Arous">Ben Arous</option>
+                        <option value="Sfax">Sfax</option>
+                        <option value="Monastir">Monastir</option>
+                        <option value="Sousse">Sousse</option>
+                        <option value="Béja">Béja</option>
+                    </select>
+                </div>
+
+                <!-- Champ numéro de téléphone -->
+                <div class="mb-3">
+                    <label for="telephone" class="form-label fw-bold text-primary">Numéro de téléphone</label>
+                    <input 
+                        type="tel" 
+                        id="telephone" 
+                        name="telephone" 
+                        class="form-control border-primary" 
+                        placeholder="Ex: 12345678" 
+                        required 
+                        maxlength="8" 
+                         pattern="^(2[0-9]|5[0-9]|9[0-9])\d{6}$" 
+                         title="Le numéro de téléphone doit commencer par 20-29, 50-59 ou 90-99 et contenir exactement 8 chiffres.">
+                </div>
+
+                <!-- Boutons de navigation -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{{ path('app_panier_afficher') }}" class="btn btn-primary w-50 me-2">Retourner au panier</a>
+                    <a href="{{ path('app_commande_paiement') }}" class="btn btn-primary w-50 me-2">Passer au paiement</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

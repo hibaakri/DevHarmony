@@ -40,4 +40,18 @@ class CommandeRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
+   public function findCommandesByUser(int $userId): array  
+    //QueryBuilder pour récupérer les commandes liées à un utilisateur spécifique.
+   {
+       return $this->createQueryBuilder('c') // 'c' est un alias pour Commande
+           ->leftJoin('c.produits', 'p')     // Suppose que `produits` est la relation entre `Commande` et `Produit`
+           ->addSelect('p')                 // Inclure les produits dans la requête
+           ->where('c.user = :userId')
+           ->setParameter('userId', $userId)
+           ->orderBy('c.dateCommande', 'DESC') // Tri par date descendante
+           ->getQuery()
+           ->getResult(); // Retourne un tableau d'objets Commande
+   }
 }

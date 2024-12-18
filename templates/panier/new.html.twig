@@ -1,27 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un nouveau panier{% endblock %}
+{% block title %}Ajouter un Produit au Panier{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
-        <div class="card shadow-lg">
-            <div class="card-header bg-primary text-white">
-                <h1 class="h4 mb-0">Créer un nouveau panier</h1>
-            </div>
-            <div class="card-body">
-                <!-- Inclusion du formulaire -->
-                {{ form_start(form, {'attr': {'class': 'form'}}) }}
-                    {{ form_widget(form) }}
-                    <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
-                {{ form_end(form) }}
-            </div>
-        </div>
+        <h1 class="text-primary">Ajouter un Produit</h1>
 
-        <!-- Bouton pour revenir à la liste -->
-        <div class="text-center mt-4">
-            <a class="btn btn-secondary" href="{{ path('app_panier_index') }}">Retour à la liste</a>
+        <form action="{{ path('app_panier_ajouter', {'id': produit.id}) }}" method="post">
+            <div class="form-group">
+                <label for="quantite">Quantité</label>
+                <input type="number" name="quantite" id="quantite" value="1" min="1" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Ajouter au Panier</button>
+        </form>
+
+        <div class="mt-4">
+            <a href="{{ path('app_panier_afficher') }}" class="btn btn-secondary">Voir le Panier</a>
         </div>
     </div>
 {% endblock %}
-
-

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\User;
 use App\Repository\PanierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,7 +16,39 @@ class Panier
     private ?int $id = null;
 
     #[ORM\Column]
+    #[ORM\JoinColumn(nullable:false)]
     private ?int $id_panier = null;
+
+    #[ORM\OneToOne(inversedBy:'panier', targetEntity:User::class, cascade: ['persist', 'remove'])] 
+    #[ORM\JoinColumn(nullable:false)]
+    
+   private ?User $user = null;
+
+   public function getUser(): ?User
+   {
+       return $this->user;
+   }
+
+   public function setUser(?User $user): self
+   {
+       $this->user = $user;
+
+       return $this;
+   }
+
+   #[ORM\OneToOne(mappedBy: 'Panier', targetEntity: Commande::class)]
+    private ?Commande $commande = null;
+//     public function getCommande(): ?Commande
+//    {
+//        return $this->commande;
+//    }
+
+//    public function setCommande(?Commande $Commande): self
+//    {
+//        $this->commande = $commande;
+
+//        return $this;
+//    }
 
     #[ORM\Column]
     private ?int $id_produit = null;
