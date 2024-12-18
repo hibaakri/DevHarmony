@@ -30,7 +30,7 @@
                     
                     <a href="{{ path('app_whishliste_show', {'id': whishliste.id}) }}" class="btn btn-primary btn-sm">Show</a>
                     {{ include('whishliste/_delete_form.html.twig') }}
-                    <a href="#" class="btn btn-primary btn-sm">ajouter au panier</a>
+                    <a href="#{#{{ path('app_panier_ajouter', { 'id': produit.id }) }}#}" class="btn btn-primary btn-sm">ajouter au panier</a>
                     {#<a href="{{ path('app_whishliste_edit', {'id': whishliste.id}) }}" class="btn btn-primary btn-sm">Edit</a>#}
                 </td>
             </tr>

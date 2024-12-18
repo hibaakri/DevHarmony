@@ -178,12 +178,11 @@ suggestionsList.style.display = 'none';
 										class="cart-info d-flex align-self-center">
 										{#<a href="#offcanvas-wishlist" style="margin-left: 50px"
 										                                        class="heart offcanvas-toggle" data-number="3"><i class="icon-heart"></i></a>#}
-										<a href="{{ path('app_home') }}" style="margin-left: 50px" class="heart" data-number="3">
+										<a href="{{ path('app_whishliste_index') }}" style="margin-left: 50px" class="heart" >
 											<i class="icon-heart"></i>
 										</a>
-										<a href="#offcanvas-cart" class="bag offcanvas-toggle" data-number="3">
+										<a href="{{ path('app_panier_afficher') }}" class="bag offcanvas-toggle" >
 											<i class="icon-bag"></i>
-											<span>$20.00</span>
 										</a>
 									</div>
 								</div>
