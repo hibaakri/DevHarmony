@@ -61,7 +61,7 @@
 					<div class="row">
 						<div class="col-md-2">
 							<div class="logo">
-								<a href="index.html"><img class="img-responsive" src="FO/images/logo/logo.png" alt="logo.jpg"/></a>
+								<a href="index.html"><img  height="90px" width="200px" src="{{asset('FO/images/logo/logo.png')}}" alt="logo.jpg"/></a>
 							</div>
 						</div>
 						<div class="col-md-10  ">
@@ -181,9 +181,7 @@ suggestionsList.style.display = 'none';
 										<a href="{{ path('app_whishliste_index') }}" style="margin-left: 50px" class="heart" >
 											<i class="icon-heart"></i>
 										</a>
-										<a href="{{ path('app_panier_afficher') }}" class="bag offcanvas-toggle" >
-											<i class="icon-bag"></i>
-										</a>
+										
 									</div>
 								</div>
 								<div style="margin-left: 50px">
@@ -222,7 +220,7 @@ suggestionsList.style.display = 'none';
 										<ul class="submenu-item" id="category-list"></ul>
 									</li>
 								</ul>
-							</ul>
+						 
 							<!-- menu content -->
 						</div>
 						<!-- header menu vertical -->
@@ -271,20 +269,23 @@ console.error('Erreur lors de la récupération des catégories :', error);
 									<a href="/produit">Produit</a>
 								</li>
 								
-								<li class="text-end">
-									<a href="/whishliste">Wishlist</a>
-								</li>
+ 							 
 								 
 								<li class="text-end">
 									<a href="/service/apres/vente">
 										Service Après Vente</a>
 								</li>
-								<li class="text-end"><a href="/panier">Mon Panier</a></li>
-								<li class="text-end"><a href="/commandes">Mes Commandes</a></li>
+
+								 {% if app.user %}
+										
+ 								<li class="text-end"><a href="/commandes">Mes Commandes</a></li>
+ 								<li class="text-end"><a href="{{ path('app_panier_afficher') }}">Mon panier</a></li>
+							
+							 {% endif %}
 								<div class="text-end ">
 									{% if app.user %}
 										
-										<h3><b class="" style="color: black;" ><i>{{app.user.email}}</i></b></h3>
+										<h3 class="mt-1" ><b  style="color: black;" ><i>  <img height="35x" width="35px" src="{{asset('user.png')}}" alt=""> {{app.user.email}}</i></b></h3>
 		
 									{% endif %}
 								</div>
@@ -301,136 +302,8 @@ console.error('Erreur lors de la récupération des catégories :', error);
 		</div>
 		<!-- header menu -->
 
-		 <!-- Slider Start -->
-        <div class="slider-area slider-height-1">
-            <div class="hero-slider swiper-container">
-                <div class="swiper-wrapper">
-                    <!-- Single Slider  -->
-                    <div class="swiper-slide bg-img d-flex" style="background-image: url(assets/images/slider-image/sample-2.jpg);">
-                        <div class="container align-self-center">
-                            <div class="slider-content-1 slider-animated-1 text-start pl-60px">
-                                <span class="animated color-gray">NEW DESIGN FEATURES</span>
-                                <h1 class="animated color-black">
-                                    Hamsung Galaxy <br />
-                                    <strong>S10+ Edge</strong>
-                                </h1>
-                                <a href="shop-4-column.html" class="shop-btn animated">SHOP NOW</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Slider  -->
-                    <div class="swiper-slide bg-img d-flex" style="background-image: url(assets/images/slider-image/sample-1.jpg);">
-                        <div class="container align-self-center">
-                            <div class="slider-content-1 slider-animated-1 text-start pl-60px">
-                                <span class="animated color-gray">WIRELESS BLUETOOTH GAMING</span>
-                                <h1 class="animated color-black">
-                                    Bluetooth Gamepad <br />
-                                    <strong>IPEGA PG-9023</strong>
-                                </h1>
-                                <a href="shop-4-column.html" class="shop-btn animated">SHOP NOW</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Single Slider  -->
-                </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination swiper-pagination-white"></div>
-            </div>
-        </div>
-        <!-- Slider End -->
-		 <!-- Static Area Start -->
-		<div class="static-area mtb-60px">
-            <div class="container">
-                <div class="static-area-wrap">
-                    <div class="row">
-                        <!-- Static Single Item Start -->
-                        <div class="col-lg-3 col-xs-12 col-md-6 col-sm-6 mb-md-30px mb-lm-30px">
-                            <div class="single-static">
-                                <img src="assets/images/icons/static-icons-1.png" alt="" class="img-responsive" />
-                                <div class="single-static-meta">
-                                    <h4>Free Shipping</h4>
-                                    <p>On all orders over $75.00</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Static Single Item End -->
-                        <!-- Static Single Item Start -->
-                        <div class="col-lg-3 col-xs-12 col-md-6 col-sm-6 mb-md-30px mb-lm-30px">
-                            <div class="single-static">
-                                <img src="assets/images/icons/static-icons-2.png" alt="" class="img-responsive" />
-                                <div class="single-static-meta">
-                                    <h4>Free Returns</h4>
-                                    <p>Returns are free within 9 days</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Static Single Item End -->
-                        <!-- Static Single Item Start -->
-                        <div class="col-lg-3 col-xs-12 col-md-6 col-sm-6 mb-sm-30px">
-                            <div class="single-static">
-                                <img src="assets/images/icons/static-icons-4.png" alt="" class="img-responsive" />
-                                <div class="single-static-meta">
-                                    <h4>Support 24/7</h4>
-                                    <p>Contact us 24 hours a day</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Static Single Item End -->
-                        <!-- Static Single Item Start -->
-                        <div class="col-lg-3 col-xs-12 col-md-6 col-sm-6">
-                            <div class="single-static">
-                                <img src="assets/images/icons/static-icons-3.png" alt="" class="img-responsive" />
-                                <div class="single-static-meta">
-                                    <h4>100% Payment Secure</h4>
-                                    <p>Your payment are safe with us.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Static Single Item End -->
-                    </div>
-                </div>
-            </div>
-        </div>
-	<!-- Static Area End -->
-        <!-- Banner Area Start -->
-		<div class="banner-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                        <div class="banner-wrapper">
-                            <a href="shop-4-column.html"><img src="assets/images/banner-image/1.jpg" alt="" /></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-xs-12">
-                        <div class="banner-wrapper">
-                            <a href="shop-4-column.html"><img src="assets/images/banner-image/2.jpg" alt="" /></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-xs-12">
-                        <div class="banner-wrapper">
-                            <a href="shop-4-column.html"><img src="assets/images/banner-image/3.jpg" alt="" /></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-		<!-- Banner Area End -->
-		 <!-- Banner Area Start -->
-            <div class="banner-area mt-30px">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="banner-wrapper">
-                                <a href="shop-4-column.html"><img src="assets/images/banner-image/4.jpg" alt="" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Banner Area End -->
-
-	</body>
-</html></header><div class="shop-category-area mt-30px">
+ </header><div class="shop-category-area mt-30px">
 <div class="container"> {% block body %}{% endblock %}
 	</div>
 </div>

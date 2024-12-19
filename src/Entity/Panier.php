@@ -16,10 +16,10 @@ class Panier
     private ?int $id = null;
 
     #[ORM\Column]
-    #[ORM\JoinColumn(nullable:false)]
+    #[ORM\JoinColumn(nullable:true)]
     private ?int $id_panier = null;
 
-    #[ORM\OneToOne(inversedBy:'panier', targetEntity:User::class, cascade: ['persist', 'remove'])] 
+    #[ORM\OneToOne(inversedBy:'Panier', targetEntity:User::class, cascade: ['persist', 'remove'])] 
     #[ORM\JoinColumn(nullable:false)]
     
    private ?User $user = null;
@@ -38,17 +38,16 @@ class Panier
 
    #[ORM\OneToOne(mappedBy: 'Panier', targetEntity: Commande::class)]
     private ?Commande $commande = null;
-//     public function getCommande(): ?Commande
-//    {
-//        return $this->commande;
-//    }
 
-//    public function setCommande(?Commande $Commande): self
-//    {
-//        $this->commande = $commande;
 
-//        return $this;
-//    }
+
+
+     public function getCommande(): ?Commande
+    {
+        return $this->commande;
+    }
+
+    
 
     #[ORM\Column]
     private ?int $id_produit = null;

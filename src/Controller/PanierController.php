@@ -81,7 +81,7 @@ public function afficherPanier(SessionInterface $session, ProduitRepository $pro
     /**
      * Ajoute un produit au panier.
      */
-    #[Route('/ajouter/{id}', name: 'app_panier_ajouter', methods: ['POST'])]
+    #[Route('/ajouter/{id}', name: 'app_panier_ajouter')]
     public function ajouterProduit(int $id, SessionInterface $session, ProduitRepository $produitRepository): Response
     {
         $produit = $produitRepository->find($id);

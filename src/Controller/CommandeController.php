@@ -122,6 +122,19 @@ class CommandeController extends AbstractController
             $commande = new Commande();
             $commande->setDateCommande(new \DateTime());
             $commande->setModePaiement('Comptant à la livraison');
+            $commande->setDateCommande(new \DateTime());
+                  $commande->setModePaiement('Comptant à la livraison');
+                  $commande->setUser($this->getUser());  
+                  $commande->setAdresseLivraison('');
+                  $commande->setCodePostal('');
+                  $commande->setGouvernement('');
+                  $commande->setTelephone('');
+                  $commande->setNom('');
+                  $commande->setPrenom('');
+                  $commande->setEmail('');
+                  $commande->setIdPanier(5);
+                //  $commande->setid_panier('');
+
 
             // Sauvegarder la commande en base de données
             $entityManager = $entityManager;

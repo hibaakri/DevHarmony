@@ -9,8 +9,7 @@
     <h1 class="mb-4">Détail de la Demande</h1>
 
     <ul class="list-group">
-        <li class="list-group-item"><strong>ID:</strong> {{ service_apres_vente.id }}</li>
-        <li class="list-group-item"><strong>Type de problème:</strong> {{ service_apres_vente.typeprobleme }}</li>
+         <li class="list-group-item"><strong>Type de problème:</strong> {{ service_apres_vente.typeprobleme }}</li>
         <li class="list-group-item"><strong>Description:</strong> {{ service_apres_vente.descriptionprobleme }}</li>
         <li class="list-group-item"><strong>Date de demande:</strong> {{ service_apres_vente.datedemande | date('d/m/Y') }}</li>
         <li class="list-group-item"><strong>État de la demande:</strong> 

@@ -14,11 +14,11 @@ class Commande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\JoinColumn(nullable:true)]
     private ?int $id_panier = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $adresseLivraison = null;
+    #[ORM\Column(length: 255 ,nullable:true)]
+     private ?string $adresseLivraison = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateCommande = null;
@@ -41,8 +41,10 @@ class Commande
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?panier $panier = null;
+    #[ORM\OneToOne]
+    #[ORM\JoinColumn(nullable:true)]
+    private ?Panier $panier = null;
+
 
     public function getId(): ?int
     {
@@ -169,11 +171,9 @@ class Commande
         return $this;
     }
     #[ORM\OneToOne(targetEntity: User::class)]
-    // #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+     private ?User $user = null;
 
-    // Autres propriétés de la classe Commande...
-
+ 
     public function getUser(): ?User
     {
         return $this->user;
@@ -187,15 +187,13 @@ class Commande
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $modePaiement = null;
-
-    // Getter pour modePaiement
+ 
     public function getModePaiement(): ?string
     {
         return $this->modePaiement;
     }
 
-    // Setter pour modePaiement
-    public function setModePaiement(string $modePaiement): self
+     public function setModePaiement(string $modePaiement): self
     {
         $this->modePaiement = $modePaiement;
 
