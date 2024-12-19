@@ -17,6 +17,7 @@ final class PanierController extends AbstractController
     #[Route(name: 'app_panier_index', methods: ['GET'])]
     public function index(PanierRepository $panierRepository): Response
     {
+        
         return $this->render('panier/index.html.twig', [
             'paniers' => $panierRepository->findAll(),
         ]);

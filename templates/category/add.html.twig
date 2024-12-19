@@ -11,9 +11,31 @@
 <div class="example-wrapper">
 
     
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': { 'novalidate': 'novalidate'}}) }}
 
-    {{ form_widget(form) }}
+    <div class="form-group">
+            {{ form_label(form.titre) }}
+            {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+            {% if form.titre.vars.errors|length > 0 %}
+                <div class="text-danger">
+                    {% for error in form.titre.vars.errors %}
+                        <p>{{ error.message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            {% if form.description.vars.errors|length > 0 %}
+                <div class="text-danger">
+                    {% for error in form.description.vars.errors %}
+                        <p>{{ error.message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     <button type="submit" class="btn btn-success">Ajouter Category</button>
 
 

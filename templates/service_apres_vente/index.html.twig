@@ -10,21 +10,18 @@
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
             <tr>
-                <th>#</th>
-                <th>Type de problème</th>
+                 <th>Type de problème</th>
                 <th>Description</th>
                 <th>Date de demande</th>
                 <th>État de la demande</th>
-                {# <th>Date de résolution</th>
-                <th>Commentaire technicien</th> #}
+                
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for service_apres_vente in service_apres_vente %}
             <tr>
-                <td>{{ service_apres_vente.id }}</td>
-                <td>{{ service_apres_vente.typeprobleme }}</td>
+                 <td>{{ service_apres_vente.typeprobleme }}</td>
                 <td>{{ service_apres_vente.descriptionprobleme }}</td>
                 <td>{{ service_apres_vente.datedemande | date('d/m/Y') }}</td>
                 <td>
@@ -43,12 +40,22 @@
                     <a href="/service/apres/vente/edit/{{ service_apres_vente.id }}" class="btn btn-warning btn-sm">Modifier</a>
                 </td>
             </tr>
+            {% else %}
+           <tr>
+            <td>
+                Aucun service aprés vente
+            </td>
+           </tr>
             {% endfor %}
         </tbody>
     </table>
-
+ <nav class="app-pagination mt-5 text-center">
+            <ul class="pagination justify-content-center">
+                {{ knp_pagination_render(service_apres_vente) }}
+            </ul>
+        </nav> 
     <div class="mt-4">
-        <a href="/service/apres/vente/add"" class="btn btn-primary">Ajouter une demande</a>
+        <a href="/service/apres/vente/add" class="btn btn-primary">Ajouter une demande</a>
     </div>
 </div>
 

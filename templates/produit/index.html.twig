@@ -1,55 +1,71 @@
 {% extends 'Admin.html.twig' %}
 
-{% block title %}Hello ProduitController!{% endblock %}
+{% block title %}Liste des Produits{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    
-
-
-    
-        <table border="1">
-            <thead>
-                <th>#</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>Crée en </th>
-                <th>Category </th>
-                <th colspan="2"> Actions  </th>
-            </thead>
-            <tbody> 
-            {% for produit in produits %}
-                <tr>
-                   
-        
-
-                    <td>{{produit.id}}</td>
-                    <td>{{produit.titre}}</td>
-                    <td>{{produit.prix}}</td>
-                    <td>{{produit.createdat  |date() }}</td>
-
-                    {% if produit.category %}
-                    <td><a href="{{produit.category.id}}">{{produit.category.titre}}</a> </td>
-
-                    {% else %}
-                    <td>no category</td>
-
-                    {% endif %}
-                    <td> <a href="/produit/show/{{produit.id}}">Consulter</a> </td>
-                    <td> <a href="/produit/edit/{{produit.id}}">Modifier</a> </td>
-            
-            
-            
-             
-                </tr>   {% endfor %}
-            </tbody>
-        </table>
-
-   <a href="/produit/add" class="btn btn-primary">Ajouter Produit</a>
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white text-center">
+            <h4 class="mb-0 fw-bold">Liste des Produits</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead class="table-dark">
+                    <tr>
+                         <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Créé le</th>
+                        <th>Catégorie</th>
+                        <th colspan="3" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produit in produits %}
+                        <tr>
+                             <td>{{ produit.titre }}</td>
+                            <td>{{ produit.prix }}</td>
+                            <td>{{ produit.createdat | date('d/m/Y') }}</td>
+                            <td>
+                                {% if produit.category %}
+                                    <a href="/category/show/{{ produit.category.id }}" class="text-decoration-none text-primary">
+                                        {{ produit.category.titre }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Aucune catégorie</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <a href="/produit/show/{{ produit.id }}" class="btn btn-info btn-sm">
+                                    <i class="bi bi-eye"></i> Consulter
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/produit/edit/{{ produit.id }}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil"></i> Modifier
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/produit/delete/{{produit.id}}" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-pencil"></i> Supprimer
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-end">
+            <a href="/produit/add" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Ajouter Produit
+            </a>
+        </div>
+    </div>
 </div>
+ <nav class="app-pagination mt-5 text-center">
+
+            <ul class="pagination justify-content-center">
+                {{ knp_pagination_render(produits) }}
+            </ul>
+        </nav> 
+
 {% endblock %}

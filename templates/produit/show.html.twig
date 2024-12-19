@@ -1,50 +1,185 @@
 {% extends 'Admin.html.twig' %}
-
-{% block title %}Hello ProduitController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-
-<div class="row">
-
-    
-        
-   
-    <div class="col-4 ">
-        <div class="card m-2">
-
-            <div class="card-header">
-                <img src="{{asset('/produits/' ~ produit.image )}}" height="100%" width="100%" alt="">    
-            </div>
-            <div class="card-body">
-                <h2>  <i>{{produit.titre}}</i></h2>
-                 <ul>
-                    
-                    <li>
-                     <b>{{produit.prix}} TND</b>
-
-                    </li>
-                    <li>{{produit.description}}</li>
-                    <li>  <p style="color: grey;" >{{produit.createdat |date(' Y-M-D')}}</p> </li>
-                     
-                 </ul>
-                </div>
-                <div class="card-footer">
-                    <a class="btn btn-secondary" href="/produit/edit/{{produit.id}}">Modifier</a>
-                    <a class="btn btn-danger" href="/produit/delete/{{produit.id}}">Supprimer</a>
-                </div>
-            </div>
-           
-    
-        </div>
-    
-      
-    
-    
-    </div>
-    
+{% block title %}Produit - Détails
 {% endblock %}
+{% block body %}
+	<div class="container mt-3">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card shadow-sm border-0" style="background-color: #f8f9fa">
+					<div class="card-header text-center" style="background-color: #e3f2fd">
+						<img src="{{ asset('/produits/' ~ produit.image) }}" class="img-fluid rounded" alt="Produit Image"/>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h1 class="display-4">{{ produit.titre }}</h1>
+				<h3 class="text-muted mb-2">
+					<a href="/category/show/{{ produit.category.id }}" class="text-decoration-none">{{ produit.category }}</a>
+				</h3>
+
+				<!-- Price and Quantity -->
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<h2 class="text-success">{{ produit.prix }}
+						TND</h2>
+					<span class="badge bg-primary">{{ produit.quantite }}
+						pièces</span>
+				</div>
+
+				<!-- Description -->
+				<h5 class="mt-4">Description:</h5>
+				<p>{{ produit.description }}</p>
+
+				<!-- Creation Date -->
+				<small class="text-muted badge">Disponible dés que le
+					{{ produit.createdAt|date('d F Y') }}</small>
+			</div>
+		</div>
+		<div class="container mt-3">
+			<div class="row justify-content-center">
+				<div class="col-md-12">
+					<h1 class="mt-5">List des Avis</h1>
+					 
+
+					<div class="card mt-5">
+						<div class="row no-gutters m-5">
+
+
+							<div class="container mt-4">
+								<div class="scrollable-comments">
+									{% if produit.avis is empty %}
+										<div class="card mb-3">
+											<div class="row no-gutters m-5">
+												<h3>pas des commentaires !</h3>
+											</div>
+										</div>
+									{% else %}
+										{% for x in produit.avis|reverse %}
+											{% if x.parent == null %}
+												<div class="card mb-3 mr-3" style="border-left: 3px solid #007bff;">
+													<div class="row no-gutters">
+														<div class="col-auto">
+															<img src="{{ asset('user.png') }}" class="rounded-circle ml-3 mt-3" width="70" height="70" alt="User Photo">
+														</div>
+														<div class="col">
+															<div class="card-body">
+																<div class="row">
+																	<div class="col">
+																		<h5 class="card-title mb-1">{{ x.user.email }}
+																		 </h5>
+																	</div>
+ 
+																		<div class="menu-options">
+																			
+																			<a href="/avis/delete/{{x.id}}" class="menu-option text-danger m-2">
+																				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewbox="0 0 16 16">
+																					<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+																				</svg>
+																			</a>
+																		</div>
+ 
+
+																</div>
+																<p class="text-muted small mb-2">{{ x.Datecreation|date('d/m/Y H:i') }}</p>
+																<p class="card-text">
+																	{% set maxLength = 100 %}
+																	{% if x.Commentaire |length > maxLength %}
+																		<span class="short-text">{{ x.Commentaire[:maxLength] }}...</span>
+																		<span class="full-text d-none">{{ x.Commentaire }}</span>
+																		<a href="#" class="show-more-link text-primary">Voir plus</a>
+																	{% else %}
+																		<b>{{ x.Commentaire }}</b>
+																	{% endif %}
+																</p>
+																<form action="{{ path('add_reply', { id: x.id }) }}" method="post" id="replyForm" class="mt-3">
+																	<div class="form-group">
+																		<textarea name="description" style="width: 90%;" class="form-control" rows="2" id="reply" placeholder="Écrivez votre réponse..."></textarea>
+																	</div>
+																	<button type="submit" class="btn btn-primary">Répondre
+																		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-reply" viewbox="0 0 16 16">
+																			<path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.7 8.7 0 0 0-1.921-.306 7 7 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254l-.042-.028a.147.147 0 0 1 0-.252l.042-.028zM7.8 10.386q.103 0 .223.006c.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96z"/>
+																		</svg>
+																	</button>
+																</form>
+																{% set i = 0 %}
+
+																<div class="replies-container d-none" id="replies-{{ x.id }}">
+
+																	{% for y in x.avis|reverse %}
+																		{% set i = 1 + i %}
+																		<div class="card mb-3" style="border-left: 3px solid rgba(0, 123, 255, 0.3); margin-left: 50px;">
+																			<div class="row no-gutters">
+																				<div class="col-auto">
+																					<img src="{{ asset('user.png') }}" class="rounded-circle ml-3 mt-3" width="50" height="50" alt="User Photo">
+																				</div>
+
+																				<div class="col">
+																					<div class="card-body">
+																						<div class="row">
+																							<div class="col">
+																								<h6 class="card-title">{{ y.user.email }}
+ 																								</h6>
+																							</div>
+
+ 																								<div class="menu-options">
+																									 
+																									<a href="/comment/product/delete/prod/{{ y.id }}" class="menu-option text-danger m-2">
+																										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewbox="0 0 16 16">
+																											<path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+																										</svg>
+																									</a>
+																								</div>
+ 																						</div>
+																<p class="text-muted small mb-2">{{ x.Datecreation|date('d/m/Y H:i') }}</p>
+																						<p class="card-text">{{ y.Commentaire }}</p>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	{% endfor %}
+
+																</div>
+																{% if x.avis is not empty %}
+																	<button class="btn btn-link text-primary view-replies-btn mt-2" data-comment-id="{{ x.id }}">Voir les réponses (
+																		{{i}}
+																		)</button>
+																{% endif %}
+															</div>
+														</div>
+													</div>
+
+													<!-- Replies Container -->
+
+												</div>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script>
+	document.querySelectorAll('.view-replies-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                try {
+                    const commentId = this.getAttribute('data-comment-id');
+                    const repliesContainer = document.getElementById('replies-' + commentId);
+                    if (!repliesContainer) throw new Error(`Replies container not found for comment ID: ${commentId}`);
+
+                    repliesContainer.classList.toggle('d-none');
+                    this.textContent = repliesContainer.classList.contains('d-none') ? 'Voir les réponses' : 'Masquer les réponses';
+                } catch (error) {
+                    console.error('Error toggling replies:', error);
+                }
+            });
+        });
+	</script>
+</div>{% endblock %}

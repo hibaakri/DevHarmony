@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CtegoryController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div class="example-wrapper container mt-5">
+    <div class="card shadow-sm">
+       <div class="card-header bg-secondary text-white text-center">
+            <h4 class="mb-0 fw-bold text-dark">Details category</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>ID :</strong> {{ category.id }}</p>
+            <p><strong>Titre :</strong> {{ category.titre }}</p>
+            <p><strong>Description :</strong> {{ category.description }}</p>
+        </div>
+       
+    </div>
+</div>
+
+
+
+<style>
+    .card img {
+        object-fit: cover;
+        height: 200px;
+        width: auto;
+        display: block;
+        margin: 0 auto; /* Centre l'image */
+    }
+    .card-body {
+        text-align: center; /* Centre le texte */
+    }
+    .card-footer {
+        text-align: center;
+    }
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container mt-4">
+
+<div class="text-end text-dark row">
+<div class="col">
+<b> Prix  </b>
+
+<form method="get" id="sortForm">
+    <!-- SVG for Sort Up with a hidden input to specify trie=max -->
+     
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-sort-up" viewBox="0 0 16 16"id="sortDown" style="cursor: pointer;">
+        <title>Sort Down</title> <path d="M3.5 12.5a.5.5 0 0 1-1 0V3.707L1.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.5.5 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 3.707zm3.5-9a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
+      </svg>
+
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-sort-down" id="sortUp" style="cursor: pointer;" viewBox="0 0 16 16">
+        <title>Sort Up</title>
+
+        <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
+      </svg>
+
+    <!-- SVG for Sort Down with a hidden input to specify trie=min -->
+    
+
+    <!-- Hidden input to pass query parameters -->
+    <input type="hidden" name="trie" id="trieValue">
+
+    <!-- Submit button (this won't be used, as we're triggering form submission through JS) -->
+    <button type="submit" style="display:none;"></button>
+</form>
+</div></div>
+
+
+<br><br>
+    <div class="row gy-4">
+        {% for produit in produits %}
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <!-- Image Section -->
+                <div class="card-header p-0 text-center">
+                <a href="/produit/show/{{produit.id}}" >
+                    <img src="{{ asset('/produits/' ~ produit.image) }}" alt="Image de {{ produit.titre }}">
+                    </a>
+                </div>
+                
+                <!-- Card Body -->
+                <div class="card-body">
+                    <h5 class="card-title">{{ produit.titre }}</h5>
+                     <p class="card-category">{{ produit.category }}</p> <!-- Affiche la catégorie ici -->
+                    <p class="card-text">
+                        <b>{{ produit.prix }} TND</b>
+                        <br>
+                        {{ produit.description }}
+                    </p>
+                    <p class="text-muted" style="font-size: 0.9rem;">Ajouté le : {{ produit.createdat | date('Y-m-d') }}</p>
+                </div>
+                
+                <!-- Card Footer -->
+                <div class="card-footer">
+                    <a href="#" class="btn btn-success btn-sm">
+                        <i class="fas fa-shopping-cart"></i> Acheter
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+  
+
+
+
+
+        <script>
+            // Add event listeners to the SVG buttons
+            document.getElementById('sortUp').addEventListener('click', function() {
+                // Set the hidden input value to 'max' when Sort Up is clicked
+                document.getElementById('trieValue').value = 'max';
+        
+                // Submit the form
+                document.getElementById('sortForm').submit();
+            });
+        
+            document.getElementById('sortDown').addEventListener('click', function() {
+                // Set the hidden input value to 'min' when Sort Down is clicked
+                document.getElementById('trieValue').value = 'min';
+        
+                // Submit the form
+                document.getElementById('sortForm').submit();
+            });
+        </script>
+
+{% endblock %}

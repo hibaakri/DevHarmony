@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,18 @@ class CategoryController extends AbstractController
     {
           //recupération de toutes la table depuis la repository 
           $categorys = $pr->findAll() ;
+          if($this->isGranted("ROLE_ADMIN"))
+          {
         return $this->render('category/index.html.twig', [
            //envoie vers la Vue 
            "categorys"=> $categorys
         ]);
+    }
+    return $this->render('category/indexClient.html.twig', [
+        //envoie vers la Vue 
+        "categorys"=> $categorys
+     ]);
+    
     }
 
 
@@ -87,22 +96,34 @@ class CategoryController extends AbstractController
         return $this->render('category/edit.html.twig', [
             //send a variable to a view 
 
-            "form" => $form
+            "form" => $form->createView()
         ]);
 
     }
 
 
     #[Route('/category/show/{id}', name: 'app_category_show')]
-    public function show(  int $id , CategoryRepository $pr , Request $request, EntityManagerInterface $em): Response
-    {
-        // Récuperation de entité a partir de LURL (ID)
+    public function show(  int $id , CategoryRepository $pr ,ProduitRepository $prodrepo , Request $request, EntityManagerInterface $em): Response
+    { 
         $category = $pr->find($id)  ;
- 
+
+        if($this->isGranted("ROLE_ADMIN"))
+        {
+      return $this->render('category/show.html.twig', [
+         //envoie vers la Vue 
+         "categorys"=> $category ,
+         "category" => $category,
+         "produits" => $prodrepo->findproductsByCategory($category->getTitre())
+      ]);
+  }
 
 
-        return $this->render('category/show.html.twig', [
-         "category" => $category
+     
+      
+
+        return $this->render('category/show_client.html.twig', [
+         "category" => $category,
+         "produits" => $prodrepo->findproductsByCategory($category->getTitre())
          ]);
     }
 
